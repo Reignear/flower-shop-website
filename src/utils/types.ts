@@ -1,0 +1,29 @@
+// import type { signUpFormValidationAdmin } from "@/validation/validation-signup-admin";
+import type { signUpFormValidationUser } from "@/validation/validation-signup-user";
+import type { signInFormValidationAdmin } from "@/validation/validation-signin-admin";
+import type { signInFormValidationUser } from "@/validation/validation-signin-user";
+import type { Session, User } from "@supabase/supabase-js";
+import * as z from "zod";
+
+export type Category =
+  | "all"
+  | "bouquets"
+  | "invitations"
+  | "gifts"
+  | "arrangements";
+
+// For admin
+// export type SignUpFormData = z.infer<typeof signUpFormValidationAdmin>;
+export type SignInFormData = z.infer<typeof signInFormValidationAdmin>;
+
+export type SignUpFormDataUser = z.infer<typeof signUpFormValidationUser>;
+export type SignInFormDataUser = z.infer<typeof signInFormValidationUser>;
+
+export type UserRole = "admin" | "user";
+
+export type AuthContextType = {
+  user: User | null;
+  session: Session | null;
+  role: UserRole | null;
+  loading: boolean;
+};

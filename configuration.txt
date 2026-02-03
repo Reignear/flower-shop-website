@@ -1,0 +1,7 @@
+npm install @supabase/supabase-js
+npm i recharts
+npm i react-router-dom
+npm install react-is
+npm install react-hook-form zod @hookform/resolvers
+npm install react-loading-indicators
+npm i @tanstack/react-query
