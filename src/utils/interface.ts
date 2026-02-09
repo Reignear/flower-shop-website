@@ -20,8 +20,13 @@ export interface SignUp {
 }
 
 export interface User {
+
   id: string;
   email: string;
+  first_name: string;
+  middle_name: string;
+  last_name: string;
+  birthdate: string;
   role: string;
 }
 
@@ -44,13 +49,23 @@ export interface Category {
   description: string;
 }
 export interface Product {
-  id: number;
+  id: string;
   code: string;
   name: string;
   image: string;
-  image_url?: any;
+  image_url: any;
   description: string;
   price: number;
   status: string;
   category_id: string | undefined;
+}
+
+export interface Feedback{
+  id: number;
+  user_id: User;
+  product_id: Product;
+  rating: number;
+  feedback: string;
+  status: string;
+  created_at: string;
 }

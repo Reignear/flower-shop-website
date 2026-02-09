@@ -15,7 +15,10 @@ import Privacy from "@/pages/public/privacy";
 import NotFound from "@/pages/unavailable/not-found";
 import UserProtectedRoutes from "@/routes/user-protected-routes";
 import UserOrder from "@/pages/user/order";
+import UserOrderReview from "@/pages/user/order-review";
 import UserProducts from "@/pages/user/products";
+import UserProductView from "@/pages/user/product-view";
+import UserCart from "@/pages/user/cart";
 import UserSettings from "@/pages/user/settings";
 import UserFavorites from "@/pages/user/favorites";
 import UserDashboard from "@/pages/user/dashboard";
@@ -23,6 +26,7 @@ import AdminFeedback from "@/pages/admin/feedback";
 import AdminSettings from "@/pages/admin/settings";
 import AdminAnalytics from "@/pages/admin/analytics";
 import AdminCategory from "@/pages/admin/category";
+import AdminOrder from "@/pages/admin/order";
 import AdminBrandingGeneral from "@/pages/admin/branding-general";
 import AdminBrandingContact from "@/pages/admin/branding-contact";
 import AdminBrandingStore from "@/pages/admin/branding-store";
@@ -56,6 +60,7 @@ export const router = createBrowserRouter([
       { path: "/admin/products", element: <AdminProduct /> },
       { path: "/admin/products/:id", element: <AdminProductView /> },
       { path: "/admin/category", element: <AdminCategory /> },
+      { path: "/admin/order", element: <AdminOrder /> },
       { path: "/admin/feedback", element: <AdminFeedback /> },
       { path: "/admin/settings", element: <AdminSettings /> },
       { path: "/admin/analytics", element: <AdminAnalytics /> },
@@ -77,7 +82,10 @@ export const router = createBrowserRouter([
     children: [
       { path: "/user/dashboard", element: <UserDashboard /> },
       { path: "/user/order", element: <UserOrder /> },
+      { path: "/user/order/review", element: <UserOrderReview /> },
       { path: "/user/products", element: <UserProducts /> },
+      { path: "/user/products/:id", element: <UserProductView /> },
+      { path: "/user/cart", element: <UserCart /> },
       { path: "/user/favorites", element: <UserFavorites /> },
       { path: "/user/settings", element: <UserSettings /> },
     ],

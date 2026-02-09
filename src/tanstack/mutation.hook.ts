@@ -1,4 +1,4 @@
-import { insertCategory } from "@/supabase/api/category.insert";
+import { insertCategory } from "@/supabase/api/admin.category.insert";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useInsertCategory = () => {

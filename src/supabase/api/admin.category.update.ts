@@ -53,45 +53,4 @@ export const updateCategory = async ({
     }),
   );
   return formattedCategory;
-  // let filePath = category.image;
-
-  // if (image) {
-  //   filePath = `category-${crypto.randomUUID()}-${image?.name}`;
-  //   await supabase.storage.from("category-images").upload(filePath, image!);
-
-  //   if (category?.image) {
-  //     await supabase.storage.from("category-images").remove([category?.image]);
-  //   }
-  // }
-  // const { data: categories } = await supabase
-  //   .from("category_table")
-  //   .update({
-  //     name: category.name,
-  //     description: category.description,
-  //     image: filePath,
-  //   })
-  //   .eq("id", category.id)
-  //   .select("*");
-  // if (!categories) return [];
-
-  // const formattedCategory = await Promise.all(
-  //   categories.map(async (category) => {
-  //     if (!category.image) {
-  //       return { ...category, image_url: "" };
-  //     }
-  //     const { data, error } = await supabase.storage
-  //       .from("category-images")
-  //       .createSignedUrl(category.image, 60 * 60 * 24 * 7);
-
-  //     if (error) {
-  //       return { ...category, image_url: "" };
-  //     }
-  //     return {
-  //       ...category,
-  //       image: category.image,
-  //       image_url: data.signedUrl,
-  //     };
-  //   }),
-  // );
-  // return formattedCategory;
 };

@@ -14,7 +14,7 @@ import {
 } from "recharts";
 import { TrendingUp, Users, ShoppingBag, MessageSquare } from "lucide-react";
 import { Card } from "@/components/ui/card";
-
+import {dashboardBreadCrumb} from "@/data/admin-layout-data";
 const salesData = [
   { month: "Jan", sales: 12000, revenue: 24000, orders: 124 },
   { month: "Feb", sales: 15000, revenue: 28000, orders: 156 },
@@ -35,7 +35,7 @@ const COLORS = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b"];
 
 export default function Dashboard() {
   return (
-    <AdminLayout>
+    <AdminLayout breadCrumbs={dashboardBreadCrumb}>
       <div className="p-8">
         {/* Header */}
         <div className="mb-8">

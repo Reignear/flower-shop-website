@@ -4,6 +4,7 @@ import { useAuth } from "@/hooks/use-auth";
 import { ThreeDot } from "react-loading-indicators";
 function AdminRouteGuard() {
   const { user, role, loading } = useAuth();
+
   if (loading) {
     return (
       <>

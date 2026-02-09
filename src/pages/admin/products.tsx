@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/exhaustive-deps */
 import CustomDialog from "@/components/custom/custom-dialog";
 import AdminLayout from "@/components/layout/admin-layout";
 import { Button } from "@/components/ui/button";
@@ -11,12 +10,16 @@ import {
   LayoutGrid,
   ArrowUpRight,
 } from "lucide-react";
-import { insertTitle, insertDescription } from "@/data/admin-product-data";
+import {
+  insertTitle,
+  insertDescription,
+  deleteTitle,
+  deleteDescription,
+  editTitle,
+  editDescription,
+} from "@/data/admin-product-data";
 import ProductFormInsert from "@/components/form/product-form-insert";
 import { useAdminProduct } from "@/hooks/use-admin-product";
-import { useEffect } from "react";
-import { fetchProduct } from "@/supabase/database/fetch-product";
-import { fetchCategory } from "@/supabase/database/fetch-category";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
 import { Link } from "react-router-dom";
 import {
@@ -28,33 +31,27 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
+import { useCategory, useProduct } from "@/tanstack/fetch.hook";
+import ProductFormDelete from "@/components/form/product-form-delete";
+import ProductFormUpdate from "@/components/form/product-form-update";
+import { productBreadCrumb } from "@/data/admin-layout-data";
+
 export default function Product() {
   const {
     openInsert,
     setOpenInsert,
     layout,
     setLayout,
-    product,
-    setProduct,
-    category,
-    setCategory,
     activeCategory,
     setActiveCategory,
+    openDelete,
+    setOpenDelete,
+    openUpdate,
+    setOpenUpdate,
   } = useAdminProduct();
 
-  useEffect(() => {
-    const fetchCategories = async () => {
-      const categories = await fetchCategory();
-      setCategory(categories);
-    };
-    const fetchProducts = async () => {
-      const products = await fetchProduct();
-      setProduct(products);
-    };
-    fetchCategories();
-    fetchProducts();
-  }, []);
-
+  const { data: product = [] } = useProduct();
+  const { data: category = [] } = useCategory();
   const totalProducts = product?.length || 0;
   const filteredProducts =
     activeCategory === "all"
@@ -62,7 +59,7 @@ export default function Product() {
       : product?.filter((p) => p.category_id === activeCategory);
 
   return (
-    <AdminLayout>
+    <AdminLayout breadCrumbs={productBreadCrumb}>
       <div className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -77,7 +74,7 @@ export default function Product() {
           <CustomDialog
             open={openInsert}
             openChange={setOpenInsert}
-            width="md:max-w-3xl"
+            width="md:max-w-4xl"
             title={insertTitle}
             description={insertDescription}
             trigger={
@@ -86,18 +83,7 @@ export default function Product() {
               </Button>
             }
           >
-            <ProductFormInsert
-              onAdd={(newProduct) => {
-                setProduct([
-                  ...(product || []),
-                  {
-                    ...newProduct,
-                    image_url: newProduct.image_url,
-                  },
-                ]);
-                setOpenInsert(false);
-              }}
-            />
+            <ProductFormInsert setOpenInsert={setOpenInsert} />
           </CustomDialog>
         </div>
         {/* Stats */}
@@ -212,7 +198,7 @@ export default function Product() {
                         <td className="py-4 px-6">
                           <div className="flex items-center gap-10">
                             <img
-                              src={product.image_url || "/placeholder.svg"}
+                              src={product.image_url}
                               alt={capitalizeFirstLetter(product.name)}
                               className="w-10 h-10 rounded object-cover"
                             />
@@ -245,31 +231,64 @@ export default function Product() {
                         <td className="py-4 px-6">
                           <div className="flex items-center justify-center gap-2">
                             <Link to={`/admin/products/${product.id}`}>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-border text-muted-foreground hover:bg-muted p-2 bg-transparent"
-                              title="View"
-                            >
-                              <Eye className="w-4 h-4" />
-                            </Button>
+                              <Button
+                                size="sm"
+                                variant="outline"
+                                className="border-border text-muted-foreground hover:bg-muted p-2 bg-transparent"
+                                title="View"
+                              >
+                                <Eye className="w-4 h-4" />
+                              </Button>
                             </Link>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-border text-muted-foreground hover:bg-muted p-2 bg-transparent"
-                              title="Edit"
+                            <CustomDialog
+                              width="md:max-w-3xl"
+                              title={editTitle}
+                              description={editDescription}
+                              open={openUpdate === product.id}
+                              openChange={(open) =>
+                                setOpenUpdate(open ? product.id : null)
+                              }
+                              trigger={
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="border-border text-muted-foreground hover:bg-muted p-2 bg-transparent"
+                                  title="Edit"
+                                >
+                                  <Edit className="w-4 h-4" />
+                                </Button>
+                              }
                             >
-                              <Edit className="w-4 h-4" />
-                            </Button>
-                            <Button
-                              size="sm"
-                              variant="outline"
-                              className="border-border text-destructive hover:bg-destructive/20 p-2 bg-transparent"
-                              title="Delete"
+                              <ProductFormUpdate
+                                product_id={product.id}
+                                product={product}
+                                old_path={product.image}
+                                setOpenUpdate={() => setOpenUpdate(null)}
+                              />
+                            </CustomDialog>
+                            <CustomDialog
+                              title={deleteTitle}
+                              description={deleteDescription}
+                              open={openDelete === product.id}
+                              openChange={(open) =>
+                                setOpenDelete(open ? product.id : null)
+                              }
+                              trigger={
+                                <Button
+                                  size="sm"
+                                  variant="outline"
+                                  className="border-border text-destructive hover:bg-destructive/20 p-2 bg-transparent"
+                                  title="Delete"
+                                >
+                                  <Trash2 className="w-4 h-4" />
+                                </Button>
+                              }
                             >
-                              <Trash2 className="w-4 h-4" />
-                            </Button>
+                              <ProductFormDelete
+                                product={product}
+                                setOpenDelete={() => setOpenDelete(null)}
+                              />
+                            </CustomDialog>
                           </div>
                         </td>
                       </tr>
@@ -280,7 +299,7 @@ export default function Product() {
             </div>
             {product?.length === 0 && (
               <div className=" p-5">
-                <h1 className="text-center text-muted-foreground">
+                <h1 className="text-center text-sm text-muted-foreground">
                   No products found
                 </h1>
               </div>
@@ -295,7 +314,7 @@ export default function Product() {
                   className="rounded-lg max-w-2xs h-full overflow-hidden border border-border"
                   key={prod.id}
                 >
-                  <div className="max-h-100">
+                  <div className="h-70">
                     <img
                       src={prod.image_url}
                       alt={capitalizeFirstLetter(prod.name)}
@@ -321,7 +340,7 @@ export default function Product() {
                 </div>
               ))}
             </div>
-            {product?.length === 0 && (
+            {filteredProducts?.length === 0 && (
               <div className=" p-5">
                 <h1 className="text-center text-muted-foreground">
                   No products found

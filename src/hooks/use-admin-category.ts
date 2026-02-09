@@ -3,15 +3,12 @@ import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 export const useAdminCategory = () => {
-  const [loading, setLoading] = useState(false);
   const { register, handleSubmit, watch } = useForm<Category>();
   const [image, setImage] = useState<File | null>(null);
   const [openInsert, setOpenInsert] = useState(false);
   const [editCategory, setEditCategory] = useState<string | null>(null);
   const [deleteCategory, setDeleteCategory] = useState(false);
   return {
-    loading,
-    setLoading,
     register,
     handleSubmit,
     watch,

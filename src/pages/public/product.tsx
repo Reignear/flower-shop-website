@@ -137,7 +137,7 @@ export default function Product() {
       : products.filter((p) => p.category === selectedCategory);
 
   return (
-    <PublicLayout>
+    <PublicLayout >
       <main className="bg-background">
         {/* Page Header */}
         <section className="px-4 md:px-8 lg:px-12 py-12 md:py-20 border-b border-border">

@@ -1,21 +1,13 @@
 import { Button } from "@/components/ui/button";
 import DashboardLayout from "@/components/layout/admin-layout";
-import { Plus, Edit, Trash2, Eye, ImageOff } from "lucide-react";
+import { Plus, Edit, Trash2, Eye, Ellipsis } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import CustomDialog from "@/components/custom/custom-dialog";
 import CategoryFormInsert from "@/components/form/category-form-insert";
-import {
-  Table,
-  TableBody,
-  TableCell,
-  TableHead,
-  TableHeader,
-  TableRow,
-} from "@/components/ui/table";
-import { Separator } from "@/components/ui/separator";
+
 import type { Category } from "@/utils/interface";
-import CategoryFormView from "@/components/form/category-form-view";
-import CategoryFormEdit from "@/components/form/category-form-edit";
+import CategoryFormSelect from "@/components/form/category-form-select";
+import CategoryFormUpdate from "@/components/form/category-form-update";
 import CategoryFormDelete from "@/components/form/category-form-delete";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
 import { useAdminCategory } from "@/hooks/use-admin-category";
@@ -29,7 +21,17 @@ import {
   deleteTitle,
   deleteDescription,
 } from "@/data/admin-category-data";
+import { categoryBreadCrumb } from "@/data/admin-layout-data";
 import { useCategory } from "@/tanstack/fetch.hook";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
 export default function Category() {
   const {
     openInsert,
@@ -42,7 +44,7 @@ export default function Category() {
   const { data: categories = [] } = useCategory();
 
   return (
-    <DashboardLayout>
+    <DashboardLayout breadCrumbs={categoryBreadCrumb}>
       <div className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -68,7 +70,6 @@ export default function Category() {
             <CategoryFormInsert setOpenInsert={setOpenInsert} />
           </CustomDialog>
         </div>
-
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardContent>
@@ -114,60 +115,44 @@ export default function Category() {
             </CardContent>
           </Card>
         </div>
-
-        <div className="bg-card rounded-lg border border-border overflow-hidden">
-          <div className="overflow-x-auto">
-            <Table>
-              <TableHeader className="sticky z-10 overflow-hidden bg-gray-100">
-                <TableRow>
-                  <TableHead className="w-25 p-5">Image</TableHead>
-                  <TableHead className="p-5">Name</TableHead>
-                  <TableHead className="p-5 max-w-sm overflow-x-auto">
-                    Description
-                  </TableHead>
-                  <TableHead className="text-right p-5 pr-15">
-                    Actions
-                  </TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {categories.map((category) => (
-                  <TableRow key={category.id} className="">
-                    <TableCell className="font-medium p-5">
-                      {category.image_url !== null ? (
-                        <img
-                          src={category.image_url}
-                          alt={category.name}
-                          className="w-12 h-12 object-cover rounded"
-                        />
-                      ) : (
-                        <ImageOff className="h-8 w-8 text-muted-foreground" />
-                      )}
-                    </TableCell>
-                    <TableCell className=" p-5 max-w-20 truncate overflow-hidden whitespace-nowrap">
-                      <h1 className="font-bold">
-                        {capitalizeFirstLetter(category.name)}
-                      </h1>
-                    </TableCell>
-                    <TableCell className=" p-5 max-w-48 truncate overflow-hidden whitespace-nowrap">
-                      {category.description}
-                    </TableCell>
-                    <TableCell className="text-right flex justify-end gap-1 p-5">
+        <div className="grid grid-cols-3 gap-5">
+          {categories.map((category) => (
+            <div
+              className="border border-border rounded-lg h-100 relative"
+              key={category.id}
+            >
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant={"secondary"}
+                    className="z-10 absolute top-2 right-2 "
+                  >
+                    <Ellipsis />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="w-40" align="end">
+                  <DropdownMenuGroup>
+                    <DropdownMenuLabel>Menu</DropdownMenuLabel>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
                       <CustomDialog
                         title={viewTitle}
                         description={viewDescription}
                         trigger={
                           <Button
                             variant={"ghost"}
-                            className="   hover:text-green-500 text-green-500 cursor-pointer"
+                            className="font-normal cursor-pointer flex items-center justify-between w-full"
                           >
-                            <Eye className="h-5 w-5" />
+                            View
+                            <Eye className="h-5 w-5 text-green-500" />
                           </Button>
                         }
                       >
-                        <CategoryFormView category={category} />
+                        <CategoryFormSelect category={category} />
                       </CustomDialog>
-
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
                       <CustomDialog
                         title={`${updateTitle} ${capitalizeFirstLetter(category.name)} category`}
                         description={updateDescription}
@@ -178,28 +163,31 @@ export default function Category() {
                         trigger={
                           <Button
                             variant={"ghost"}
-                            className="   hover:text-blue-500 text-blue-500 cursor-pointer"
+                            className="font-normal flex items-center justify-between w-full  cursor-pointer"
                           >
-                            <Edit className="h-5 w-5" />
+                            Edit <Edit className="h-5 w-5 text-blue-500" />
                           </Button>
                         }
                       >
-                        <CategoryFormEdit
+                        <CategoryFormUpdate
                           category_id={category.id}
                           category={category}
                           old_path={category.image}
                           setEditCategory={setEditCategory}
                         />
                       </CustomDialog>
+                    </DropdownMenuItem>
+                    <DropdownMenuSeparator />
+                    <DropdownMenuItem asChild>
                       <CustomDialog
                         title={`${deleteTitle} ${capitalizeFirstLetter(category.name)}`}
                         description={deleteDescription}
                         trigger={
                           <Button
                             variant={"ghost"}
-                            className="   hover:text-red-500 text-red-500 cursor-pointer"
+                            className="  font-normal flex items-center justify-between w-full  cursor-pointer"
                           >
-                            <Trash2 className="h-5 w-5 " />
+                            Delete <Trash2 className="h-5 w-5 text-red-500" />
                           </Button>
                         }
                       >
@@ -208,14 +196,27 @@ export default function Category() {
                           setDeleteCategory={setDeleteCategory}
                         />
                       </CustomDialog>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-            <Separator />
-          </div>
-        </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                </DropdownMenuContent>
+              </DropdownMenu>
+              <div className="h-60 w-full overflow-hidden rounded-t-lg flex items-center justify-center">
+                <img
+                  src={category.image_url}
+                  alt={category.name}
+                  className="h-full w-full object-cover rounded-t-lg"
+                />
+              </div>
+
+              <div className="p-5 text-center">
+                <h3 className="text-lg font-semibold">{category.name}</h3>
+                <p className="text-sm text-muted-foreground line-clamp-4">
+                  {category.description}
+                </p>
+              </div>
+            </div>
+          ))}
+        </div>{" "}
         {categories.length === 0 && (
           <div className="mt-12 text-center py-12">
             <span className="text-muted-foreground">

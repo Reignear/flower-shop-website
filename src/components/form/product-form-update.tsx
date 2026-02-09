@@ -15,36 +15,50 @@ import { Button } from "@/components/ui/button";
 import type { Product } from "@/utils/interface";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
 import { Controller } from "react-hook-form";
-import { useInsertProduct } from "@/tanstack/product.mutation";
+import { useUpdateProduct } from "@/tanstack/product.mutation";
 import { useCategory } from "@/tanstack/fetch.hook";
-import { generateCode } from "@/utils/code";
+import { useEffect } from "react";
 interface ProductFormInsertProps {
-  setOpenInsert: (open: boolean) => void;
+  product_id: string;
+  product: Product;
+  old_path: string | null;
+  setOpenUpdate: (open: boolean) => void;
 }
 
-export default function ProductFormInsert({
-  setOpenInsert,
+export default function ProductFormUpdate({
+  product_id,
+  product,
+  old_path,
+  setOpenUpdate,
 }: ProductFormInsertProps) {
   const { image, setImage, register, handleSubmit, control } =
     useAdminProduct();
 
-  const insertProductMutation = useInsertProduct();
-  const generatedCode = generateCode();
+  const updateProductMutation = useUpdateProduct();
   const { data: category = [] } = useCategory();
 
   const onSubmit = async (product: Product) => {
     try {
-      await insertProductMutation.mutateAsync({ product, image });
-      setOpenInsert(false);
+      await updateProductMutation.mutateAsync({
+        product_id,
+        product,
+        image,
+        old_path,
+      });
+      setOpenUpdate(false);
     } catch (error) {
-      console.log("Error in inserting product", error);
+      console.log("Error in updating product", error);
     }
   };
+
+  useEffect(() => {
+    setImage(product.image_url);
+  }, [product.image_url, setImage]);
 
   return (
     <form onSubmit={handleSubmit(onSubmit)}>
       <main className="grid grid-cols-2 gap-5">
-        <div className="h-full">
+        <div>
           <label className="max-w relative block h-full rounded-md shadow-xs hover:cursor-pointer">
             {image ? (
               <img
@@ -74,27 +88,33 @@ export default function ProductFormInsert({
         <div className="space-y-2 grid grid-cols-2 gap-2">
           <div className="space-y-2">
             <Label>Name</Label>
-            <Input {...register("name")} required></Input>
+            <Input
+              {...register("name")}
+              defaultValue={product.name}
+              required
+            ></Input>
           </div>
           <div className="space-y-2">
             <Label>Code</Label>
-            <Input
-              placeholder="ex. SF-001"
-              {...register("code")}
-              value={generatedCode}
-              disabled
-            ></Input>
+            <Input defaultValue={product.code} disabled></Input>
           </div>
           <div className="space-y-2 col-span-2">
             <Label>Description</Label>
-            <Textarea {...register("description")}></Textarea>
+            <Textarea
+              {...register("description")}
+              defaultValue={product.description}
+            ></Textarea>
           </div>
           <div className="space-y-2 col-span-2">
             <Label>Category</Label>
             <Controller
               name="category_id"
               control={control}
-              defaultValue={""}
+              defaultValue={
+                category
+                  .find((cat) => cat.name === product.category_id)
+                  ?.id?.toString() || ""
+              }
               render={({ field }) => (
                 <Select
                   onValueChange={field.onChange}
@@ -116,14 +136,19 @@ export default function ProductFormInsert({
           </div>
           <div className="space-y-2 ">
             <Label>Price</Label>
-            <Input type="number" {...register("price")} required></Input>
+            <Input
+              type="number"
+              {...register("price")}
+              defaultValue={product.price}
+              required
+            ></Input>
           </div>
           <div className="space-y-2 ">
             <Label>Status</Label>
             <Controller
               name="status"
               control={control}
-              defaultValue={"available"}
+              defaultValue={product.status}
               render={({ field }) => (
                 <Select onValueChange={field.onChange} value={field.value}>
                   <SelectTrigger className="w-full">
@@ -141,9 +166,11 @@ export default function ProductFormInsert({
             <Button
               className="w-full"
               type="submit"
-              disabled={insertProductMutation.isPending}
+              disabled={updateProductMutation.isPending}
             >
-              {insertProductMutation.isPending ? "Loading..." : "Add Product"}
+              {updateProductMutation.isPending
+                ? "Loading..."
+                : "Update Product"}
             </Button>
           </div>
         </div>

@@ -33,7 +33,7 @@ export default function SideBar({
 
   return (
     <aside className="w-64 bg-sidebar border-r border-sidebar-border max-h-screen flex flex-col sticky z-10 top-0">
-      <div className="p-6 border-b border-sidebar-border">
+      <div className="px-6 py-5  h-25 border-b border-sidebar-border">
         <h2 className="text-2xl font-bold text-sidebar-foreground">
           {brandName}
         </h2>

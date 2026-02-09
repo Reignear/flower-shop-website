@@ -1,6 +1,6 @@
-import { deleteCategory } from "@/supabase/api/category.delete";
-import { insertCategory } from "@/supabase/api/category.insert";
-import { updateCategory } from "@/supabase/api/category.update";
+import { deleteCategory } from "@/supabase/api/admin.category.delete";
+import { insertCategory } from "@/supabase/api/admin.category.insert";
+import { updateCategory } from "@/supabase/api/admin.category.update";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useInsertCategory = () => {

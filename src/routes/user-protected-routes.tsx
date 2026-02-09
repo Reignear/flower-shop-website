@@ -7,6 +7,7 @@ function UserRouteGuard() {
   const { user, role, loading } = useAuth();
 
   if (loading) {
+    return(
     <>
       <div className="bg-blur">
         <ThreeDot color={["#000000", "#000000", "#000000", "#000000"]} />
@@ -14,9 +15,10 @@ function UserRouteGuard() {
       <div style={{ filter: "blur(4px)" }}>
         <Outlet />
       </div>
-    </>;
+    </>
+    );
   }
-  
+
   if (!user || role !== "user") {
     return <Navigate to="/user/signin" replace />;
   }
