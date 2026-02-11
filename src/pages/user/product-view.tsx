@@ -6,7 +6,6 @@ import {
   Star,
   Truck,
   Shield,
-  ArrowLeftFromLine,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
@@ -51,13 +50,6 @@ export default function ProductView() {
     <UserLayout breadCrumbs={useProductViewBreadCrumb()}>
       <Toaster position="bottom-right" />
       <div className="mx-auto max-w-6xl px-4 py-8">
-        <Link to="/user/products">
-          <Button className="mb-4 " variant={"link"}>
-            <ArrowLeftFromLine />
-            Back
-          </Button>
-        </Link>
-
         <div className="grid gap-8 md:grid-cols-2">
           <div className="space-y-4">
             <div className="aspect-square overflow-hidden rounded-lg bg-white flex items-center justify-center">
@@ -393,3 +385,4 @@ export default function ProductView() {
     </UserLayout>
   );
 }
+// Mamasita
