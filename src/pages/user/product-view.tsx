@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useParams } from "react-router-dom";
 import { useProductID } from "@/tanstack/fetch.hook";
 import {
@@ -13,10 +14,16 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
-import type { Product } from "@/utils/interface";
+import type { Feedback, Product } from "@/utils/interface";
 import Skeleton from "react-loading-skeleton";
 import { OrbitProgress } from "react-loading-indicators";
 import { useUserProductView } from "@/hooks/use-user-product-view";
+import { formatDate } from "@/utils/date";
+import { averageRating } from "@/utils/rating";
+import { useInsertCart } from "@/tanstack/cart.mutation";
+import toast, { Toaster } from "react-hot-toast";
+import UserLayout from "@/components/layout/user-layout";
+import { useProductViewBreadCrumb } from "@/data/user-product-view-data";
 
 export default function ProductView() {
   const { id: productId } = useParams();
@@ -25,9 +32,24 @@ export default function ProductView() {
   );
   const { imgLoaded, setImgLoaded, quantity, setQuantity } =
     useUserProductView();
-  console.log("Product data:", product);
+  const insertCartMutation = useInsertCart();
+  const notify = () => toast("Here is your toast.");
+  
+  const handleAddToCart = async () => {
+    try {
+      await insertCartMutation.mutateAsync({
+        product_id: Number(productId),
+        quantity,
+      });
+      notify();
+    } catch (error) {
+      console.log("Error adding to cart", error);
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gray-50">
+    <UserLayout breadCrumbs={useProductViewBreadCrumb()}>
+      <Toaster position="bottom-right" />
       <div className="mx-auto max-w-6xl px-4 py-8">
         <Link to="/user/products">
           <Button className="mb-4 " variant={"link"}>
@@ -89,7 +111,13 @@ export default function ProductView() {
                         key={i}
                         size={16}
                         className={
-                          i < Math.floor(product?.rating || 0)
+                          i <
+                          Math.floor(
+                            averageRating(
+                              product?.feedback?.map((f: any) => f.rating) ||
+                                [],
+                            ),
+                          )
                             ? "fill-yellow-400 text-yellow-400"
                             : "text-gray-300"
                         }
@@ -97,7 +125,7 @@ export default function ProductView() {
                     ))}
                   </div>
                   <span className="text-sm text-gray-600">
-                    ({product?.reviews} reviews)
+                    ({product?.feedback?.length} reviews)
                   </span>
                 </div>
               )}
@@ -124,7 +152,10 @@ export default function ProductView() {
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
                     className="px-3 py-2 text-gray-600 hover:bg-gray-100"
-                    disabled={product?.status !== "available"}
+                    disabled={
+                      product?.status !== "available" ||
+                      insertCartMutation.isPending
+                    }
                   >
                     −
                   </button>
@@ -134,7 +165,10 @@ export default function ProductView() {
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity + 1))}
                     className="px-3 py-2 text-gray-600 hover:bg-gray-100"
-                    disabled={product?.status !== "available"}
+                    disabled={
+                      product?.status !== "available" ||
+                      insertCartMutation.isPending
+                    }
                   >
                     +
                   </button>
@@ -153,16 +187,23 @@ export default function ProductView() {
               <div className="flex gap-3">
                 <Button
                   className="flex-1 gap-2 bg-blue-600 hover:bg-blue-700"
-                  disabled={product?.status !== "available"}
+                  disabled={
+                    product?.status !== "available" ||
+                    insertCartMutation.isPending
+                  }
+                  onClick={handleAddToCart}
                 >
                   <ShoppingCart size={20} />
-                  Add to Cart
+                  {insertCartMutation.isPending ? "Adding..." : "Add to Cart"}
                 </Button>
               </div>
               <Link to="/user/order/review" prefetch="viewport">
                 <Button
                   className={`w-full ${product?.status === "available" ? "bg-red-600 hover:bg-red-800" : "bg-gray-300 cursor-not-allowed"}`}
-                  disabled={product?.status !== "available"}
+                  disabled={
+                    product?.status !== "available" ||
+                    insertCartMutation.isPending
+                  }
                 >
                   Buy Now
                 </Button>
@@ -236,16 +277,17 @@ export default function ProductView() {
                 ) : (
                   <span className="text-gray-600 text-center" />
                 )}
-                {/* {product.reviews_data.map((review) => (
-                  <Card key={review.id}>
-                    <CardContent className="pt-6">
+                {product?.feedback.map((feedback: Feedback) => (
+                  <Card key={feedback.id}>
+                    <CardContent>
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <p className="font-semibold text-gray-900">
-                            {review.title}
+                            {capitalizeFirstLetter(feedback.user_id.first_name)}{" "}
+                            {capitalizeFirstLetter(feedback.user_id.last_name)}
                           </p>
                           <p className="text-sm text-gray-600">
-                            {review.author} • {review.date}
+                            {formatDate(feedback.created_at)}
                           </p>
                         </div>
                         <div className="flex">
@@ -254,7 +296,7 @@ export default function ProductView() {
                               key={i}
                               size={16}
                               className={
-                                i < review.rating
+                                i < feedback.rating
                                   ? "fill-yellow-400 text-yellow-400"
                                   : "text-gray-300"
                               }
@@ -262,10 +304,10 @@ export default function ProductView() {
                           ))}
                         </div>
                       </div>
-                      <p className="text-gray-700">{review.comment}</p>
+                      <p className="text-gray-700">{feedback.feedback}</p>
                     </CardContent>
                   </Card>
-                ))} */}
+                ))}
                 {!isProductLoading && product?.feedback.length === 0 && (
                   <p className="text-gray-600 text-center">
                     No reviews yet. Be the first to review this product!
@@ -326,7 +368,14 @@ export default function ProductView() {
                                 key={i}
                                 size={14}
                                 className={
-                                  i < 4
+                                  i <
+                                  Math.floor(
+                                    averageRating(
+                                      item?.feedback?.map(
+                                        (f: any) => f.rating,
+                                      ) || [],
+                                    ),
+                                  )
                                     ? "fill-yellow-400 text-yellow-400"
                                     : "text-gray-300"
                                 }
@@ -341,6 +390,6 @@ export default function ProductView() {
           </div>
         </div>
       </div>
-    </div>
+    </UserLayout>
   );
 }

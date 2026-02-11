@@ -20,7 +20,6 @@ export interface SignUp {
 }
 
 export interface User {
-
   id: string;
   email: string;
   first_name: string;
@@ -48,6 +47,17 @@ export interface Category {
   image_url: any;
   description: string;
 }
+
+export interface Feedback {
+  id: number;
+  user_id: User;
+  product_id: Product;
+  rating: number;
+  feedback: string;
+  status: string;
+  created_at: string;
+}
+
 export interface Product {
   id: string;
   code: string;
@@ -58,14 +68,13 @@ export interface Product {
   price: number;
   status: string;
   category_id: string | undefined;
+  feedback?: Feedback[];
 }
 
-export interface Feedback{
+export interface Cart {
   id: number;
   user_id: User;
   product_id: Product;
-  rating: number;
-  feedback: string;
-  status: string;
+  quantity: number;
   created_at: string;
-}
+};

@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import Skeleton from "react-loading-skeleton";
 import { OrbitProgress } from "react-loading-indicators";
+import { productBreadCrumb } from "@/data/user-product-data";
 
 export default function ProductsPage() {
   const { activeCategory, setActiveCategory, imageLoaded, setImageLoaded } =
@@ -30,9 +31,9 @@ export default function ProductsPage() {
       ? product
       : product.filter((prod) => prod.category_id === activeCategory);
 
-      const totalProducts = product.length;
+  const totalProducts = product.length;
   return (
-    <UserLayout>
+    <UserLayout breadCrumbs={productBreadCrumb}>
       <div className="p-8 space-y-5">
         <div className="mb-8">
           <h1 className="text-3xl font-bold text-foreground mb-2">
@@ -48,7 +49,9 @@ export default function ProductsPage() {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
             <div>
               <p className="text-sm text-muted-foreground">Total Products</p>
-              <p className="text-3xl font-bold text-foreground">{totalProducts}</p>
+              <p className="text-3xl font-bold text-foreground">
+                {totalProducts}
+              </p>
             </div>
             <div>
               <p className="text-sm text-muted-foreground">Total Purchases</p>

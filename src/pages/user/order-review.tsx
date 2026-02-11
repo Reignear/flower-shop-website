@@ -2,9 +2,11 @@ import { ChevronLeft, Truck, Edit2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export default function OrderReview() {
+  const navigate = useNavigate();
+
   const orderData = {
     items: [
       {
@@ -42,10 +44,10 @@ export default function OrderReview() {
       {/* Header */}
       <header className="border-b border-gray-200 sticky top-0 z-10 bg-white">
         <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <button className="flex items-center gap-2 text-gray-700 hover:text-gray-900 font-medium text-sm">
+          <Button variant={"link"} onClick={() => navigate(-1)}>
             <ChevronLeft size={18} />
-            Back to Cart
-          </button>
+            Back
+          </Button>
         </div>
       </header>
 
@@ -170,10 +172,6 @@ export default function OrderReview() {
                 <div className="flex justify-between text-sm text-gray-700">
                   <span>Shipping</span>
                   <span>₱{orderData.shipping.toFixed(2)}</span>
-                </div>
-                <div className="flex justify-between text-sm text-gray-700">
-                  <span>Tax</span>
-                  <span>₱{orderData.tax.toFixed(2)}</span>
                 </div>
               </div>
 
