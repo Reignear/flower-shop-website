@@ -3,6 +3,8 @@ import { fetchCategory } from "@/supabase/api/fetch.category.ts";
 import { fetchProduct } from "@/supabase/api/fetch.product";
 import { fetchProductById } from "@/supabase/api/fetch.product.id";
 import { fetchCart } from "@/supabase/api/fetch.cart";
+import { fetchUserAddress } from "@/supabase/api/fetch.user.address";
+import { fetchBillingMethod } from "@/supabase/api/fetch.billing.method";
 
 export const useCategory = () => {
   return useQuery({
@@ -44,6 +46,30 @@ export const useCart = () => {
   return useQuery({
     queryKey: ["cart"],
     queryFn: () => fetchCart(),
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+};
+
+export const useAddress = () => {
+  return useQuery({
+    queryKey: ["address"],
+    queryFn: () => fetchUserAddress(),
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+};
+
+export const useBillingMethod = () => {
+  return useQuery({
+    queryKey: ["billingMethod"],
+    queryFn: () => fetchBillingMethod(),
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),

@@ -4,6 +4,11 @@ import type { signInFormValidationAdmin } from "@/validation/validation-signin-a
 import type { signInFormValidationUser } from "@/validation/validation-signin-user";
 import type { Session, User } from "@supabase/supabase-js";
 import * as z from "zod";
+// import type {
+//   bankTransferValidation,
+//   gcashValidation,
+//   paypalValidation,
+// } from "@/validation/validation-billing-method-admin";
 
 export type Category =
   | "all"
@@ -27,3 +32,7 @@ export type AuthContextType = {
   role: UserRole | null;
   loading: boolean;
 };
+
+// export type GcashMethod = z.infer<typeof gcashValidation>;
+// export type PayPalMethod = z.infer<typeof paypalValidation>;
+// export type BankTransferMethod = z.infer<typeof bankTransferValidation>;

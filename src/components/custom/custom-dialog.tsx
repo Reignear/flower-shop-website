@@ -30,7 +30,7 @@ export default function CustomDialog({
   return (
     <Dialog open={open} onOpenChange={openChange}>
       <DialogTrigger asChild>{trigger}</DialogTrigger>
-      <DialogContent className={`sm:max-w-md ${width}`}>
+      <DialogContent className={`sm:max-w-md  ${width}`}>
         <DialogHeader>
           <DialogTitle>{title}</DialogTitle>
           <DialogDescription>{description}</DialogDescription>

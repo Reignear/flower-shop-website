@@ -385,4 +385,3 @@ export default function ProductView() {
     </UserLayout>
   );
 }
-// Mamasita

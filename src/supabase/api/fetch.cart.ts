@@ -13,7 +13,8 @@ export const fetchCart = async () => {
   const { data } = await supabase
     .from("cart_table")
     .select(
-      `quantity,
+      `id,
+       quantity,
        product_id (id, code, description, name, price, image),
        created_at`,
     )
@@ -35,7 +36,10 @@ export const fetchCart = async () => {
         return { ...item, image_url: "" };
       }
 
-      return { ...item, product_id: { ...item.product_id, image_url: imageData.signedUrl } };
+      return {
+        ...item,
+        product_id: { ...item.product_id, image_url: imageData.signedUrl },
+      };
     }),
   );
 

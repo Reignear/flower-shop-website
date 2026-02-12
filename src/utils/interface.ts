@@ -77,4 +77,91 @@ export interface Cart {
   product_id: Product;
   quantity: number;
   created_at: string;
-};
+}
+
+export interface Address {
+  id?: number;
+  user_id?: User;
+  address_line1: string;
+  address_line2: string;
+  barangay: string;
+  city: string;
+  province: string;
+  region: string;
+  is_default: boolean;
+  postal_code?: string;
+  created_at?: string;
+}
+
+// For address fetch API
+export interface Region {
+  code: string;
+  name: string;
+  regionCode: number;
+  islandGroupCode: string;
+  psgc10DigitCode: number;
+}
+export interface Province {
+  code: string;
+  name: string;
+  regionCode: number;
+  islandGroupCode: string;
+  psgc10DigitCode: number;
+}
+export interface CityMunicipality {
+  code: string;
+  name: string;
+  oldName: string;
+  isCapital: boolean;
+  isCity: boolean;
+  isMunicipality: boolean;
+  provinceCode: number;
+  districtCode: number;
+  regionCode: number;
+  islandGroupCode: string;
+  psgc10DigitCode: number;
+}
+export interface Barangay {
+  code: string;
+  name: string;
+  oldName: string;
+  subMunicipalityCode: boolean;
+  cityCode: number;
+  municipalityCode: boolean;
+  districtCode: number;
+  provinceCode: number;
+  regionCode: number;
+  islandGroupCode: string;
+  psgc10DigitCode: number;
+}
+interface BillingMethodBase {
+  id?: number;
+  method_type: string;
+}
+
+// Individual method types
+export interface GcashMethod extends BillingMethodBase {
+  gcash_number: string;
+  gcash_name: string;
+}
+
+export interface PayPalMethod extends BillingMethodBase {
+  paypal_email: string;
+}
+
+export interface BankTransferMethod extends BillingMethodBase {
+  bank_name: string;
+  bank_account_number: string;
+  bank_account_name: string;
+}
+
+export interface CODMethod extends BillingMethodBase {
+  cod_enabled: boolean;
+}
+
+// Discriminated union for when you need to handle any billing method
+export type BillingMethod =
+  | GcashMethod
+  | PayPalMethod
+  | BankTransferMethod
+  | CODMethod;

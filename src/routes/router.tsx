@@ -19,7 +19,11 @@ import UserOrderReview from "@/pages/user/order-review";
 import UserProducts from "@/pages/user/products";
 import UserProductView from "@/pages/user/product-view";
 import UserCart from "@/pages/user/cart";
-import UserSettings from "@/pages/user/settings";
+import UserSettingsProfile from "@/pages/user/settings-profile";
+import UserSettingsAddress from "@/pages/user/settings-address";
+import UserSettingsNotification from "@/pages/user/settings-notification";
+import UserSettingsSecurity from "@/pages/user/settings-security";
+import UserSettingsDeletion from "@/pages/user/settings-delete";
 import UserFavorites from "@/pages/user/favorites";
 import UserDashboard from "@/pages/user/dashboard";
 import AdminFeedback from "@/pages/admin/feedback";
@@ -32,6 +36,7 @@ import AdminBrandingContact from "@/pages/admin/branding-contact";
 import AdminBrandingStore from "@/pages/admin/branding-store";
 import AdminBrandingPrivacy from "@/pages/admin/branding-privacy";
 import AdminBrandingShipping from "@/pages/admin/branding-shipping";
+import AdminBrandingBilling from "@/pages/admin/branding-billing";
 import AdminSignin from "@/pages/auth/admin/signin";
 import UserSignin from "@/pages/auth/user/signin";
 import UserSignup from "@/pages/auth/user/signup";
@@ -75,6 +80,7 @@ export const router = createBrowserRouter([
       { path: "/admin/branding/contact", element: <AdminBrandingContact /> },
       { path: "/admin/branding/shipping", element: <AdminBrandingShipping /> },
       { path: "/admin/branding/privacy", element: <AdminBrandingPrivacy /> },
+      { path: "/admin/branding/billing", element: <AdminBrandingBilling /> },
     ],
   },
   {
@@ -87,7 +93,19 @@ export const router = createBrowserRouter([
       { path: "/user/products/:id", element: <UserProductView /> },
       { path: "/user/cart", element: <UserCart /> },
       { path: "/user/favorites", element: <UserFavorites /> },
-      { path: "/user/settings", element: <UserSettings /> },
+
+      {
+        path: "/user/settings",
+        element: <Navigate to="/user/settings/profile" replace />,
+      },
+      { path: "/user/settings/profile", element: <UserSettingsProfile /> },
+      { path: "/user/settings/address", element: <UserSettingsAddress /> },
+      {
+        path: "/user/settings/notification",
+        element: <UserSettingsNotification />,
+      },
+      { path: "/user/settings/security", element: <UserSettingsSecurity /> },
+      { path: "/user/settings/deletion", element: <UserSettingsDeletion /> },
     ],
   },
   {
