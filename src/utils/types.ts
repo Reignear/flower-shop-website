@@ -33,6 +33,12 @@ export type AuthContextType = {
   loading: boolean;
 };
 
+export type Status =
+  | "pending"
+  | "on-going"
+  | "ready-for-pick"
+  | "completed"
+  | "declined";
 // export type GcashMethod = z.infer<typeof gcashValidation>;
 // export type PayPalMethod = z.infer<typeof paypalValidation>;
 // export type BankTransferMethod = z.infer<typeof bankTransferValidation>;

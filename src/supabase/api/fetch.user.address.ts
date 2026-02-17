@@ -11,7 +11,15 @@ export const fetchUserAddress = async () => {
   const { data } = await supabase
     .from("user_address_table")
     .select(
-      "address_line1, address_line2, barangay, city, province, region, postal_code, is_default",
+      ` id, 
+        address_line1, 
+        address_line2, 
+        barangay, 
+        city, 
+        province, 
+        region, 
+        postal_code, 
+        is_default`,
     )
     .eq("user_id", user.id)
     .order("created_at", { ascending: false });

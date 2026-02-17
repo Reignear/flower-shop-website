@@ -7,3 +7,4 @@ npm install react-loading-indicators
 npm i @tanstack/react-query
 npm i react-loading-skeleton
 npm install react-hot-toast
+npm install motion

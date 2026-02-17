@@ -11,6 +11,9 @@ import { useUserCart } from "@/hooks/use-user-cart";
 import { Mosaic } from "react-loading-indicators";
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
+import { Toaster } from "react-hot-toast";
+import { useDeleteCart } from "@/tanstack/cart.mutation";
+import { CustomToast } from "@/components/custom/custom-toast";
 
 export default function Cart() {
   const { data: CartData, isLoading } = useCart();
@@ -44,8 +47,21 @@ export default function Cart() {
     setData(data.filter((item: any) => item.id !== id));
   };
 
+  const deleteMutation = useDeleteCart();
+
+  const deleteCartItem = async (cart_id: number) => {
+    try {
+      CustomToast(deleteMutation.mutateAsync(cart_id), "delete");
+    } catch (error) {
+      console.error("Error deleting cart item:", error);
+    }
+  };
+
+  
+
   return (
     <UserLayout breadCrumbs={cartBreadCrumb}>
+      <Toaster />
       <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
         {isLoading && (
           <div className="grid grid-cols-3 gap-5">
@@ -107,6 +123,7 @@ export default function Cart() {
                             onClick={() =>
                               updateQuantity(item.id, item.quantity - 1)
                             }
+                            disabled={item.quantity <= 1}
                             className="rounded p-1 hover:bg-muted transition-colors"
                             aria-label="Decrease quantity"
                           >
@@ -128,7 +145,7 @@ export default function Cart() {
 
                         {/* Remove Button */}
                         <button
-                          onClick={() => removeItem(item.id)}
+                          onClick={() => deleteCartItem(item.id)}
                           className="mt-2 rounded p-2 text-destructive hover:bg-red-50 transition-colors"
                           aria-label="Remove item"
                         >
@@ -153,7 +170,7 @@ export default function Cart() {
           </div>
           <div className="lg:col-span-1">
             <Card
-              className={`sticky top-8 border border-border bg-card p-6 shadow-sm ${isLoading ? "hidden" : ""}`}
+              className={`sticky top-8 border border-border bg-card p-6 shadow-sm ${data.length <= 0 && !isLoading ? "hidden" : ""}`}
             >
               <h2 className="mb-6 text-xl font-bold text-foreground">
                 Order Summary

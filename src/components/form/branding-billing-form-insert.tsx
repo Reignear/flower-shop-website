@@ -73,28 +73,40 @@ export function BrandingBillingFormInsert() {
       >
         <div className="grid grid-cols-2 gap-5">
           {/* GCash */}
-          <div className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer">
+          <Label
+            htmlFor="gcash"
+            className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer"
+          >
             <RadioGroupItem value="gcash" id="gcash" />
-            <Label htmlFor="gcash">GCash</Label>
-          </div>
+            <span>GCash</span>
+          </Label>
 
           {/* Cash on Delivery */}
-          <div className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer">
+          <Label
+            htmlFor="cod"
+            className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer"
+          >
             <RadioGroupItem value="cod" id="cod" />
-            <Label htmlFor="cod">Cash on Delivery</Label>
-          </div>
+            <span>Cash on Delivery</span>
+          </Label>
 
           {/* PayPal */}
-          <div className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer">
+          <Label
+            htmlFor="paypal"
+            className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer"
+          >
             <RadioGroupItem value="paypal" id="paypal" />
-            <Label htmlFor="paypal">PayPal</Label>
-          </div>
+            <span>PayPal</span>
+          </Label>
 
           {/* Bank Transfer */}
-          <div className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer">
+          <Label
+            htmlFor="bank"
+            className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer"
+          >
             <RadioGroupItem value="bank" id="bank" />
-            <Label htmlFor="bank">Bank Transfer</Label>
-          </div>
+            <span>Bank Transfer</span>
+          </Label>
         </div>
       </RadioGroup>
 
@@ -180,7 +192,10 @@ export function BrandingBillingFormInsert() {
             <div className="grid grid-cols-3 gap-5">
               <div className="space-y-2">
                 <Label>Bank Name</Label>
-                <Input placeholder="BDO, BPI, Metrobank" />
+                <Input
+                  placeholder="BDO, BPI, Metrobank"
+                  {...registerBank("bank_name")}
+                />
               </div>
               <div className="space-y-2">
                 <Label>Account Number</Label>

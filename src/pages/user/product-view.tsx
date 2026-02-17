@@ -1,12 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useParams } from "react-router-dom";
 import { useProductID } from "@/tanstack/fetch.hook";
-import {
-  ShoppingCart,
-  Star,
-  Truck,
-  Shield,
-} from "lucide-react";
+import { ShoppingCart, Star, Truck, Shield } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
@@ -20,10 +15,10 @@ import { useUserProductView } from "@/hooks/use-user-product-view";
 import { formatDate } from "@/utils/date";
 import { averageRating } from "@/utils/rating";
 import { useInsertCart } from "@/tanstack/cart.mutation";
-import toast, { Toaster } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import UserLayout from "@/components/layout/user-layout";
 import { useProductViewBreadCrumb } from "@/data/user-product-view-data";
-
+import { CustomToast } from "@/components/custom/custom-toast";
 export default function ProductView() {
   const { id: productId } = useParams();
   const { data: product, isLoading: isProductLoading } = useProductID(
@@ -31,16 +26,18 @@ export default function ProductView() {
   );
   const { imgLoaded, setImgLoaded, quantity, setQuantity } =
     useUserProductView();
+
   const insertCartMutation = useInsertCart();
-  const notify = () => toast("Here is your toast.");
-  
+
   const handleAddToCart = async () => {
     try {
-      await insertCartMutation.mutateAsync({
-        product_id: Number(productId),
-        quantity,
-      });
-      notify();
+      await CustomToast(
+        insertCartMutation.mutateAsync({
+          product_id: Number(productId),
+          quantity,
+        }),
+        "insert",
+      );
     } catch (error) {
       console.log("Error adding to cart", error);
     }
@@ -189,9 +186,22 @@ export default function ProductView() {
                   {insertCartMutation.isPending ? "Adding..." : "Add to Cart"}
                 </Button>
               </div>
-              <Link to="/user/order/review" prefetch="viewport">
+              <Link
+                to="/user/order/review"
+                state={{
+                  items: product ? [{ product_id: product, quantity }] : [],
+                  subtotal: (product?.price ?? 0) * quantity,
+                  shippingFee: (product?.price ?? 0) * quantity > 500 ? 0 : 50,
+                  total:
+                    (product?.price ?? 0) * quantity +
+                    ((product?.price ?? 0) * quantity > 500 ? 0 : 50),
+                }}
+                prefetch="viewport"
+                className={`w-full ${product?.status !== "available" || insertCartMutation.isPending ? "pointer-events-none" : ""}`}
+              >
                 <Button
-                  className={`w-full ${product?.status === "available" ? "bg-red-600 hover:bg-red-800" : "bg-gray-300 cursor-not-allowed"}`}
+                  variant={"destructive"}
+                  className="w-full"
                   disabled={
                     product?.status !== "available" ||
                     insertCartMutation.isPending
@@ -321,64 +331,69 @@ export default function ProductView() {
                     <Skeleton width="100%" height={80} />
                   </div>
                 ))
-              : product?.related_products?.map((item: Product) => (
-                  <Link
-                    to={`/user/products/${item?.id}`}
-                    prefetch="viewport"
-                    onClick={() => setImgLoaded(false)}
-                  >
-                    <Card
-                      key={item.id}
-                      className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+              : product?.related_products?.map(
+                  (item: Product, index: number) => (
+                    <Link
+                      key={index}
+                      to={`/user/products/${item?.id}`}
+                      prefetch="viewport"
+                      onClick={() => setImgLoaded(false)}
                     >
-                      <div className="aspect-square overflow-hidden flex items-center justify-center">
-                        {!imgLoaded && (
-                          <OrbitProgress
-                            variant="spokes"
-                            dense
-                            color="#b2b2b2"
-                            size="medium"
-                          />
-                        )}
+                      <Card
+                        key={item.id}
+                        className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                      >
+                        <div className="aspect-square overflow-hidden flex items-center justify-center">
+                          {!imgLoaded && (
+                            <OrbitProgress
+                              variant="spokes"
+                              dense
+                              color="#b2b2b2"
+                              size="medium"
+                            />
+                          )}
 
-                        <img
-                          src={item.image_url}
-                          alt="Related product"
-                          className={`h-full w-full object-cover hover:scale-110 transition-transform ${imgLoaded ? "" : "hidden"}`}
-                          onLoad={() => setImgLoaded(true)}
-                        />
-                      </div>
-                      <CardContent className="pt-4">
-                        <p className="font-medium text-gray-900">{item.name}</p>
-                        <div className="mt-2 flex items-center justify-between">
-                          <span className="font-bold text-gray-900">
-                            ₱{item.price}
-                          </span>
-                          <div className="flex">
-                            {[...Array(5)].map((_, i) => (
-                              <Star
-                                key={i}
-                                size={14}
-                                className={
-                                  i <
-                                  Math.floor(
-                                    averageRating(
-                                      item?.feedback?.map(
-                                        (f: any) => f.rating,
-                                      ) || [],
-                                    ),
-                                  )
-                                    ? "fill-yellow-400 text-yellow-400"
-                                    : "text-gray-300"
-                                }
-                              />
-                            ))}
-                          </div>
+                          <img
+                            src={item.image_url}
+                            alt="Related product"
+                            className={`h-full w-full object-cover hover:scale-110 transition-transform ${imgLoaded ? "" : "hidden"}`}
+                            onLoad={() => setImgLoaded(true)}
+                          />
                         </div>
-                      </CardContent>
-                    </Card>
-                  </Link>
-                ))}
+                        <CardContent className="pt-4">
+                          <p className="font-medium text-gray-900">
+                            {item.name}
+                          </p>
+                          <div className="mt-2 flex items-center justify-between">
+                            <span className="font-bold text-gray-900">
+                              ₱{item.price}
+                            </span>
+                            <div className="flex">
+                              {[...Array(5)].map((_, i) => (
+                                <Star
+                                  key={i}
+                                  size={14}
+                                  className={
+                                    i <
+                                    Math.floor(
+                                      averageRating(
+                                        item?.feedback?.map(
+                                          (f: any) => f.rating,
+                                        ) || [],
+                                      ),
+                                    )
+                                      ? "fill-yellow-400 text-yellow-400"
+                                      : "text-gray-300"
+                                  }
+                                />
+                              ))}
+                            </div>
+                          </div>
+                        </CardContent>
+                      </Card>
+                    </Link>
+                  ),
+                )}
           </div>
         </div>
       </div>

@@ -80,7 +80,7 @@ export interface Cart {
 }
 
 export interface Address {
-  id?: number;
+  id: number;
   user_id?: User;
   address_line1: string;
   address_line2: string;
@@ -134,9 +134,12 @@ export interface Barangay {
   islandGroupCode: string;
   psgc10DigitCode: number;
 }
-interface BillingMethodBase {
+
+// Billing method interfaces
+export interface BillingMethodBase {
   id?: number;
   method_type: string;
+  is_available?: boolean;
 }
 
 // Individual method types

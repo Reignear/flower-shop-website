@@ -36,7 +36,7 @@ export const insertBankTransfer = async ({
 }: {
   bank: BankTransferMethod;
 }) => {
-  const { data: bankData } = await supabase
+  const { data: bankData, error } = await supabase
     .from("billing_method_table")
     .insert({
       method_type: "bank",
@@ -44,6 +44,8 @@ export const insertBankTransfer = async ({
       bank_account_name: bank.bank_account_name,
       bank_account_number: bank.bank_account_number,
     });
+
+  console.log("Bank Insert Error:", error);
   return bankData;
 };
 

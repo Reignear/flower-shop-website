@@ -25,7 +25,7 @@ export default function ProductsPage() {
     useUserProduct();
   const { data: product = [], isLoading: isProductLoading } = useProduct();
   const { data: category = [], isLoading: isCategoryLoading } = useCategory();
-
+  
   const filteredProducts =
     activeCategory === "all"
       ? product
