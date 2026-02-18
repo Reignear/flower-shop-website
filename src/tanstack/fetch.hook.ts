@@ -6,6 +6,7 @@ import { fetchCart } from "@/supabase/api/fetch.cart";
 import { fetchUserAddress } from "@/supabase/api/fetch.user.address";
 import { fetchBillingMethod } from "@/supabase/api/fetch.billing.method";
 import { fetchOrders } from "@/supabase/api/fetch.order";
+import { fetchOrderByID } from "@/supabase/api/fetch.order.id";
 
 export const useCategory = () => {
   return useQuery({
@@ -83,6 +84,18 @@ export const useOrder = () => {
   return useQuery({
     queryKey: ["orders"],
     queryFn: () => fetchOrders(),
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+};
+
+export const useOrderById = (id: number) => {
+  return useQuery({
+    queryKey: ["orders", id],
+    queryFn: () => fetchOrderByID(id),
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),

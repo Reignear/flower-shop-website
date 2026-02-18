@@ -1,21 +1,16 @@
 import { AuthProvider } from "@/context/auth-context";
 import { useAuth } from "@/hooks/use-auth";
-import { ThreeDot } from "react-loading-indicators";
+import Loading from "@/pages/loading/loading";
 import { Navigate, Outlet } from "react-router-dom";
 
 function UserRouteGuard() {
   const { user, role, loading } = useAuth();
 
   if (loading) {
-    return(
-    <>
-      <div className="bg-blur">
-        <ThreeDot color={["#000000", "#000000", "#000000", "#000000"]} />
-      </div>
-      <div style={{ filter: "blur(4px)" }}>
-        <Outlet />
-      </div>
-    </>
+    return (
+      <>
+        <Loading />
+      </>
     );
   }
 

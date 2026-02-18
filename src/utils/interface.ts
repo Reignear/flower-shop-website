@@ -168,3 +168,37 @@ export type BillingMethod =
   | PayPalMethod
   | BankTransferMethod
   | CODMethod;
+
+export type OrderItem = {
+  id: number;
+  order_id: Order;
+  product_id: Product;
+  quantity: number;
+  unit_price: number;
+  sub_total: number;
+};
+export type Payment = {
+  id: number;
+  billing_method_id: BillingMethod;
+  order_id: Order;
+  reference_number: string;
+  amount: number;
+  currency: string;
+  status: string;
+  payment_gateway: string;
+  created_at: string;
+};
+
+export type Order = {
+  id: number;
+  user_id: User;
+  order_date: string;
+  order_items_table: OrderItem[];
+  payment_table: Payment;
+  total_amount: number;
+  status: string;
+  shipping_fee: number;
+  user_address_id: Address;
+  created_at: string;
+  reference_number: string;
+};

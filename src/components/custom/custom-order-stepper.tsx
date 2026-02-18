@@ -1,7 +1,4 @@
-"use client";
-
 import { Check, X } from "lucide-react";
-
 import type { Status } from "@/utils/types";
 interface OrderStepperProps {
   status: Status;

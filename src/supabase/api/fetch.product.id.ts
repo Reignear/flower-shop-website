@@ -1,7 +1,7 @@
 import { supabase } from "@/supabase/client";
 
 export const fetchProductById = async (productId: number) => {
-  
+
   // Fetch the product details along with its category information
   const { data: product, error: productError } = await supabase
     .from("product_table")

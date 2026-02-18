@@ -17,20 +17,19 @@ import { capitalizeFirstLetter } from "@/utils/capitalize";
 import { Link } from "react-router-dom";
 import { Separator } from "@/components/ui/separator";
 import Skeleton from "react-loading-skeleton";
-import { OrbitProgress } from "react-loading-indicators";
 import { productBreadCrumb } from "@/data/user-product-data";
+import CustomSkeleton from "@/components/custom/custom-skeleton";
 
 export default function ProductsPage() {
   const { activeCategory, setActiveCategory, imageLoaded, setImageLoaded } =
     useUserProduct();
   const { data: product = [], isLoading: isProductLoading } = useProduct();
   const { data: category = [], isLoading: isCategoryLoading } = useCategory();
-  
+
   const filteredProducts =
     activeCategory === "all"
       ? product
       : product.filter((prod) => prod.category_id === activeCategory);
-
   const totalProducts = product.length;
   return (
     <UserLayout breadCrumbs={productBreadCrumb}>
@@ -106,12 +105,7 @@ export default function ProductsPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {isProductLoading
             ? Array.from({ length: 3 }).map((_, i) => (
-                <div
-                  key={i}
-                  className="bg-gray-200 w-full h-80 rounded-lg skeleton-effect"
-                >
-                  <Skeleton width="100%" height={80} />
-                </div>
+                <CustomSkeleton key={i} type="product-card" />
               ))
             : filteredProducts.map((product) => (
                 <Card
@@ -119,14 +113,7 @@ export default function ProductsPage() {
                   className="overflow-hidden hover:shadow-lg transition "
                 >
                   <div className="h-48  overflow-hidden flex items-center justify-center bg-gray-100">
-                    {!imageLoaded && (
-                      <OrbitProgress
-                        variant="spokes"
-                        dense
-                        color="#b2b2b2"
-                        size="medium"
-                      />
-                    )}
+                    {!imageLoaded && <CustomSkeleton type="photo-full" />}
                     <img
                       src={product.image_url}
                       alt={product.name}

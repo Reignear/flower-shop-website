@@ -15,7 +15,7 @@ import type { Address, Region } from "@/utils/interface";
 import { Controller } from "react-hook-form";
 import { useInsertAddress } from "@/tanstack/address.mutation";
 import { useAddress } from "@/tanstack/fetch.hook";
-import { AddressCard } from "@/components/custom/custoom-address-card";
+import { AddressCard } from "@/components/custom/custom-address-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import UserSettingsLayout from "@/components/layout/user-settings-layout";

@@ -11,7 +11,7 @@ export async function fetchProduct() {
 
   if (!products) return [];
   // Format the products to include the image URL and category name
-  const formmatedProducts = await Promise.all(
+  const formattedProducts = await Promise.all(
     products.map(async (product) => {
       if (!product.image) return { ...product, image_url: "" };
 
@@ -27,5 +27,5 @@ export async function fetchProduct() {
       };
     }),
   );
-  return formmatedProducts;
+  return formattedProducts;
 }

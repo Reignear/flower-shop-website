@@ -148,13 +148,13 @@ export default function Product() {
           </div>
           <div className="flex mb-6 items-center justify-center gap-2">
             <Button
-              variant={`${layout === "grid" ? "default" : "outline"}`}
+              variant={`${layout === "grid" ? "customized" : "outline"}`}
               onClick={() => setLayout("grid")}
             >
               <LayoutGrid />
             </Button>
             <Button
-              variant={`${layout === "list" ? "default" : "outline"}`}
+              variant={`${layout === "list" ? "customized" : "outline"}`}
               onClick={() => setLayout("list")}
             >
               <List />
@@ -331,7 +331,7 @@ export default function Product() {
                     <h2 className="text-lg font-semibold">₱ {prod.price}</h2>
                     <div className="mt-4">
                       <Link to={`/admin/products/${prod.id}`}>
-                        <Button className="w-full mt-2">
+                        <Button className="w-full mt-2" variant={"customized"}>
                           View details <ArrowUpRight />
                         </Button>
                       </Link>

@@ -19,6 +19,7 @@ import { Toaster } from "react-hot-toast";
 import UserLayout from "@/components/layout/user-layout";
 import { useProductViewBreadCrumb } from "@/data/user-product-view-data";
 import { CustomToast } from "@/components/custom/custom-toast";
+import CustomSkeleton from "@/components/custom/custom-skeleton";
 export default function ProductView() {
   const { id: productId } = useParams();
   const { data: product, isLoading: isProductLoading } = useProductID(
@@ -50,14 +51,7 @@ export default function ProductView() {
         <div className="grid gap-8 md:grid-cols-2">
           <div className="space-y-4">
             <div className="aspect-square overflow-hidden rounded-lg bg-white flex items-center justify-center">
-              {!imgLoaded && (
-                <OrbitProgress
-                  variant="spokes"
-                  dense
-                  color="#b2b2b2"
-                  size="medium"
-                />
-              )}
+              {!imgLoaded && <CustomSkeleton type="photo-full" />}
               <img
                 src={product?.image_url}
                 alt={product?.name}
@@ -67,12 +61,10 @@ export default function ProductView() {
             </div>
           </div>
           <div className="space-y-6">
-            <div>
+            <div className="space-y-3">
               <div className="mb-2 flex items-center gap-2">
                 {isProductLoading ? (
-                  <div className="bg-gray-200 w-25 h-4 rounded-lg skeleton-effect ">
-                    <Skeleton width={300} />
-                  </div>
+                  <CustomSkeleton type="small-text" width={8} />
                 ) : (
                   <Badge variant="secondary">
                     {capitalizeFirstLetter(product?.status)}
@@ -81,17 +73,13 @@ export default function ProductView() {
               </div>
               <h1 className="text-3xl font-bold text-gray-900">
                 {isProductLoading ? (
-                  <div className="bg-gray-200 w-72 h-8 rounded-lg skeleton-effect ">
-                    <Skeleton width={300} />
-                  </div>
+                  <CustomSkeleton type="large-text" />
                 ) : (
                   product?.name
                 )}
               </h1>
               {isProductLoading ? (
-                <div className="mt-4 bg-gray-200 w-40 h-8 rounded-lg skeleton-effect ">
-                  <Skeleton width={300} />
-                </div>
+                <CustomSkeleton type="small-text" width={8} />
               ) : (
                 <div className="mt-4 flex items-center gap-2">
                   <div className="flex">
@@ -122,9 +110,7 @@ export default function ProductView() {
             <div className="space-y-2">
               <div className="flex items-baseline gap-3">
                 {isProductLoading ? (
-                  <div className="bg-gray-200 w-20 h-8 rounded-lg skeleton-effect ">
-                    <Skeleton width={100} />
-                  </div>
+                  <CustomSkeleton type="large-text" width={10} />
                 ) : (
                   <span className="text-3xl font-bold text-gray-900">
                     ₱{product?.price}
@@ -252,9 +238,7 @@ export default function ProductView() {
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {isProductLoading ? (
-                    <div className="bg-gray-200 w-full h-24 rounded-lg skeleton-effect">
-                      <Skeleton width="100%" height={96} />
-                    </div>
+                    <CustomSkeleton type="description-text" />
                   ) : (
                     <p className="text-gray-700">{product?.description}</p>
                   )}
@@ -269,12 +253,7 @@ export default function ProductView() {
                 <h3 className="text-xl font-semibold">Customer Reviews</h3>
                 {isProductLoading ? (
                   Array.from({ length: 3 }).map((_, i) => (
-                    <div
-                      key={i}
-                      className="bg-gray-200 w-full h-20 rounded-lg skeleton-effect"
-                    >
-                      <Skeleton width="100%" height={80} />
-                    </div>
+                    <CustomSkeleton key={i} type="description-text" />
                   ))
                 ) : (
                   <span className="text-gray-600 text-center" />

@@ -5,11 +5,16 @@ import { ChevronRight } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface AdminLayoutProps {
+  className?: string;
   children: React.ReactNode;
   breadCrumbs?: { label: string; href: string }[];
 }
 
-const AdminLayout = ({ children, breadCrumbs }: AdminLayoutProps) => {
+const AdminLayout = ({
+  className,
+  children,
+  breadCrumbs,
+}: AdminLayoutProps) => {
   return (
     <div className="flex min-h-screen ">
       <SideBar
@@ -39,7 +44,7 @@ const AdminLayout = ({ children, breadCrumbs }: AdminLayoutProps) => {
             })}
           </div>
         </div>
-        {children}
+        <div className={className}>{children}</div>
       </main>
     </div>
   );

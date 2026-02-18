@@ -27,6 +27,7 @@ export const insertOrder = async ({
       status: "pending",
       user_address_id: user_address_id,
       shipping_fee: shipping_fee,
+      reference_number: `ORD-${Math.floor(Math.random() * 1000000)}`, // Generate a random reference number
     })
     .select("*")
     .single();

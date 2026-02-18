@@ -15,6 +15,7 @@ import Privacy from "@/pages/public/privacy";
 import NotFound from "@/pages/unavailable/not-found";
 import UserProtectedRoutes from "@/routes/user-protected-routes";
 import UserOrder from "@/pages/user/order";
+import UserOrderView from "@/pages/user/order-view";
 import UserOrderReview from "@/pages/user/order-review";
 import UserProducts from "@/pages/user/products";
 import UserProductView from "@/pages/user/product-view";
@@ -88,6 +89,7 @@ export const router = createBrowserRouter([
     children: [
       { path: "/user/dashboard", element: <UserDashboard /> },
       { path: "/user/order", element: <UserOrder /> },
+      { path: "/user/order/:id", element: <UserOrderView /> },
       { path: "/user/order/review", element: <UserOrderReview /> },
       { path: "/user/products", element: <UserProducts /> },
       { path: "/user/products/:id", element: <UserProductView /> },
