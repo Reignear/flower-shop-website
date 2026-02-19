@@ -191,14 +191,16 @@ export type Payment = {
 
 export type Order = {
   id: number;
-  user_id: User;
+  user_id: string;
   order_date: string;
   order_items_table: OrderItem[];
   payment_table: Payment;
   total_amount: number;
   status: string;
   shipping_fee: number;
-  user_address_id: Address;
+  user_address_table: Address;
   created_at: string;
   reference_number: string;
+  delivery_date: string;
+  user_table: User;
 };

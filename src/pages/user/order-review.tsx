@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { ChevronLeft, Truck } from "lucide-react";
+import { CalendarDays, ChevronLeft, Truck } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
@@ -18,6 +18,9 @@ import { CustomToast } from "@/components/custom/custom-toast";
 import { useInsertOrder } from "@/tanstack/order-mutation";
 import { Toaster } from "react-hot-toast";
 import { useDeleteCart } from "@/tanstack/cart.mutation";
+import { Calendar } from "@/components/ui/calendar";
+import { getDateOnly } from "@/utils/date-formatter";
+
 export default function OrderReview() {
   const navigate = useNavigate();
   const location = useLocation();
@@ -29,7 +32,7 @@ export default function OrderReview() {
   const subTotalPerItem = (item: any) => {
     return item.quantity * item.product_id.price;
   };
-  const { control, handleSubmit, errors } = useOrderPreview();
+  const { control, handleSubmit, errors, date } = useOrderPreview();
   const insertOrderMutation = useInsertOrder();
   const deleteCartMutation = useDeleteCart();
 
@@ -40,22 +43,23 @@ export default function OrderReview() {
           data: items,
           shipping_fee: shippingFee,
           total: total,
+          delivery_date: date ? getDateOnly(date) : getDateOnly(new Date()),
           billing_method_id: Number(data.billing_method_id),
           user_address_id: Number(data.user_address_id),
         }),
         "insert",
       );
+
       await Promise.all(
         items.map((item: any) => deleteCartMutation.mutateAsync(item.id)),
       );
-
       await new Promise((resolve) => setTimeout(resolve, 1500));
-
       navigate("/user/order");
     } catch (error) {
       console.log("Error in placing order", error);
     }
   };
+
   return (
     <div className="min-h-screen bg-white">
       {/* Header */}
@@ -201,6 +205,33 @@ export default function OrderReview() {
                     {errors.user_address_id.message as string}
                   </p>
                 )}
+                <div className="flex items-center gap-3">
+                  <CalendarDays size={20} className="text-blue-600" />
+                  <h2 className="text-lg font-bold text-gray-900">
+                    Shipping Date
+                  </h2>
+                </div>
+                <div className="bg-gray-50 rounded-lg p-4">
+                  <Controller
+                    name="delivery_date"
+                    control={control}
+                    rules={{ required: "Please select a delivery date" }}
+                    render={({ field }) => (
+                      <Calendar
+                        mode="single"
+                        selected={field.value}
+                        onSelect={field.onChange}
+                        className="rounded-lg border w-full"
+                        captionLayout="dropdown"
+                      />
+                    )}
+                  />
+                  {errors.delivery_date && (
+                    <p className="text-xs text-center text-red-500 mt-2">
+                      {errors.delivery_date.message as string}
+                    </p>
+                  )}
+                </div>
               </Card>
 
               {/* Payment Method */}

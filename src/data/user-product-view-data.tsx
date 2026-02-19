@@ -1,7 +1,7 @@
 import { useProductID } from "@/tanstack/fetch.hook";
 import { useParams } from "react-router-dom";
 
-export function useProductViewBreadCrumb() {
+export function ProductViewBreadCrumb() {
     const{id: productId} = useParams();
     const {data: product} = useProductID(Number(productId));
     return [

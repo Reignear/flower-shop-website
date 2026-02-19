@@ -5,12 +5,14 @@ export const insertOrder = async ({
   data,
   shipping_fee,
   total,
+  delivery_date,
   billing_method_id,
   user_address_id,
 }: {
   data: Cart[];
   shipping_fee: number;
   total: number;
+  delivery_date: string;
   billing_method_id: number;
   user_address_id: number;
 }) => {
@@ -25,6 +27,7 @@ export const insertOrder = async ({
       order_date: new Date().toISOString(),
       total_amount: total,
       status: "pending",
+      delivery_date: delivery_date, // Set delivery date to current date for now, can be updated later
       user_address_id: user_address_id,
       shipping_fee: shipping_fee,
       reference_number: `ORD-${Math.floor(Math.random() * 1000000)}`, // Generate a random reference number

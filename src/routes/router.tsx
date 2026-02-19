@@ -14,7 +14,12 @@ import Shipping from "@/pages/public/shipping";
 import Privacy from "@/pages/public/privacy";
 import NotFound from "@/pages/unavailable/not-found";
 import UserProtectedRoutes from "@/routes/user-protected-routes";
-import UserOrder from "@/pages/user/order";
+import UserOrderAll from "@/pages/user/order-all";
+import UserOrderDeclined from "@/pages/user/order-declined";
+import UserOrderDelivered from "@/pages/user/order-delivered";
+import UserOrderOnProcess from "@/pages/user/order-on-process";
+import UserOrderForPickup from "@/pages/user/order-for-pickup";
+import UserOrderPending from "@/pages/user/order-pending";
 import UserOrderView from "@/pages/user/order-view";
 import UserOrderReview from "@/pages/user/order-review";
 import UserProducts from "@/pages/user/products";
@@ -31,7 +36,12 @@ import AdminFeedback from "@/pages/admin/feedback";
 import AdminSettings from "@/pages/admin/settings";
 import AdminAnalytics from "@/pages/admin/analytics";
 import AdminCategory from "@/pages/admin/category";
-import AdminOrder from "@/pages/admin/order";
+import AdminOrderAll from "@/pages/admin/order-all";
+import AdminOrderDelivered from "@/pages/admin/order-delivered";
+import AdminOrderOnProcess from "@/pages/admin/order-on-process";
+import AdminOrderForPickup from "@/pages/admin/order-for-pickup";
+import AdminOrderPending from "@/pages/admin/order-pending";
+import AdminOrderDeclined from "@/pages/admin/order-declined";
 import AdminBrandingGeneral from "@/pages/admin/branding-general";
 import AdminBrandingContact from "@/pages/admin/branding-contact";
 import AdminBrandingStore from "@/pages/admin/branding-store";
@@ -66,7 +76,18 @@ export const router = createBrowserRouter([
       { path: "/admin/products", element: <AdminProduct /> },
       { path: "/admin/products/:id", element: <AdminProductView /> },
       { path: "/admin/category", element: <AdminCategory /> },
-      { path: "/admin/order", element: <AdminOrder /> },
+      // { path: "/admin/order", element: <AdminOrderAll /> },
+      {
+        path: "/admin/order",
+        element: <Navigate to="/admin/order/all" replace />,
+      },
+      { path: "/admin/order/all", element: <AdminOrderAll /> },
+      { path: "/admin/order/on-process", element: <AdminOrderOnProcess /> },
+      { path: "/admin/order/delivered", element: <AdminOrderDelivered /> },
+      { path: "/admin/order/for-pickup", element: <AdminOrderForPickup /> },
+      { path: "/admin/order/pending", element: <AdminOrderPending /> },
+      { path: "/admin/order/declined", element: <AdminOrderDeclined /> },
+
       { path: "/admin/feedback", element: <AdminFeedback /> },
       { path: "/admin/settings", element: <AdminSettings /> },
       { path: "/admin/analytics", element: <AdminAnalytics /> },
@@ -84,18 +105,33 @@ export const router = createBrowserRouter([
       { path: "/admin/branding/billing", element: <AdminBrandingBilling /> },
     ],
   },
+
+  // For User routes
   {
     element: <UserProtectedRoutes />,
     children: [
+      // Dashboard sidebar item
       { path: "/user/dashboard", element: <UserDashboard /> },
-      { path: "/user/order", element: <UserOrder /> },
+      // Order sidebar item
+      {
+        path: "/user/order",
+        element: <Navigate to="/user/order/all" replace />,
+      },
+      { path: "/user/order/all", element: <UserOrderAll /> },
+      { path: "/user/order/declined", element: <UserOrderDeclined /> },
+      { path: "/user/order/pending", element: <UserOrderPending /> },
+      { path: "/user/order/for-pickup", element: <UserOrderForPickup /> },
+      { path: "/user/order/on-process", element: <UserOrderOnProcess /> },
+      { path: "/user/order/delivered", element: <UserOrderDelivered /> },
       { path: "/user/order/:id", element: <UserOrderView /> },
       { path: "/user/order/review", element: <UserOrderReview /> },
+      // Products sidebar item
       { path: "/user/products", element: <UserProducts /> },
       { path: "/user/products/:id", element: <UserProductView /> },
+      // Cart sidebar item
       { path: "/user/cart", element: <UserCart /> },
       { path: "/user/favorites", element: <UserFavorites /> },
-
+      // Settings sidebar item
       {
         path: "/user/settings",
         element: <Navigate to="/user/settings/profile" replace />,

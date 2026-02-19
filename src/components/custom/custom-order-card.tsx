@@ -1,7 +1,13 @@
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { CustomOrderStepper } from "@/components/custom/custom-order-stepper";
-import { ChevronRight, Package, MapPin, Calendar } from "lucide-react";
+import {
+  ChevronRight,
+  Package,
+  MapPin,
+  Calendar,
+  CalendarCheck2,
+} from "lucide-react";
 import type { Order } from "@/utils/interface";
 import { Mosaic } from "react-loading-indicators";
 import { useUserOrder } from "@/hooks/use-user-order";
@@ -91,16 +97,16 @@ export function CustomOrderCard({ order }: OrderCardProps) {
       <div className="px-6 py-4">
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-4">
           <div className="flex items-start gap-2">
-            <Calendar className="w-4 h-4 text-gray-400 mt-1 flex-0" />
+            <Calendar className="w-4 h-4 text-emerald-400 mt-1 flex" />
             <div>
               <p className="text-xs text-gray-500">Order Date</p>
-              <p className="text-sm font-medium text-gray-900 dark:text-white">
-                {order.order_date}
+              <p className="text-sm font-mono font-medium text-gray-900 dark:text-white">
+                {order.order_date ? `${order.order_date}` : "No order date"}
               </p>
             </div>
           </div>
           <div className="flex items-start gap-2">
-            <Package className="w-4 h-4 text-gray-400 mt-1 flex-0" />
+            <Package className="w-5 h-5 text-emerald-400 mt-1 flex" />
             <div>
               <p className="text-xs text-gray-500">Reference</p>
               <p className="text-sm font-mono font-medium text-gray-900 dark:text-white">
@@ -108,18 +114,28 @@ export function CustomOrderCard({ order }: OrderCardProps) {
               </p>
             </div>
           </div>
-          <div className="flex items-start gap-2 col-span-2 md:col-span-2">
-            <MapPin className="w-4 h-4 text-gray-400 mt-1 flex-0" />
+          <div className="flex items-start gap-2 col-span-2 md:col-span-1">
+            <MapPin className="w-4 h-4 text-emerald-400 mt-1 flex" />
             <div>
               <p className="text-xs text-gray-500">Status</p>
-              <p className="text-sm font-medium text-gray-900 dark:text-white capitalize">
+              <p className="text-sm font-mono font-medium text-gray-900 dark:text-white capitalize">
                 {order.status}
+              </p>
+            </div>
+          </div>
+          <div className="flex items-start gap-2 col-span-2 md:col-span-1">
+            <CalendarCheck2 className="w-4 h-4 text-emerald-400 mt-1 flex" />
+            <div>
+              <p className="text-xs text-gray-500">Delivery Date</p>
+              <p className="text-sm font-mono font-medium text-gray-900 dark:text-white capitalize">
+                {order.delivery_date
+                  ? `${order.delivery_date}`
+                  : "No delivery date"}
               </p>
             </div>
           </div>
         </div>
       </div>
-
       {/* Footer */}
       <div className="px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 grid grid-cols-2 gap-3">
         <Link to={`/user/order/${order.id}`} className="w-full">

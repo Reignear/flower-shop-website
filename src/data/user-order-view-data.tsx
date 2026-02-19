@@ -6,7 +6,7 @@ export function useOrderViewBreadCrumb() {
   const { data: order } = useOrderById(Number(id));
   return [
     { label: "Dashboard", href: "/user/dashboard" },
-    { label: "Product", href: "/user/products" },
+    { label: "Order", href: "/user/order/all" },
     {
       label: `${order?.reference_number || order?.id}`,
       href: `/user/order/${id}`,

@@ -17,7 +17,7 @@ import { averageRating } from "@/utils/rating";
 import { useInsertCart } from "@/tanstack/cart.mutation";
 import { Toaster } from "react-hot-toast";
 import UserLayout from "@/components/layout/user-layout";
-import { useProductViewBreadCrumb } from "@/data/user-product-view-data";
+import { ProductViewBreadCrumb } from "@/data/user-product-view-data";
 import { CustomToast } from "@/components/custom/custom-toast";
 import CustomSkeleton from "@/components/custom/custom-skeleton";
 export default function ProductView() {
@@ -45,7 +45,7 @@ export default function ProductView() {
   };
 
   return (
-    <UserLayout breadCrumbs={useProductViewBreadCrumb()}>
+    <UserLayout breadCrumbs={ProductViewBreadCrumb()}>
       <Toaster position="bottom-right" />
       <div className="mx-auto max-w-6xl px-4 py-8">
         <div className="grid gap-8 md:grid-cols-2">

@@ -26,7 +26,7 @@ const AdminLayout = ({
       />
 
       <main className="flex-1">
-        <div className="p-6 flex items-center border-b  h-25 bg-sidebar sticky z-10 top-0 border-sidebar-border">
+        <div className="p-6 flex items-center border-b px-6 py-5  h-25 bg-sidebar sticky z-10 top-0 border-sidebar-border">
           <div className="flex items-center gap-2 text-sm">
             {breadCrumbs?.map((item, index) => {
               const isLast = index === breadCrumbs.length - 1;

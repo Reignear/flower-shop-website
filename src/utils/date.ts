@@ -1,4 +1,5 @@
 export function formatDate(dateInput: Date | string | number): string {
+   if (!dateInput) return "No date";
     const date = new Date(dateInput);
     if (isNaN(date.getTime())) {
         throw new Error('Invalid date input');

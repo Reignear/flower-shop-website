@@ -8,12 +8,15 @@ import { capitalizeAll, capitalizeFirstLetter } from "@/utils/capitalize";
 import type { OrderItem } from "@/utils/interface";
 import { getStepperStatus, getStatusBadgeColor } from "@/utils/status";
 import { useOrderViewBreadCrumb } from "@/data/user-order-view-data";
+import { formatDate } from "@/utils/date";
+import CustomSkeleton from "@/components/custom/custom-skeleton";
 
 export default function OrderView() {
   const { id: id } = useParams();
   const { data: order, isLoading: isOrderLoading } = useOrderById(Number(id));
-
   const stepperStatus = getStepperStatus(order?.status);
+
+  console.log(order);
   return (
     <UserLayout breadCrumbs={useOrderViewBreadCrumb()}>
       <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-10">
@@ -21,24 +24,30 @@ export default function OrderView() {
           {/* Header */}
           <div className="mb-6">
             <div className="flex items-center justify-between mb-2">
-              <h1 className="text-3xl font-bold text-slate-900">
-                Order #{order?.id}
-              </h1>
-
-              <span
-                className={`px-4 py-2 rounded-full font-semibold text-sm ${getStatusBadgeColor(order?.status)}`}
-              >
-                {capitalizeFirstLetter(order?.status)}
-              </span>
+              {isOrderLoading ? (
+                <CustomSkeleton type="large-text" width={15} />
+              ) : (
+                <h1 className="text-3xl font-bold text-slate-900">
+                  Order #{order?.reference_number}
+                </h1>
+              )}
+              {isOrderLoading ? (
+                <CustomSkeleton type="status-badge" width={5} />
+              ) : (
+                <span
+                  className={`px-4 py-2 rounded-full font-semibold text-sm ${getStatusBadgeColor(order?.status)}`}
+                >
+                  {capitalizeFirstLetter(order?.status)}
+                </span>
+              )}
             </div>
-            <p className="text-slate-500">
-              Ordered on{" "}
-              {new Date(order?.order_date).toLocaleDateString("en-US", {
-                year: "numeric",
-                month: "long",
-                day: "numeric",
-              })}
-            </p>
+            {isOrderLoading ? (
+              <CustomSkeleton type="small-text" width={15} />
+            ) : (
+              <p className="text-slate-500">
+                Ordered on {formatDate(order?.order_date)}
+              </p>
+            )}
           </div>
 
           {/* Main Content - Teal Border Card */}

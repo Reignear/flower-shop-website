@@ -41,7 +41,14 @@ export default function CustomSkeleton({
     case "cart-card":
       return <div></div>;
     case "status-badge":
-      return <div></div>;
+      return (
+        <div
+          className="bg-gray-200 h-8 rounded-lg skeleton-effect "
+          style={width ? { width: `${width}rem` } : { width: "10rem" }}
+        >
+          <Skeleton />
+        </div>
+      );
     case "photo-full":
       return (
         <OrbitProgress variant="spokes" dense color="#b2b2b2" size="medium" />

@@ -40,3 +40,12 @@ export const orderBreadCrumb = [
   { label: "Dashboard", href: "/user/dashboard" },
   { label: "Orders", href: "/user/order" },
 ];
+
+export const tabItems = [
+  { label: "All Orders", href: "/user/order/all" },
+  { label: "Pending", href: "/user/order/declined" },
+  { label: "On Going", href: "/user/order/pending" },
+  { label: "Declined", href: "/user/order/for-pickup" },
+  { label: "For Pick Up", href: "/user/order/on-process" },
+  { label: "Completed", href: "/user/order/delivered" },
+];

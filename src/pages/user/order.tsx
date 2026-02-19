@@ -1,34 +1,23 @@
 import UserLayout from "@/components/layout/user-layout";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { CustomOrderCard } from "@/components/custom/custom-order-card";
-import { Filter, Package } from "lucide-react";
 import { useOrder } from "@/tanstack/fetch.hook";
 import type { Order } from "@/utils/interface";
-import { getOrderStats, orderBreadCrumb } from "@/data/user-order-data";
-import { useUserOrder } from "@/hooks/use-user-order";
-import Skeleton from "react-loading-skeleton";
+import {
+  getOrderStats,
+  orderBreadCrumb,
+  tabItems,
+} from "@/data/user-order-data";
+import { Link, useLocation } from "react-router-dom";
+interface OrderProps {
+  children: React.ReactNode;
+}
+export default function Order({ children }: OrderProps) {
+  const { data: orders } = useOrder();
 
-export default function Order() {
-  const { filterStatus, setFilterStatus } = useUserOrder();
-  const { data: orders, isLoading: isOrderLoading } = useOrder();
-
+  const location = useLocation();
+  const pathname = location.pathname;
   // Filtering logic
-  const filteredOrders =
-    orders?.filter((order) => {
-      if (filterStatus === "all") return true;
-      if (filterStatus === "pending")
-        return order.status.toLowerCase() === "pending";
-      if (filterStatus === "on-going")
-        return order.status.toLowerCase() === "on-going";
-      if (filterStatus === "ready-for-pick")
-        return order.status.toLowerCase() === "ready-for-pick";
-      if (filterStatus === "completed")
-        return order.status.toLowerCase() === "completed";
-      if (filterStatus === "declined")
-        return order.status.toLowerCase() === "declined";
-      return false;
-    }) ?? [];
 
   // Stats calculations
   const totalOrders = orders?.length || 0;
@@ -45,8 +34,6 @@ export default function Order() {
     completedOrders,
     totalSpent,
   );
-
-  console.log("Orders:", orders);
 
   return (
     <UserLayout breadCrumbs={orderBreadCrumb}>
@@ -96,118 +83,28 @@ export default function Order() {
 
         {/* Main Content */}
         <div className="px-6 py-8">
-          {/* Filters and Search */}
           <div className="mb-8">
             <div className="flex flex-col md:flex-row gap-4 mb-6">
-              {/* Filter Buttons */}
               <div className="flex gap-2 flex-wrap">
-                <Button
-                  onClick={() => setFilterStatus("all")}
-                  className={`gap-2 ${
-                    filterStatus === "all"
-                      ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                      : "bg-white dark:bg-gray-800 text-gray-900 dark:text-white border border-gray-300 dark:border-gray-600 hover:bg-gray-50 dark:hover:bg-gray-700"
-                  }`}
-                >
-                  <Filter className="w-4 h-4" />
-                  All Orders
-                </Button>
-                <Button
-                  onClick={() => setFilterStatus("pending")}
-                  variant={filterStatus === "pending" ? "default" : "outline"}
-                  className={
-                    filterStatus === "pending"
-                      ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                      : ""
-                  }
-                >
-                  Pending
-                </Button>
-                <Button
-                  onClick={() => setFilterStatus("on-going")}
-                  variant={filterStatus === "on-going" ? "default" : "outline"}
-                  className={
-                    filterStatus === "on-going"
-                      ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                      : ""
-                  }
-                >
-                  On Going
-                </Button>
-                <Button
-                  onClick={() => setFilterStatus("declined")}
-                  variant={filterStatus === "declined" ? "default" : "outline"}
-                  className={
-                    filterStatus === "declined"
-                      ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                      : ""
-                  }
-                >
-                  Declined
-                </Button>
-                <Button
-                  onClick={() => setFilterStatus("ready-for-pick")}
-                  variant={
-                    filterStatus === "ready-for-pick" ? "default" : "outline"
-                  }
-                  className={
-                    filterStatus === "ready-for-pick"
-                      ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                      : ""
-                  }
-                >
-                  For Pick Up
-                </Button>
-                <Button
-                  onClick={() => setFilterStatus("completed")}
-                  variant={filterStatus === "completed" ? "default" : "outline"}
-                  className={
-                    filterStatus === "completed"
-                      ? "bg-emerald-600 text-white hover:bg-emerald-700"
-                      : ""
-                  }
-                >
-                  Completed
-                </Button>
+                {tabItems.map((tab, index) => {
+                  const isActive =
+                    pathname === tab.href ||
+                    pathname.startsWith(tab.href + "/");
+                  return (
+                    <Link to={tab.href} key={index}>
+                      <Button
+                        variant={`${isActive ? "customized" : "outline"}`}
+                      >
+                        {tab.label}
+                      </Button>
+                    </Link>
+                  );
+                })}
               </div>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-6">
-            {/* Orders Grid */}
-            {filteredOrders?.map((order: Order) => (
-              <CustomOrderCard key={order.id} order={order} />
-            ))}
-          </div>
-
-          {/* Loading State */}
-          {isOrderLoading && (
-            <div className="grid grid-cols-1 gap-5">
-              <div className="col-span-2 space-y-4">
-                {Array.from({ length: 3 }).map((_, index) => (
-                  <div
-                    key={index}
-                    className="bg-gray-200 w-full h-96 rounded-lg skeleton-effect "
-                  >
-                    <Skeleton width={100} />
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Empty State */}
-          {!isOrderLoading && filteredOrders?.length === 0 && (
-            <Card className="border-0 bg-white dark:bg-gray-800 text-center py-12">
-              <Package className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-lg font-semibold text-gray-900 dark:text-white mb-2">
-                No orders found
-              </h3>
-              <p className="text-gray-600 dark:text-gray-400">
-                Try adjusting your filters or search terms
-              </p>
-            </Card>
-          )}
+          <div className="grid grid-cols-1 gap-6">{children}</div>
         </div>
       </div>
     </UserLayout>
