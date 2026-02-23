@@ -2,9 +2,9 @@ import type { Status } from "@/utils/types";
 
 // For stepper status, we will use the same status as the order status, but we will map it to the stepper status
 export function getStepperStatus(status: string): Status {
-  if (status === "ready-for-pick") return "ready-for-pick";
-  if (status === "on-going") return "on-going";
-  if (status === "completed") return "completed";
+  if (status === "for-pickup") return "for-pickup";
+  if (status === "on-process") return "on-process";
+  if (status === "delivered") return "delivered";
   if (status === "declined") return "declined";
   return "pending";
 }
@@ -16,7 +16,7 @@ export function getStatusBadgeColor(status: string) {
       return "bg-blue-100 text-blue-700";
     case "pending":
       return "bg-yellow-100 text-yellow-700";
-    case "completed":
+    case "delivered":
       return "bg-green-100 text-green-700";
     case "declined":
       return "bg-red-100 text-red-700";

@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Star } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import PublicLayout from "@/components/layout/public-layout";
+import { useFeedback } from "@/tanstack/fetch.hook";
 
 interface FeedbackItem {
   id: number;
@@ -582,7 +583,6 @@ function StarRating({ rating }: { rating: number }) {
 function FeedbackCard({ feedback }: { feedback: FeedbackItem }) {
   return (
     <div className="bg-card border border-border rounded-lg overflow-hidden hover:shadow-lg transition">
-      {/* Attached Photo */}
       {feedback.photoUrl && (
         <div className="w-full h-48 overflow-hidden bg-gray-200">
           <img
@@ -629,6 +629,8 @@ export default function FeedbackPage() {
   const [showAll, setShowAll] = useState(false);
   const displayedFeedback = showAll ? feedbackData : feedbackData.slice(0, 10);
 
+  const { data, error } = useFeedback();
+  console.log("Feedback", data, error);
   return (
     <PublicLayout>
       <main className="min-h-screen bg-background">
@@ -636,10 +638,10 @@ export default function FeedbackPage() {
           {/* Page Header */}
           <div className="mb-12">
             <h1 className="text-4xl md:text-5xl font-bold text-foreground mb-4">
-              Customer Feedback
+              Customer Product Feedback
             </h1>
             <p className="text-lg text-muted-foreground">
-              See what our customers think about our products and services
+              See what our customers think about our products
             </p>
           </div>
 

@@ -1,19 +1,25 @@
-export default function Stats() {
+interface StatProps {
+  sold: number;
+  type: number;
+  client: number;
+  experience: number;
+}
+export default function Stats({ sold, type, client, experience }: StatProps) {
   const stats = [
     {
-      number: "3000+",
-      label: "Packages Sold",
+      number: `${type}+`,
+      label: "Bouquet Types",
     },
     {
-      number: "5000+",
+      number: `${sold}+`,
       label: "Bouquet Sold",
     },
     {
-      number: "7000+",
+      number: `${client}+`,
       label: "Happy Clients",
     },
     {
-      number: "25+",
+      number: `${experience}+`,
       label: "Years of Experience",
     },
   ];

@@ -48,13 +48,20 @@ export interface Category {
   description: string;
 }
 
-export interface Feedback {
+export interface ProductFeedback {
   id: number;
-  user_id: User;
-  product_id: Product;
+  user: User | string;
+  product: Product;
   rating: number;
   feedback: string;
-  status: string;
+  created_at: string;
+}
+export interface OrderFeedback {
+  id: number;
+  user: User ;
+  order: Order;
+  rating: number;
+  feedback: string;
   created_at: string;
 }
 
@@ -67,21 +74,21 @@ export interface Product {
   description: string;
   price: number;
   status: string;
-  category_id: string | undefined;
-  feedback?: Feedback[];
+  category: string | undefined;
+  feedback?: ProductFeedback[];
 }
 
 export interface Cart {
   id: number;
-  user_id: User;
-  product_id: Product;
+  user: User;
+  product: Product;
   quantity: number;
   created_at: string;
 }
 
 export interface Address {
   id: number;
-  user_id?: User;
+  user?: User;
   address_line1: string;
   address_line2: string;
   barangay: string;
@@ -171,15 +178,15 @@ export type BillingMethod =
 
 export type OrderItem = {
   id: number;
-  order_id: Order;
-  product_id: Product;
+  order: Order;
+  product: Product;
   quantity: number;
   unit_price: number;
   sub_total: number;
 };
 export type Payment = {
   id: number;
-  billing_method_id: BillingMethod;
+  billing: BillingMethod;
   order_id: Order;
   reference_number: string;
   amount: number;
@@ -193,14 +200,15 @@ export type Order = {
   id: number;
   user_id: string;
   order_date: string;
-  order_items_table: OrderItem[];
-  payment_table: Payment;
+  order_items: OrderItem[];
+  payment: Payment;
   total_amount: number;
   status: string;
   shipping_fee: number;
-  user_address_table: Address;
+  shipping_address: Address;
   created_at: string;
   reference_number: string;
   delivery_date: string;
-  user_table: User;
+  user: User;
+  feedback?: OrderFeedback[];
 };

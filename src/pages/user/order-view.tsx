@@ -14,9 +14,6 @@ import CustomSkeleton from "@/components/custom/custom-skeleton";
 export default function OrderView() {
   const { id: id } = useParams();
   const { data: order, isLoading: isOrderLoading } = useOrderById(Number(id));
-  const stepperStatus = getStepperStatus(order?.status);
-
-  console.log(order);
   return (
     <UserLayout breadCrumbs={useOrderViewBreadCrumb()}>
       <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-10">
@@ -60,55 +57,53 @@ export default function OrderView() {
               </h2>
 
               <div className="space-y-6">
-                {order?.order_items_table.map(
-                  (item: OrderItem, index: number) => (
-                    <div
-                      key={index}
-                      className="flex gap-4 pb-6 border-b border-slate-200 last:border-b-0 last:pb-0"
-                    >
-                      {/* Product Image */}
-                      <div className="shrink-0">
-                        <img
-                          src={item.product_id.image_url}
-                          alt={item.product_id.name}
-                          className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-lg shadow-md"
-                        />
-                      </div>
+                {order?.order_items.map((item: OrderItem, index: number) => (
+                  <div
+                    key={index}
+                    className="flex gap-4 pb-6 border-b border-slate-200 last:border-b-0 last:pb-0"
+                  >
+                    {/* Product Image */}
+                    <div className="shrink-0">
+                      <img
+                        src={item.product.image_url}
+                        alt={item.product.name}
+                        className="w-24 h-24 md:w-32 md:h-32 object-cover rounded-lg shadow-md"
+                      />
+                    </div>
 
-                      {/* Product Details */}
-                      <div className="grow">
-                        <div className="flex justify-between items-start mb-2">
-                          <div>
-                            <h3 className="text-lg font-semibold text-slate-900">
-                              {item?.product_id.name}
-                            </h3>
-                            <p className="text-sm text-slate-500 mt-1">
-                              Code: {capitalizeAll(item?.product_id.code)}
-                            </p>
-                          </div>
-                          <p className="text-2xl font-bold text-emerald-500">
-                            ₱{item?.sub_total.toFixed(2)}
+                    {/* Product Details */}
+                    <div className="grow">
+                      <div className="flex justify-between items-start mb-2">
+                        <div>
+                          <h3 className="text-lg font-semibold text-slate-900">
+                            {item?.product.name}
+                          </h3>
+                          <p className="text-sm text-slate-500 mt-1">
+                            Code: {capitalizeAll(item?.product.code)}
                           </p>
                         </div>
+                        <p className="text-2xl font-bold text-emerald-500">
+                          ₱{item?.sub_total.toFixed(2)}
+                        </p>
+                      </div>
 
-                        <div className="flex gap-6 mt-4 text-sm">
-                          <div>
-                            <p className="text-slate-500">Quantity</p>
-                            <p className="font-semibold  text-emerald-500">
-                              {item?.quantity}
-                            </p>
-                          </div>
-                          <div>
-                            <p className="text-slate-500">Unit Price</p>
-                            <p className="font-semibold text-slate-900">
-                              ₱{item?.unit_price.toFixed(2)}
-                            </p>
-                          </div>
+                      <div className="flex gap-6 mt-4 text-sm">
+                        <div>
+                          <p className="text-slate-500">Quantity</p>
+                          <p className="font-semibold  text-emerald-500">
+                            {item?.quantity}
+                          </p>
+                        </div>
+                        <div>
+                          <p className="text-slate-500">Unit Price</p>
+                          <p className="font-semibold text-slate-900">
+                            ₱{item?.unit_price.toFixed(2)}
+                          </p>
                         </div>
                       </div>
                     </div>
-                  ),
-                )}
+                  </div>
+                ))}
               </div>
 
               {/* Price Breakdown */}
@@ -138,7 +133,7 @@ export default function OrderView() {
               <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-4">
                 Order Status
               </p>
-              <CustomOrderStepper status={stepperStatus} />
+              <CustomOrderStepper status={getStepperStatus(order?.status)} />
             </div>
           </div>
 
@@ -178,7 +173,7 @@ export default function OrderView() {
                 <div className="flex justify-between">
                   <span className="text-slate-600">Currency</span>
                   <span className="font-semibold text-slate-900">
-                    {order?.payment_table.currency || "Not set"}
+                    {order?.payment?.currency || "Not set"}
                   </span>
                 </div>
               </div>
@@ -194,24 +189,20 @@ export default function OrderView() {
                 <div className="flex justify-between">
                   <span className="text-slate-600">Payment Method</span>
 
-                  {order?.payment_table?.[0]?.billing_method_id?.method_type ===
-                    "cod" && (
+                  {order?.payment?.[0]?.billing?.method_type === "cod" && (
                     <span className="font-semibold text-slate-900">
                       Cash on Delivery
                     </span>
                   )}
-                  {order?.payment_table?.[0]?.billing_method_id?.method_type ===
-                    "bank" && (
+                  {order?.payment?.[0]?.billing?.method_type === "bank" && (
                     <span className="font-semibold text-slate-900">
                       Bank Transfer
                     </span>
                   )}
-                  {order?.payment_table?.[0]?.billing_method_id?.method_type ===
-                    "paypal" && (
+                  {order?.payment?.[0]?.billing?.method_type === "paypal" && (
                     <span className="font-semibold text-slate-900">PayPal</span>
                   )}
-                  {order?.payment_table?.[0]?.billing_method_id?.method_type ===
-                    "gcash" && (
+                  {order?.payment?.[0]?.billing?.method_type === "gcash" && (
                     <span className="font-semibold text-slate-900">Gcash</span>
                   )}
                 </div>
@@ -219,15 +210,15 @@ export default function OrderView() {
                 <div className="flex justify-between">
                   <span className="text-slate-600">Payment Status</span>
                   <span
-                    className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusBadgeColor(order?.payment_table?.[0]?.status)}`}
+                    className={`px-3 py-1 rounded-full text-sm font-semibold ${getStatusBadgeColor(order?.payment?.[0]?.status)}`}
                   >
-                    {capitalizeFirstLetter(order?.payment_table?.[0]?.status)}
+                    {capitalizeFirstLetter(order?.payment?.[0]?.status)}
                   </span>
                 </div>
                 <div className="flex justify-between">
                   <span className="text-slate-600">Total Amount</span>
                   <span className="font-bold text-lg text-emerald-500">
-                    ₱{order?.payment_table?.[0]?.amount.toFixed(2)}
+                    ₱{order?.payment?.[0]?.amount.toFixed(2)}
                   </span>
                 </div>
               </div>
@@ -265,18 +256,18 @@ export default function OrderView() {
               </h3>
               <div className="text-slate-700 space-y-1">
                 <p className="font-semibold">
-                  {order?.user_address_table.address_line1}{" "}
-                  {order?.user_address_table.address_line2}{" "}
-                  {order?.user_address_table.barangay}
+                  {order?.shipping_address.address_line1}{" "}
+                  {order?.shipping_address.address_line2}{" "}
+                  {order?.shipping_address.barangay}
                 </p>
                 <p className="font-semibold"></p>
                 <p>
-                  {order?.user_address_table.city},{" "}
-                  {order?.user_address_table.province}
+                  {order?.shipping_address.city},{" "}
+                  {order?.shipping_address.province}
                 </p>
                 <p>
-                  {order?.user_address_table.postal_code},{" "}
-                  {order?.user_address_table.region}
+                  {order?.shipping_address.postal_code},{" "}
+                  {order?.shipping_address.region}
                 </p>
               </div>
             </div>

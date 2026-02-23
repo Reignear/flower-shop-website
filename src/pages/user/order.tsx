@@ -10,6 +10,7 @@ import {
 } from "@/data/user-order-data";
 import { Link, useLocation } from "react-router-dom";
 interface OrderProps {
+  
   children: React.ReactNode;
 }
 export default function Order({ children }: OrderProps) {
@@ -22,7 +23,7 @@ export default function Order({ children }: OrderProps) {
   // Stats calculations
   const totalOrders = orders?.length || 0;
   const completedOrders =
-    orders?.filter((o) => o.status.toLowerCase() === "completed").length || 0;
+    orders?.filter((o) => o.status.toLowerCase() === "delivered").length || 0;
   const onGoingOrders =
     orders?.filter((o) => o.status.toLowerCase() === "on-going").length || 0;
   const totalSpent =
@@ -104,7 +105,7 @@ export default function Order({ children }: OrderProps) {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 gap-6">{children}</div>
+          <div className="grid grid-cols-1 gap-5">{children}</div>
         </div>
       </div>
     </UserLayout>

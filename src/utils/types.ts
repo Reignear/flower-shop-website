@@ -35,10 +35,13 @@ export type AuthContextType = {
 
 export type Status =
   | "pending"
-  | "on-going"
-  | "ready-for-pick"
-  | "completed"
+  | "on-process"
+  | "for-pickup"
+  | "delivered"
   | "declined";
-// export type GcashMethod = z.infer<typeof gcashValidation>;
-// export type PayPalMethod = z.infer<typeof paypalValidation>;
-// export type BankTransferMethod = z.infer<typeof bankTransferValidation>;
+
+export type FeedBackFormValues = {
+  productId: number;
+  rating: number;
+  feedback: string;
+};

@@ -7,6 +7,9 @@ import { fetchUserAddress } from "@/supabase/api/fetch.user.address";
 import { fetchBillingMethod } from "@/supabase/api/fetch.billing.method";
 import { fetchOrders } from "@/supabase/api/fetch.order";
 import { fetchOrderByID } from "@/supabase/api/fetch.order.id";
+import { fetchOrderByStatus } from "@/supabase/api/fetch.order.status";
+import { fetchStats } from "@/supabase/api/fetch.landing";
+import { fetchFeedback } from "@/supabase/api/fetch.feedback";
 
 export const useCategory = () => {
   return useQuery({
@@ -94,8 +97,44 @@ export const useOrder = () => {
 
 export const useOrderById = (id: number) => {
   return useQuery({
-    queryKey: ["orders", id],
+    queryKey: ["orderById", id],
     queryFn: () => fetchOrderByID(id),
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+};
+
+export const useOrderByStatus = (status: string) => {
+  return useQuery({
+    queryKey: ["orderByStatus", status],
+    queryFn: () => fetchOrderByStatus(status),
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+};
+
+export const useLanding = () => {
+  return useQuery({
+    queryKey: ["landing"],
+    queryFn: () => fetchStats(),
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+};
+
+export const useFeedback = () => {
+  return useQuery({
+    queryKey: ["feedback"],
+    queryFn: () => fetchFeedback(),
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),

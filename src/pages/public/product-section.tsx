@@ -1,39 +1,13 @@
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
-import { Heart } from "lucide-react";
+import type { Product } from "@/utils/interface";
 import { Link } from "react-router-dom";
 
-export default function ProductSection() {
-  const products = [
-    {
-      name: "Aster Bouquet",
-      price: "$27.23",
-      image:
-        "https://imgs.search.brave.com/qEUa5ir21yKDh-0lZxaJfjImDM1zwxXLPb785BLRQ6I/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZS5zaHV0dGVyc3Rv/Y2suY29tL2ltYWdl/LXBob3RvL2RyeS1m/cmVzaC1mbG93ZXJz/LWZsYXQtbGF5b3V0/LTI2MG53LTI0OTQ5/NTg0NzcuanBn",
-      isNew: true,
-    },
-    {
-      name: "Rose Bouquet",
-      price: "$27.00",
-      image:
-        "https://imgs.search.brave.com/qEUa5ir21yKDh-0lZxaJfjImDM1zwxXLPb785BLRQ6I/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZS5zaHV0dGVyc3Rv/Y2suY29tL2ltYWdl/LXBob3RvL2RyeS1m/cmVzaC1mbG93ZXJz/LWZsYXQtbGF5b3V0/LTI2MG53LTI0OTQ5/NTg0NzcuanBn",
-      isNew: true,
-    },
-    {
-      name: "Tulip Bouquet",
-      price: "$20.99",
-      image:
-        "https://imgs.search.brave.com/qEUa5ir21yKDh-0lZxaJfjImDM1zwxXLPb785BLRQ6I/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZS5zaHV0dGVyc3Rv/Y2suY29tL2ltYWdl/LXBob3RvL2RyeS1m/cmVzaC1mbG93ZXJz/LWZsYXQtbGF5b3V0/LTI2MG53LTI0OTQ5/NTg0NzcuanBn",
-      isNew: false,
-    },
-    {
-      name: "Special Bouquet",
-      price: "$50.99",
-      image:
-        "https://imgs.search.brave.com/qEUa5ir21yKDh-0lZxaJfjImDM1zwxXLPb785BLRQ6I/rs:fit:500:0:1:0/g:ce/aHR0cHM6Ly9pbWFn/ZS5zaHV0dGVyc3Rv/Y2suY29tL2ltYWdl/LXBob3RvL2RyeS1m/cmVzaC1mbG93ZXJz/LWZsYXQtbGF5b3V0/LTI2MG53LTI0OTQ5/NTg0NzcuanBn",
-      isNew: false,
-    },
-  ];
+interface ProductSectionProps {
+  products: Product[];
+}
+
+export default function ProductSection({products}: ProductSectionProps) {
   return (
     <main className="px-4 md:px-8 lg:px-12 py-12 md:py-20 bg-background">
       <div className="max-w-7xl mx-auto">
@@ -43,40 +17,38 @@ export default function ProductSection() {
               Product
             </p>
             <h2 className="text-4xl md:text-5xl font-bold text-foreground text-balance">
-              Our Best Sellers This Month
+              Our Latest Products
             </h2>
           </div>
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          {products.map((product, index) => (
+          {products?.map((product: Product, index: number) => (
             <Card
               key={index}
               className="group overflow-hidden bg-card border-border hover:shadow-lg transition-shadow"
             >
               <div className="relative aspect-square overflow-hidden bg-muted">
-                {product.isNew && (
-                  <div className="absolute top-4 left-4 z-10 bg-foreground text-background px-3 py-1 rounded-full text-xs font-bold">
-                    New!
-                  </div>
-                )}
-                <img
-                  src={product.image || "/placeholder.svg"}
-                  alt={product.name}
-                  className="w-full h-full object-cover group-hover:scale-105 transition-transform"
-                />
+                {}
+                  <img
+                    src={product.image_url || "/placeholder.svg"}
+                    alt={product.name}
+                    className="w-full h-full object-cover group-hover:scale-105 transition-transform"
+
+                  />
+                
               </div>
               <div className="p-4">
-                <h3 className="font-semibold text-foreground mb-2 line-clamp-2">
+                <h3 className="font-semibold text-foreground line-clamp-2">
                   {product.name}
                 </h3>
+                <p className="text-muted-foreground mb-2 text-sm line-clamp-1">
+                  {product.description}
+                </p>
                 <div className="flex items-center justify-between">
                   <p className="text-lg font-bold text-foreground">
-                    {product.price}
+                    ₱ {product.price}
                   </p>
-                  <Button variant="ghost" size="icon" className="rounded-full">
-                    <Heart className="w-5 h-5" />
-                  </Button>
                 </div>
               </div>
             </Card>

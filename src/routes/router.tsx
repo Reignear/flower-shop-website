@@ -15,6 +15,7 @@ import Privacy from "@/pages/public/privacy";
 import NotFound from "@/pages/unavailable/not-found";
 import UserProtectedRoutes from "@/routes/user-protected-routes";
 import UserOrderAll from "@/pages/user/order-all";
+import UserOrderFeedback from "@/pages/user/order-feedback";
 import UserOrderDeclined from "@/pages/user/order-declined";
 import UserOrderDelivered from "@/pages/user/order-delivered";
 import UserOrderOnProcess from "@/pages/user/order-on-process";
@@ -124,6 +125,7 @@ export const router = createBrowserRouter([
       { path: "/user/order/on-process", element: <UserOrderOnProcess /> },
       { path: "/user/order/delivered", element: <UserOrderDelivered /> },
       { path: "/user/order/:id", element: <UserOrderView /> },
+      { path: "/user/order/feedback/:id", element: <UserOrderFeedback /> },
       { path: "/user/order/review", element: <UserOrderReview /> },
       // Products sidebar item
       { path: "/user/products", element: <UserProducts /> },

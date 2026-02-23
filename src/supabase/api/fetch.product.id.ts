@@ -13,7 +13,7 @@ export const fetchProductById = async (productId: number) => {
   // Fetch feedback for the product and related products in parallel (parallel means both requests are made at the same time, and we wait for both to complete)
   const [feedbackRes, relatedRes] = await Promise.all([
     supabase
-      .from("feedback_table")
+      .from("product_feedback_table")
       .select(`*, user_id (id, email, first_name, middle_name, last_name)`)
       .eq("product_id", productId)
       .limit(5),
@@ -42,7 +42,7 @@ export const fetchProductById = async (productId: number) => {
     relatedProducts.map(async (relatedProduct) => {
       const [{ data: relatedFeedback }, { data: imgData }] = await Promise.all([
         supabase
-          .from("feedback_table")
+          .from("product_feedback_table")
           .select(`*, user_id (id, email, first_name, middle_name, last_name)`)
           .eq("product_id", relatedProduct.id)
           .limit(5),

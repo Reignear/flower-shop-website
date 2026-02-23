@@ -8,7 +8,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Badge } from "@/components/ui/badge";
 import { Link } from "react-router-dom";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
-import type { Feedback, Product } from "@/utils/interface";
+import type { ProductFeedback, Product } from "@/utils/interface";
 import Skeleton from "react-loading-skeleton";
 import { OrbitProgress } from "react-loading-indicators";
 import { useUserProductView } from "@/hooks/use-user-product-view";
@@ -258,7 +258,7 @@ export default function ProductView() {
                 ) : (
                   <span className="text-gray-600 text-center" />
                 )}
-                {product?.feedback.map((feedback: Feedback) => (
+                {product?.feedback.map((feedback: ProductFeedback) => (
                   <Card key={feedback.id}>
                     <CardContent>
                       <div className="flex items-start justify-between mb-2">

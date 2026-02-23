@@ -27,7 +27,14 @@ export default function CustomSkeleton({
 }: CustomSkeletonProps) {
   switch (type) {
     case "order-card":
-      return <div></div>;
+      return (
+        <div
+          key={key}
+          className="bg-gray-200 w-full h-80 rounded-lg skeleton-effect"
+        >
+          <Skeleton width={width || "100%"} height={height || 80} />
+        </div>
+      );
     case "product-card":
       return (
         <div

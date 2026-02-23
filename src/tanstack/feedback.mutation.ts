@@ -1,10 +1,10 @@
-import { insertOrder } from "@/supabase/api/user.order.insert";
+import { insertFeedback } from "@/supabase/api/user.feedback.insert";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
-export const useInsertOrder = () => {
+export const useInsertFeedback = () => {
   const queryClient = useQueryClient();
   return useMutation({
-    mutationFn: insertOrder,
+    mutationFn: insertFeedback,
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },

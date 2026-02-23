@@ -1,7 +1,7 @@
 import Order from "./order";
 
 const OrderPending = () => {
-  return <Order>Order</Order>;
+  return <Order>OrderPending</Order>;
 };
 
 export default OrderPending;

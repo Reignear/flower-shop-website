@@ -22,9 +22,9 @@ export const fetchOrderByID = async (id: number) => {
       .from("orders_table")
       .select(
         `*,
-          user_table (*),
-          order_items_table (*, product_id (*)),
-         payment_table (*, billing_method_id (*))
+          user: user_table (*),
+          order_items: order_items_table (*, product_id (*)),
+         payment: payment_table (*, billing_method_id (*))
          `,
       )
       .eq("id", id)
@@ -36,19 +36,18 @@ export const fetchOrderByID = async (id: number) => {
     if (!data) return null;
 
     // If there are no order items, return the order as is
-    if (!data.order_items_table || data.order_items_table.length === 0)
-      return data;
+    if (!data.order_items || data.order.length === 0) return data;
 
     // Fetch signed URLs for all product images in the order items
     const itemsWithImages = await Promise.all(
-      data.order_items_table.map(async (item: OrderItem) => {
+      data.order_items.map(async (item: OrderItem) => {
         const { data: image_url } = await supabase.storage
           .from("product-images")
-          .createSignedUrl(item.product_id.image, 60 * 60 * 24 * 7);
+          .createSignedUrl(item.product.image, 60 * 60 * 24 * 7);
         return {
           ...item,
-          product_id: {
-            ...item.product_id,
+          product: {
+            ...item.product,
             image_url: image_url?.signedUrl || "",
           },
         };
@@ -56,7 +55,7 @@ export const fetchOrderByID = async (id: number) => {
     );
     return {
       ...data,
-      order_items_table: itemsWithImages,
+      order_items: itemsWithImages,
     };
   }
 
@@ -66,9 +65,10 @@ export const fetchOrderByID = async (id: number) => {
       .from("orders_table")
       .select(
         `*,
-          order_items_table (*, product_id (*)),
-          payment_table (*, billing_method_id (*)),
-          user_address_table(*)
+          order_items: order_items_table (*, product: product_id (*)),
+          payment: payment_table (*, billing: billing_method_id (*)),
+          shipping_address: user_address_table(*),
+          feedback: order_feedback_table (*)
          `,
       )
       .eq("user_id", user.id)
@@ -79,18 +79,17 @@ export const fetchOrderByID = async (id: number) => {
     }
     if (!data) return null;
 
-    if (!data.order_items_table || data.order_items_table.length === 0)
-      return data;
+    if (!data.order_items || data.order_items.length === 0) return data;
 
     const itemsWithImages = await Promise.all(
-      data.order_items_table.map(async (item: OrderItem) => {
+      data.order_items.map(async (item: OrderItem) => {
         const { data: image_url } = await supabase.storage
           .from("product-images")
-          .createSignedUrl(item.product_id.image, 60 * 60 * 24 * 7);
+          .createSignedUrl(item.product.image, 60 * 60 * 24 * 7);
         return {
           ...item,
-          product_id: {
-            ...item.product_id,
+          product: {
+            ...item.product,
             image_url: image_url?.signedUrl || "",
           },
         };
@@ -98,7 +97,7 @@ export const fetchOrderByID = async (id: number) => {
     );
     return {
       ...data,
-      order_items_table: itemsWithImages,
+      order_items: itemsWithImages,
     };
   }
   return null;

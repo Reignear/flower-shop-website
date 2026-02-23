@@ -10,12 +10,12 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
   const steps: { key: Status; label: string; description: string }[] = [
     { key: "pending", label: "Pending", description: "Order placed" },
     {
-      key: isDeclined ? "declined" : "on-going",
-      label: isDeclined ? "Declined" : "On-going",
+      key: isDeclined ? "declined" : "on-process",
+      label: isDeclined ? "Declined" : "On-Process",
       description: isDeclined ? "Order declined" : "Being prepared",
     },
-    { key: "ready-for-pick", label: "Ready for Pick", description: "Ready" },
-    { key: "completed", label: "Completed", description: "Delivered" },
+    { key: "for-pickup", label: "Ready for Pick", description: "Ready" },
+    { key: "delivered", label: "Delivered", description: "Delivered" },
   ];
 
   const currentStepIndex = isDeclined
@@ -26,7 +26,7 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
     <div className="w-full">
       <div className="flex items-center justify-between">
         {steps.map((step, index) => {
-          const isCompleted = !isDeclined && index < currentStepIndex;
+          const isDelivered = !isDeclined && index < currentStepIndex;
           const isCurrent = index === currentStepIndex;
           const isDeclinedStep = isDeclined && index === 1;
 
@@ -38,14 +38,14 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
                   className={`flex items-center justify-center w-12 h-12 rounded-full font-bold text-sm transition-all duration-300 ${
                     isDeclinedStep
                       ? "bg-red-500 text-white shadow-lg scale-110"
-                      : isCompleted || isCurrent
+                      : isDelivered || isCurrent
                         ? "bg-emerald-500 text-white shadow-lg scale-110"
                         : "bg-gray-200 text-gray-600"
                   }`}
                 >
                   {isDeclinedStep ? (
                     <X className="w-6 h-6" />
-                  ) : isCompleted ? (
+                  ) : isDelivered ? (
                     <Check className="w-6 h-6" />
                   ) : (
                     <span>{index + 1}</span>
@@ -59,7 +59,7 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
                       className={`h-full rounded transition-all duration-300 ${
                         isDeclined && index <= 1
                           ? "bg-red-500"
-                          : isCompleted
+                          : isDelivered
                             ? "bg-emerald-500"
                             : "bg-gray-200"
                       }`}
@@ -76,7 +76,7 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
                       ? "text-red-600"
                       : isCurrent
                         ? "text-emerald-600"
-                        : isCompleted
+                        : isDelivered
                           ? "text-emerald-500"
                           : "text-gray-600"
                   }`}
