@@ -2,58 +2,46 @@ import { Button } from "@/components/ui/button";
 import PublicLayout from "@/components/layout/public-layout";
 import { ArrowRight } from "lucide-react";
 import { Link } from "react-router-dom";
+import PremadeBouquets from "/assets/images/public/premade-bouquets.svg";
+import CustomizedBouquets from "/assets/images/public/customized-bouquets.svg";
+import BouquetArrangement from "/assets/images/public/bouquet-arrangement.svg";
 const Services = () => {
   const services = [
     {
       id: 1,
-      title: "Custom Bouquets",
+      title: "Premade Bouquets",
       description:
-        "Personalized flower arrangements tailored to your preferences and occasion",
-      image: "/tulip-flowers-bouquet.jpg",
-      features: ["Premium Selection", "Same-day Delivery", "Custom Colors"],
+        "Beautiful bouquets crafted from idea, thoughtfully arranged by our florists—perfect for quick gifting and special moments.",
+      image: PremadeBouquets,
+      features: [
+        "Ready-to-Order Designs",
+        "Mixed Fresh & Dried Flowers",
+        "No hassle Delivery",
+      ],
     },
     {
       id: 2,
-      title: "Wedding Florals",
+      title: "Customized Bouquets",
       description:
-        "Complete floral design for your special day from bridal bouquets to centerpieces",
-      image: "/pink-rose-bouquet-flowers.jpg",
+        "Create your own bouquet by choosing flowers, colors, and styles that match your personal taste and occasion.",
+      image: CustomizedBouquets,
       features: [
-        "Full Design Consultation",
-        "Venue Decoration",
-        "Bridal Packages",
+        "Choose Your Flowers",
+        "Personalized Wrapping",
+        "Custom Message Cards",
       ],
     },
     {
       id: 3,
-      title: "Corporate Events",
+      title: "Bouquet Arrangement",
       description:
-        "Professional floral arrangements for conferences, galas, and business celebrations",
-      image: "/flower-gift-hand.jpg",
-      features: ["Bulk Orders", "Event Coordination", "Custom Branding"],
-    },
-    {
-      id: 4,
-      title: "Subscription Service",
-      description:
-        "Receive fresh flowers delivered weekly to brighten your space",
-      image: "/special-mixed-bouquet-flowers.jpg",
-      features: ["Weekly Delivery", "Flexible Plans", "Premium Blooms"],
-    },
-    {
-      id: 5,
-      title: "Gift Hampers",
-      description:
-        "Curated gift sets combining flowers with premium chocolates and wine",
-      image: "/flower-arrangement-delivery.jpg",
-      features: ["Luxury Packaging", "Customizable Items", "Gift Wrapping"],
-    },
-    {
-      id: 6,
-      title: "Plant Care Consultation",
-      description: "Expert advice on caring for your flowers and indoor plants",
-      image: "/woman-with-flowers-smiling.jpg",
-      features: ["Free Consultation", "Care Tips", "Long-lasting Blooms"],
+        "Professional floral arrangement services for custom events, celebrations, and corporate gatherings.",
+      image: BouquetArrangement,
+      features: [
+        "Event Styling Support",
+        "Large-Scale Arrangements",
+        "Theme-Based Designs",
+      ],
     },
   ];
   return (
@@ -70,7 +58,6 @@ const Services = () => {
               comprehensive floral solutions for every occasion and celebration.
             </p>
           </div>
-
           {/* Services Grid */}
           <div className="max-w-7xl mx-auto">
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
@@ -79,7 +66,6 @@ const Services = () => {
                   key={service.id}
                   className="group bg-card rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300"
                 >
-                  {/* Image */}
                   <div className="relative h-64 overflow-hidden bg-muted">
                     <img
                       src={service.image || "/placeholder.svg"}
@@ -88,7 +74,6 @@ const Services = () => {
                     />
                   </div>
 
-                  {/* Content */}
                   <div className="p-6 flex flex-col">
                     <h3 className="text-xl md:text-2xl font-bold text-foreground mb-3">
                       {service.title}
@@ -97,11 +82,10 @@ const Services = () => {
                       {service.description}
                     </p>
 
-                    {/* Features */}
                     <div className="space-y-2 mb-6">
-                      {service.features.map((feature, idx) => (
+                      {service.features.map((feature, index) => (
                         <div
-                          key={idx}
+                          key={index}
                           className="flex items-center gap-2 text-sm text-foreground"
                         >
                           <div className="w-1.5 h-1.5 rounded-full bg-primary" />
@@ -110,9 +94,8 @@ const Services = () => {
                       ))}
                     </div>
 
-                    {/* CTA Button */}
                     <Button className="w-full bg-primary text-primary-foreground hover:bg-primary/90 rounded-lg gap-2 group/btn">
-                      Learn More
+                      Order now
                       <ArrowRight className="w-4 h-4 group-hover/btn:translate-x-1 transition-transform" />
                     </Button>
                   </div>

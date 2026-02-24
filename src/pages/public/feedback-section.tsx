@@ -74,7 +74,7 @@ export default function FeedbackSection({ feedbacks }: FeedbackSectionProps) {
               size="lg"
               className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              View  Feedback <SquareArrowOutUpRight />
+              View Product Feedback <SquareArrowOutUpRight />
             </Button>
           </Link>
         </div>

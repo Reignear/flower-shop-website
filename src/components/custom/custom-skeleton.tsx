@@ -12,7 +12,8 @@ interface CustomSkeletonProps {
     | "photo-icon"
     | "description-text"
     | "small-text"
-    | "large-text";
+    | "large-text"
+    | "feedback-card";
   length?: number;
   width?: number | string;
   height?: number | string;
@@ -89,6 +90,12 @@ export default function CustomSkeleton({
           className="bg-gray-200 h-9 rounded-lg skeleton-effect "
           style={width ? { width: `${width}rem` } : { width: "18rem" }}
         >
+          <Skeleton />
+        </div>
+      );
+    case "feedback-card":
+      return (
+        <div className="bg-gray-200 w-full h-80 rounded-lg skeleton-effect">
           <Skeleton />
         </div>
       );

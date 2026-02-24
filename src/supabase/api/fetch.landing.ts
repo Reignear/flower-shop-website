@@ -32,7 +32,7 @@ export const fetchStats = async () => {
     
     const orderFeedback = supabase
       .from("order_feedback_table")
-      .select("id, feedback, rating, user: user_table (id, first_name)")
+      .select("id, feedback, rating, user: user_table (id, first_name, middle_name, last_name)")
       .order("created_at", { ascending: false })
       .limit(10);
 

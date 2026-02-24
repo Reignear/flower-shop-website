@@ -5,7 +5,7 @@ export async function fetchProduct() {
     .from("product_table")
     .select(
       `*, 
-        category_id (id, name)`,
+        category: category_id (id, name)`,
     )
     .order("created_at", { ascending: false });
 
@@ -21,7 +21,7 @@ export async function fetchProduct() {
 
       return {
         ...product,
-        category_id: product.category_id?.name,
+        category: product.category?.name,
         image: product.image,
         image_url: imageUrl?.signedUrl || "",
       };

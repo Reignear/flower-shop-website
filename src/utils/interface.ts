@@ -50,7 +50,7 @@ export interface Category {
 
 export interface ProductFeedback {
   id: number;
-  user: User | string;
+  user: User;
   product: Product;
   rating: number;
   feedback: string;
@@ -58,7 +58,7 @@ export interface ProductFeedback {
 }
 export interface OrderFeedback {
   id: number;
-  user: User ;
+  user: User;
   order: Order;
   rating: number;
   feedback: string;
