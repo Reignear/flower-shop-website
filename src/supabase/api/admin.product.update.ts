@@ -32,7 +32,7 @@ export const updateProduct = async ({
       image: filePath,
       price: Number(product.price),
       status: product.status,
-      category_id: product.category_id,
+      category_id: product.category,
     })
     .eq("id", product_id)
     .select("*, category_id (id, name)");
@@ -49,7 +49,7 @@ export const updateProduct = async ({
         .createSignedUrl(product.image, 60 * 60 * 24 * 7);
       return {
         ...product,
-        category_id: product.category_id?.name,
+        category_id: product.category?.name,
         image: product.image,
         image_url: imageUrl?.signedUrl || "",
       };
