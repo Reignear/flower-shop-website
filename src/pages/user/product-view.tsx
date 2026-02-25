@@ -43,7 +43,7 @@ export default function ProductView() {
       console.log("Error adding to cart", error);
     }
   };
-
+  
   return (
     <UserLayout breadCrumbs={ProductViewBreadCrumb()}>
       <Toaster position="bottom-right" />
@@ -264,8 +264,8 @@ export default function ProductView() {
                       <div className="flex items-start justify-between mb-2">
                         <div>
                           <p className="font-semibold text-gray-900">
-                            {capitalizeFirstLetter(feedback.user_id.first_name)}{" "}
-                            {capitalizeFirstLetter(feedback.user_id.last_name)}
+                            {capitalizeFirstLetter(feedback.user.first_name)}{" "}
+                            {capitalizeFirstLetter(feedback.user.last_name)}
                           </p>
                           <p className="text-sm text-gray-600">
                             {formatDate(feedback.created_at)}

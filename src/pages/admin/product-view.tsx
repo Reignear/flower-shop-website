@@ -13,7 +13,7 @@ import { useViewProductBreadCrumb } from "@/data/admin-layout-data";
 import { useParams } from "react-router-dom";
 import { useProductID } from "@/tanstack/fetch.hook";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
-import type { Feedback } from "@/utils/interface";
+import type { ProductFeedback } from "@/utils/interface";
 
 // Sample product data
 const productData = {
@@ -77,8 +77,7 @@ const productData = {
 export default function ProductView() {
   const { id: productId } = useParams();
   const { data: product } = useProductID(Number(productId));
-
-
+  console.log(product);
   const breadCrumb = useViewProductBreadCrumb();
 
   return (
@@ -240,10 +239,7 @@ export default function ProductView() {
                       ))}
                     </div>
                     <div className="flex-1 bg-muted rounded-full h-2 overflow-hidden">
-                      <div
-                        className="bg-primary h-full transition-all"
-                      p
-                      />
+                      <div className="bg-primary h-full transition-all" />
                     </div>
                     <span className="text-sm text-muted-foreground w-12 text-right">
                       {
@@ -267,7 +263,7 @@ export default function ProductView() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {product?.feedback.map((fd: Feedback) => (
+              {product?.feedback.map((fd: ProductFeedback) => (
                 <div
                   key={fd.id}
                   className="border-t border-border pt-4 first:border-t-0 first:pt-0"
@@ -275,9 +271,9 @@ export default function ProductView() {
                   <div className="flex items-start justify-between mb-2">
                     <div>
                       <p className="font-semibold text-foreground">
-                        {capitalizeFirstLetter(fd.user_id.first_name)}{" "}
-                        {capitalizeFirstLetter(fd.user_id.middle_name)}{" "}
-                        {capitalizeFirstLetter(fd.user_id.last_name)}
+                        {capitalizeFirstLetter(fd.user.first_name)}{" "}
+                        {capitalizeFirstLetter(fd.user.middle_name)}{" "}
+                        {capitalizeFirstLetter(fd.user.last_name)}
                       </p>
                       <p className="text-sm text-muted-foreground">
                         {fd.created_at}

@@ -31,6 +31,8 @@ export default function ProductsPage() {
       ? product
       : product.filter((prod) => prod.category_id === activeCategory);
   const totalProducts = product.length;
+
+  console.log(product);
   return (
     <UserLayout breadCrumbs={productBreadCrumb}>
       <div className="p-8 space-y-5">
@@ -134,7 +136,7 @@ export default function ProductsPage() {
                       {capitalizeFirstLetter(product.status)}
                     </p>
                     <p className="text-sm text-muted-foreground mb-4">
-                      Category: {capitalizeFirstLetter(product.category_id)}
+                      Category: {capitalizeFirstLetter(product.category)}
                     </p>
                     <div className="flex justify-between items-center">
                       <p className="font-semibold text-lg text-foreground">

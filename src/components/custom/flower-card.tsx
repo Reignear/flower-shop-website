@@ -1,4 +1,4 @@
-import type { Flower } from "@/utils/types";
+import type { Flower } from "@/utils/interface";
 
 interface FlowerCardProps {
   data: Flower;

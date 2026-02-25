@@ -25,12 +25,12 @@ export const fetchCart = async () => {
   // Format the cart items to include the product image URL
   const formattedData = await Promise.all(
     (data as unknown as Cart[]).map(async (item) => {
-      if (!item.product_id.image) {
+      if (!item.product.image) {
         return { ...item, image_url: "" };
       }
       const { data: imageData, error: imageError } = await supabase.storage
         .from("product-images")
-        .createSignedUrl(item.product_id.image, 60 * 60 * 24 * 7);
+        .createSignedUrl(item.product.image, 60 * 60 * 24 * 7);
 
       if (imageError) {
         return { ...item, image_url: "" };
@@ -38,7 +38,7 @@ export const fetchCart = async () => {
 
       return {
         ...item,
-        product_id: { ...item.product_id, image_url: imageData.signedUrl },
+        product_id: { ...item.product, image_url: imageData.signedUrl },
       };
     }),
   );

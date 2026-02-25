@@ -13,13 +13,14 @@ import { Link } from "react-router-dom";
 import { getStatusBadgeColor } from "@/utils/status";
 import { formatDashText } from "@/utils/dash-formatter";
 import { orderAllBreadCrumb } from "@/data/admin-order-data";
+import CustomSkeleton from "@/components/custom/custom-skeleton";
 
 export default function OrdersPage() {
   const { activeLayout, setActiveLayout } = useAdminOrder();
 
   const { data: order, isLoading: isOrderLoading } = useOrder();
   console.log(order);
-  
+
   return (
     <AdminLayout className="p-8" breadCrumbs={orderAllBreadCrumb}>
       <div className="space-y-6">
@@ -49,6 +50,13 @@ export default function OrdersPage() {
 
         {/* Orders Grid */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          {isOrderLoading && (
+            <div>
+              {Array.from({ length: 4 }).map((_, index) => (
+                <CustomSkeleton type="product-card" key={index} />
+              ))}
+            </div>
+          )}
           {order?.map((order: Order) => (
             <Card
               key={order.id}
@@ -78,9 +86,9 @@ export default function OrdersPage() {
                       Customer
                     </p>
                     <p className="text-gray-900 font-medium mt-1">
-                      {capitalizeFirstLetter(order?.user_table.first_name)}{" "}
-                      {capitalizeFirstLetter(order?.user_table.middle_name)}{" "}
-                      {capitalizeFirstLetter(order?.user_table.last_name)}
+                      {capitalizeFirstLetter(order?.user.first_name)}{" "}
+                      {capitalizeFirstLetter(order?.user.middle_name)}{" "}
+                      {capitalizeFirstLetter(order?.user.last_name)}
                     </p>
                   </div>
                   <div>
@@ -88,8 +96,8 @@ export default function OrdersPage() {
                       Location
                     </p>
                     <p className="text-gray-900 font-medium mt-1">
-                      {order?.user_address_table.barangay},{" "}
-                      {order?.user_address_table.city}
+                      {order?.shipping_address.barangay},{" "}
+                      {order?.shipping_address.city}
                     </p>
                   </div>
                 </div>

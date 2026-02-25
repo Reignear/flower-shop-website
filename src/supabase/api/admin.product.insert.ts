@@ -23,7 +23,7 @@ export const insertProduct = async ({
       image: image ? fileName : "",
       price: Number(product.price),
       status: product.status,
-      category_id: product.category_id,
+      category_id: product.category,
     })
     .select(`*, category_id (id, name)`);
 

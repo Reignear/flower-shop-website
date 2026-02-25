@@ -92,7 +92,7 @@ export default function ProductFormInsert({
           <div className="space-y-2 col-span-2">
             <Label>Category</Label>
             <Controller
-              name="category_id"
+              name="category"
               control={control}
               defaultValue={""}
               render={({ field }) => (

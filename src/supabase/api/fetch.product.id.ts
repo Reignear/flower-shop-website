@@ -1,7 +1,6 @@
 import { supabase } from "@/supabase/client";
 
 export const fetchProductById = async (productId: number) => {
-
   // Fetch the product details along with its category information
   const { data: product, error: productError } = await supabase
     .from("product_table")
@@ -14,7 +13,9 @@ export const fetchProductById = async (productId: number) => {
   const [feedbackRes, relatedRes] = await Promise.all([
     supabase
       .from("product_feedback_table")
-      .select(`*, user_id (id, email, first_name, middle_name, last_name)`)
+      .select(
+        `*, user: user_id (id, email, first_name, middle_name, last_name)`,
+      )
       .eq("product_id", productId)
       .limit(5),
     supabase
@@ -43,7 +44,9 @@ export const fetchProductById = async (productId: number) => {
       const [{ data: relatedFeedback }, { data: imgData }] = await Promise.all([
         supabase
           .from("product_feedback_table")
-          .select(`*, user_id (id, email, first_name, middle_name, last_name)`)
+          .select(
+            `*, user: user_id (id, email, first_name, middle_name, last_name)`,
+          )
           .eq("product_id", relatedProduct.id)
           .limit(5),
         // If the related product has an image, fetch its signed URL; otherwise, return an empty string

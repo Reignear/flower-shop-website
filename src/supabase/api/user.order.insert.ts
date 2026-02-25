@@ -61,10 +61,10 @@ export const insertOrder = async ({
         .from("order_items_table")
         .insert({
           order_id: order.id,
-          product_id: item.product_id.id,
+          product_id: item.product.id,
           quantity: item.quantity,
-          unit_price: item.product_id.price,
-          sub_total: item.quantity * item.product_id.price,
+          unit_price: item.product.price,
+          sub_total: item.quantity * item.product.price,
         });
 
       if (errorOrderItems) {
