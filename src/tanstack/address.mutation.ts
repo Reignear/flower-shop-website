@@ -8,8 +8,8 @@ export const useInsertAddress = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["address"] });
     },
-    onError: (error) => {
-      console.error("Error inserting address:", error);
-    },
+    // onError: (error) => {
+    //   console.error("Error inserting address:", error);
+    // },
   });
 };

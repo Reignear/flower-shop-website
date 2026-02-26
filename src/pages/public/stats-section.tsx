@@ -8,7 +8,7 @@ export default function Stats({ sold, type, client, experience }: StatProps) {
   const stats = [
     {
       number: `${type}+`,
-      label: "Bouquet Types",
+      label: "Products",
     },
     {
       number: `${sold}+`,

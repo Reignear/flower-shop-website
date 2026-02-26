@@ -34,14 +34,13 @@ export default function SignUp() {
     <AuthAnimationLayout>
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-lg md:min-w-md space-y-6">
-          <div className="flex flex-col items-center gap-4">
-            <h1 className="text-3xl font-bold tracking-tight ">
-              CELESTIAL BLOOM
-            </h1>
-          </div>
-
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm bg-white/95">
             <CardHeader className="space-y-2">
+              <div className="flex flex-col items-center gap-4">
+                <h1 className="text-3xl font-bold tracking-tight ">
+                  CELESTIAL BLOOM
+                </h1>
+              </div>
               <CardTitle className="text-2xl">Sign Up</CardTitle>
               <CardDescription>
                 Enter your information to create your account

@@ -22,9 +22,11 @@ export const fetchOrderByID = async (id: number) => {
       .from("orders_table")
       .select(
         `*,
-          user: user_table (*),
-          order_items: order_items_table (*, product_id (*)),
-         payment: payment_table (*, billing_method_id (*))
+          user: user_table(*),
+          order_items: order_items_table (*, product: product_id (*)),
+          payment: payment_table (*, billing: billing_method_id (*)),
+          shipping_address: user_address_table(*),
+          feedback: order_feedback_table (*)
          `,
       )
       .eq("id", id)
@@ -36,7 +38,7 @@ export const fetchOrderByID = async (id: number) => {
     if (!data) return null;
 
     // If there are no order items, return the order as is
-    if (!data.order_items || data.order.length === 0) return data;
+    if (!data.order_items || data.order_items.length === 0) return data;
 
     // Fetch signed URLs for all product images in the order items
     const itemsWithImages = await Promise.all(

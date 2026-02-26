@@ -12,23 +12,23 @@ interface NavbarProps {
 const Navbar = ({ title, brandLogoUrl, navItems, extraItems }: NavbarProps) => {
   return (
     <header className=" bg-background border-b border-border z-10 sticky ">
-      <div className=" max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-6 grid grid-cols-3">
-        <div className=" flex items-center justify-start gap-3">
+      <div className=" max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-6 grid grid-cols-5">
+        <div className="col-span-1 flex items-center justify-start gap-3">
           <img
             src={brandLogoUrl}
             alt={title}
             className="h-12 w-12 object-cover rounded-full"
           />
-          <h1 className="text-2xl hidden md:flex font-extrabold text-foreground love-light-regular">
+          <h1 className="text-3xl hidden md:flex font-extrabold text-foreground love-light-regular">
             {title}
           </h1>
         </div>
-        <div className="h-full w-full flex md:hidden items-center justify-center">
-          <h1 className="text-2xl   text-center font-extrabold text-foreground love-light-regular">
+        <div className="h-full w-full flex col-span-3 md:hidden items-center justify-center">
+          <h1 className="text-3xl  text-center font-extrabold text-foreground love-light-regular">
             {title}
           </h1>
         </div>
-        <nav className="hidden md:flex items-center justify-center gap-8">
+        <nav className="hidden md:flex items-center justify-center gap-8 md:col-span-3">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -50,7 +50,7 @@ const Navbar = ({ title, brandLogoUrl, navItems, extraItems }: NavbarProps) => {
             </Link>
           ))}
         </div>
-        <div className="flex justify-end  md:hidden">
+        <div className="col-span-1 flex justify-end  md:hidden">
           <Sheet>
             <SheetTrigger>
               <Menu className="h-5 w-5 mr-2" />

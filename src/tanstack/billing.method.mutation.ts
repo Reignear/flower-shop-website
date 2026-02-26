@@ -13,9 +13,9 @@ export const useInsertGcash = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["billingMethod"] });
     },
-    onError: (error) => {
-      console.error("Error inserting gcash billing method", error);
-    },
+    // onError: (error) => {
+    //   console.error("Error inserting gcash billing method", error);
+    // },
   });
 };
 
@@ -26,9 +26,9 @@ export const useInsertPayPal = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["billingMethod"] });
     },
-    onError: (error) => {
-      console.error("Error inserting paypal billing method", error);
-    },
+    // onError: (error) => {
+    //   console.error("Error inserting paypal billing method", error);
+    // },
   });
 };
 
@@ -39,9 +39,9 @@ export const useInsertBankTransfer = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["billingMethod"] });
     },
-    onError: (error) => {
-      console.error("Error inserting bank transfer billing method:", error);
-    },
+    // onError: (error) => {
+    //   console.error("Error inserting bank transfer billing method:", error);
+    // },
   });
 };
 export const useInsertCOD = () => {
@@ -51,8 +51,8 @@ export const useInsertCOD = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["billingMethod"] });
     },
-    onError: (error) => {
-      console.error("Error inserting cod billing method", error);
-    },
+    // onError: (error) => {
+    //   console.error("Error inserting cod billing method", error);
+    // },
   });
 };

@@ -8,7 +8,7 @@ import { useAdminCategory } from "@/hooks/use-admin-category";
 import { handleImageChange, ImagePreview } from "@/utils/image";
 import { useUpdateCategory } from "@/tanstack/category.mutation";
 import { useEffect } from "react";
-
+import { CustomToast } from "@/components/custom/custom-toast";
 interface CategoryFormEditProps {
   category_id: string;
   category: Category;
@@ -24,14 +24,15 @@ export default function CategoryFormEdit({
 }: CategoryFormEditProps) {
   const { register, handleSubmit, image, setImage } = useAdminCategory();
   const updateCategoryMutation = useUpdateCategory();
+  
   const onSubmit = async (category: Category) => {
     try {
-      await updateCategoryMutation.mutateAsync({
+      await CustomToast(updateCategoryMutation.mutateAsync({
         id: category_id,
         category,
         image,
         old_path: old_path,
-      });
+      }) ,"edit",);
       setEditCategory(null);
     } catch (error) {
       console.log("Error in updating category", error);

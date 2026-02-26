@@ -10,9 +10,9 @@ export const useInsertCategory = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
-    onError: (error) => {
-      console.error("Error inserting category:", error);
-    },
+    // onError: (error) => {
+    //   console.error("Error inserting category:", error);
+    // },
   });
 };
 
@@ -23,9 +23,9 @@ export const useUpdateCategory = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
-    onError: (error) => {
-      console.error("Error inserting category:", error);
-    },
+    // onError: (error) => {
+    //   console.error("Error inserting category:", error);
+    // },
   });
 };
 
@@ -36,8 +36,8 @@ export const useDeleteCategory = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["categories"] });
     },
-    onError: (error) => {
-      console.error("Error deleting category:", error);
-    },
+    // onError: (error) => {
+    //   console.error("Error deleting category:", error);
+    // },
   });
 };

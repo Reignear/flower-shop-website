@@ -10,6 +10,9 @@ export const useInsertProduct = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
+    // onError: (error) => {
+    //   console.error("Error inserting product:", error);
+    // },
   });
 };
 
@@ -20,6 +23,9 @@ export const useDeleteProduct = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
+    // onError: (error) => {
+    //   console.error("Error deleting product:", error);
+    // },
   });
 };
 
@@ -30,5 +36,8 @@ export const useUpdateProduct = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["products"] });
     },
+    // onError: (error) => {
+    //   console.error("Error updating product:", error);
+    // },
   });
 };

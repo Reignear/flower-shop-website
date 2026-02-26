@@ -26,7 +26,7 @@ export const useCategory = () => {
 export const useProduct = () => {
   return useQuery({
     queryKey: ["products"],
-    queryFn: () => fetchProduct(),
+    queryFn: fetchProduct,
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
@@ -50,7 +50,7 @@ export const useProductID = (productId: number) => {
 export const useCart = () => {
   return useQuery({
     queryKey: ["cart"],
-    queryFn: () => fetchCart(),
+    queryFn: fetchCart,
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
@@ -62,7 +62,7 @@ export const useCart = () => {
 export const useAddress = () => {
   return useQuery({
     queryKey: ["address"],
-    queryFn: () => fetchUserAddress(),
+    queryFn: fetchUserAddress,
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
@@ -74,7 +74,7 @@ export const useAddress = () => {
 export const useBillingMethod = () => {
   return useQuery({
     queryKey: ["billingMethod"],
-    queryFn: () => fetchBillingMethod(),
+    queryFn: fetchBillingMethod,
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
@@ -86,7 +86,7 @@ export const useBillingMethod = () => {
 export const useOrder = () => {
   return useQuery({
     queryKey: ["orders"],
-    queryFn: () => fetchOrders(),
+    queryFn: fetchOrders,
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
@@ -122,7 +122,7 @@ export const useOrderByStatus = (status: string) => {
 export const useLanding = () => {
   return useQuery({
     queryKey: ["landing"],
-    queryFn: () => fetchStats(),
+    queryFn: fetchStats,
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
@@ -134,7 +134,7 @@ export const useLanding = () => {
 export const useFeedback = () => {
   return useQuery({
     queryKey: ["feedback"],
-    queryFn: () => fetchFeedback(),
+    queryFn: fetchFeedback,
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),

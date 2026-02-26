@@ -21,11 +21,13 @@ export const fetchOrders = async () => {
     const { data, error } = await supabase
       .from("orders_table")
       .select(
-        ` reference_number,
+        ` id, 
+          reference_number,
           order_date,
           status,
           total_amount,
           delivery_date,
+          reason,
           user: user_table (first_name, middle_name, last_name),
           shipping_address: user_address_table(barangay, city)
          `,

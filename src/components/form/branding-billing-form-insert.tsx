@@ -15,6 +15,7 @@ import type {
   GcashMethod,
   PayPalMethod,
 } from "@/utils/interface";
+import { CustomToast } from "@/components/custom/custom-toast";
 export function BrandingBillingFormInsert() {
   const {
     activePaymentMethod,
@@ -37,28 +38,37 @@ export function BrandingBillingFormInsert() {
   const submitGcash = async (data: GcashMethod) => {
     try {
       console.log("Submitting GCash data:", data);
-      await insertGcashMutation.mutateAsync({ gcash: data });
+      await CustomToast(
+        insertGcashMutation.mutateAsync({ gcash: data }),
+        "insert",
+      );
     } catch (error) {
       console.log("Error in inserting gcash billing method", error);
     }
   };
   const submitPayPal = async (data: PayPalMethod) => {
     try {
-      await insertPayPalMutation.mutateAsync({ paypal: data });
+      await CustomToast(
+        insertPayPalMutation.mutateAsync({ paypal: data }),
+        "insert",
+      );
     } catch (error) {
       console.log("Error in inserting PayPal billing method", error);
     }
   };
   const submitBankTransfer = async (data: BankTransferMethod) => {
     try {
-      await insertBankTransferMutation.mutateAsync({ bank: data });
+      await CustomToast(
+        insertBankTransferMutation.mutateAsync({ bank: data }),
+        "insert",
+      );
     } catch (error) {
       console.log("Error in inserting bank transfer billing method", error);
     }
   };
   const submitCOD = async () => {
     try {
-      await insertCODMutation.mutateAsync();
+      await CustomToast(insertCODMutation.mutateAsync(), "insert");
     } catch (error) {
       console.log("Error in inserting COD billing method", error);
     }

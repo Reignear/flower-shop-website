@@ -47,7 +47,7 @@ export const insertOrder = async ({
     reference_no: 0,
     amount: total,
     currency: "PHP",
-    status: "completed",
+    status: "pending",
     payment_gateway: "COD",
   });
 

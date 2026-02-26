@@ -3,6 +3,7 @@ import type { Product } from "@/utils/interface";
 import { Button } from "@/components/ui/button";
 import { useDeleteProduct } from "@/tanstack/product.mutation";
 import { useAdminProduct } from "@/hooks/use-admin-product";
+import { CustomToast } from "@/components/custom/custom-toast";
 interface ProductFormDeleteProps {
   product: Product;
   setOpenDelete: () => void;
@@ -17,7 +18,10 @@ export default function ProductFormDelete({
 
   const onSubmit = async () => {
     try {
-      await productDeleteMutation.mutateAsync({ product });
+      await CustomToast(
+        productDeleteMutation.mutateAsync({ product }),
+        "delete",
+      );
       setOpenDelete();
     } catch (error) {
       console.log(error);

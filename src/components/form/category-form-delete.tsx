@@ -5,6 +5,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { useDeleteCategory } from "@/tanstack/category.mutation";
+import { CustomToast } from "@/components/custom/custom-toast";
 interface CategoryFormDeleteProps {
   category: Category;
   setDeleteCategory: (open: boolean) => void;
@@ -21,7 +22,10 @@ export default function CategoryFormDelete({
   const onSubmit = async () => {
     if (match) {
       try {
-        await deleteCategoryMutation.mutateAsync({ category });
+        await CustomToast(
+          deleteCategoryMutation.mutateAsync({ category }),
+          "delete",
+        );
         setDeleteCategory(false);
       } catch (error) {
         console.log("Error in deleting category", error);

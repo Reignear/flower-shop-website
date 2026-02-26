@@ -21,13 +21,14 @@ export const fetchOrderByStatus = async (status: string) => {
     const { data, error } = await supabase
       .from("orders_table")
       .select(
-        ` reference_number,
+        ` id, 
+          reference_number,
           order_date,
           status,
           total_amount,
           delivery_date,
-          user_table (first_name, middle_name, last_name),
-          user_address_table(barangay, city)
+          user: user_table (first_name, middle_name, last_name),
+          shipping_address: user_address_table(barangay, city)
          `,
       )
       .eq("status", status)

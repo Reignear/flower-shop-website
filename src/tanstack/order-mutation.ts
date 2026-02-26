@@ -8,5 +8,10 @@ export const useInsertOrder = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
+    // onError: (error) => {
+    //   console.error("Error inserting order:", error);
+    // },
   });
 };
+
+ 

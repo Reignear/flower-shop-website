@@ -41,7 +41,6 @@ export default function Category() {
     setEditCategory,
     setDeleteCategory,
   } = useAdminCategory();
-
   const { data: categories = [], isLoading: isCategoryLoading } = useCategory();
 
   return (

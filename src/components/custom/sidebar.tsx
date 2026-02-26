@@ -77,18 +77,17 @@ export default function SideBar({
           return (
             <div
               key={item.label}
-              className={`${isExpanded ? "bg-emerald-50" : ""} mb-2`}
+              className={`${isExpanded ? "bg-gray-100" : ""} mb-2`}
             >
               {hasDropdown ? (
                 <button
                   onClick={() => toggleDropdown(item.label)}
                   className={cn(
-                    `w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-allors ${item.disabled && "cursor-not-allowed opacity-50"}`,
+                    `w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all`,
                     isActive
                       ? "bg-emerald-600 text-sidebar-primary-foreground"
                       : "text-sidebar-foreground hover:bg-emerald-100",
                   )}
-                  disabled={item.disabled}
                 >
                   <Icon className="w-5 h-5" />
                   <span className="font-medium flex-1 text-left">
@@ -105,7 +104,7 @@ export default function SideBar({
                 <Link
                   to={item.href}
                   className={cn(
-                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${item.disabled && "cursor-not-allowed opacity-50"}`,
+                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors `,
                     isActive
                       ? "bg-emerald-600 text-sidebar-primary-foreground"
                       : "text-sidebar-foreground hover:bg-emerald-100",
@@ -135,7 +134,7 @@ export default function SideBar({
                         key={subItem.href}
                         to={subItem.href}
                         className={cn(
-                          `flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-sm ${subItem.disabled && "cursor-not-allowed opacity-50"}`,
+                          `flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-sm`,
                           isSubActive
                             ? "bg-emerald-600 text-sidebar-primary-foreground"
                             : "text-sidebar-foreground hover:bg-emerald-100",

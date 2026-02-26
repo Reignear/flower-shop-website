@@ -7,6 +7,7 @@ import { useAdminCategory } from "@/hooks/use-admin-category";
 import type { Category } from "@/utils/interface";
 import { handleImageChange, ImagePreview } from "@/utils/image";
 import { useInsertCategory } from "@/tanstack/category.mutation";
+import { CustomToast } from "@/components/custom/custom-toast";
 
 interface CategoryFormInsertProps {
   setOpenInsert: (open: boolean) => void;
@@ -19,7 +20,10 @@ export default function CategoryFormInsert({
   const insertCategoryMutation = useInsertCategory();
   const submitForm = async (data: Category) => {
     try {
-      await insertCategoryMutation.mutateAsync({ data, image });
+      await CustomToast(
+        insertCategoryMutation.mutateAsync({ data, image }),
+        "insert",
+      );
       setOpenInsert(false);
     } catch (error) {
       console.log("Error in inserting category", error);

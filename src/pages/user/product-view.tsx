@@ -43,7 +43,7 @@ export default function ProductView() {
       console.log("Error adding to cart", error);
     }
   };
-  
+
   return (
     <UserLayout breadCrumbs={ProductViewBreadCrumb()}>
       <Toaster position="bottom-right" />

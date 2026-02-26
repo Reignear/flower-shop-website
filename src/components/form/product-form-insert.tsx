@@ -18,6 +18,7 @@ import { Controller } from "react-hook-form";
 import { useInsertProduct } from "@/tanstack/product.mutation";
 import { useCategory } from "@/tanstack/fetch.hook";
 import { generateCode } from "@/utils/code";
+import { CustomToast } from "@/components/custom/custom-toast";
 interface ProductFormInsertProps {
   setOpenInsert: (open: boolean) => void;
 }
@@ -34,7 +35,10 @@ export default function ProductFormInsert({
 
   const onSubmit = async (product: Product) => {
     try {
-      await insertProductMutation.mutateAsync({ product, image });
+      await CustomToast(
+        insertProductMutation.mutateAsync({ product, image }),
+        "insert",
+      );
       setOpenInsert(false);
     } catch (error) {
       console.log("Error in inserting product", error);

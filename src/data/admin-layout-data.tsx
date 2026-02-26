@@ -7,7 +7,7 @@ import {
   BarChart3,
   ChartColumnStacked,
   Tag,
-  Truck,
+  Cuboid,
 } from "lucide-react";
 import { useParams } from "react-router-dom";
 export const navItems = [
@@ -15,52 +15,45 @@ export const navItems = [
     label: "Dashboard",
     href: "/admin/dashboard",
     icon: LayoutDashboard,
-    disabled: false,
   },
   {
     label: "Analytics",
     href: "/admin/analytics",
     icon: BarChart3,
-    disabled: true,
   },
   {
     label: "Products",
     href: "/admin/products",
     icon: Package,
-    disabled: false,
   },
   {
     label: "Category",
     href: "/admin/category",
     icon: ChartColumnStacked,
-    disabled: false,
   },
   {
     label: "Order",
     href: "/admin/order",
     items: [
-      { label: "All Orders", href: "/admin/order/all", disabled: false },
-      { label: "Pending", href: "/admin/order/pending", disabled: true },
-      { label: "On Process", href: "/admin/order/on-process", disabled: true },
-      { label: "For Pick Up", href: "/admin/order/for-pickup", disabled: true },
-      { label: "Delivered", href: "/admin/order/delivered", disabled: false },
-      { label: "Declined", href: "/admin/order/declined", disabled: true },
+      { label: "All Orders", href: "/admin/order/all" },
+      { label: "Pending", href: "/admin/order/pending" },
+      { label: "On Process", href: "/admin/order/on-process" },
+      { label: "For Pick Up", href: "/admin/order/for-pickup" },
+      { label: "Delivered", href: "/admin/order/delivered" },
+      { label: "Declined", href: "/admin/order/declined" },
     ],
-    icon: Truck,
-    disabled: false,
+    icon: Cuboid,
   },
   {
     label: "Feedback",
     href: "/admin/feedback",
     icon: MessageSquare,
-    disabled: true,
   },
-  { label: "Branding", href: "/admin/branding", icon: Tag, disabled: true },
+  { label: "Branding", href: "/admin/branding", icon: Tag },
   {
     label: "Settings",
     href: "/admin/settings",
     icon: Settings,
-    disabled: true,
   },
 ];
 

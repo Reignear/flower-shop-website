@@ -31,18 +31,17 @@ export default function SignUp() {
   };
   return (
     <AuthAnimationLayout>
-      <div className="min-h-screenflex items-center justify-center md:p-4 p-10">
+      <div className="min-h-screen flex items-center justify-center md:p-4 p-10">
         <div className="w-full max-w-lg  md:min-w-md space-y-6">
-          <div className="flex flex-col items-center gap-4">
-            <h1 className="text-3xl font-bold tracking-tight ">
-              CELESTIAL BLOOM
-            </h1>
-
-            <p className="text-gray-600 text-sm">Welcome back</p>
-          </div>
-
-          <Card className="border-gray-200 shadow-sm">
+          <Card className="border-gray-200 shadow-sm bg-white/95">
             <CardHeader className="space-y-2">
+              <div className="flex flex-col items-center gap-4">
+                <h1 className="text-3xl font-bold tracking-tight ">
+                  CELESTIAL BLOOM
+                </h1>
+
+                <p className="text-gray-600 text-sm">Welcome back</p>
+              </div>
               <CardTitle className="text-2xl">Sign In</CardTitle>
               <CardDescription>
                 Enter your email to access your account

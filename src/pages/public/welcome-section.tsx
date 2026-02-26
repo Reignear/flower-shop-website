@@ -26,11 +26,11 @@ export default function WelcomeSection() {
           </div>
 
           {/* Right Image */}
-          <div className="flex justify-center items-start lg:justify-end">
-            <div className="relative w-full max-w-md aspect-square">
+          <div className="flex justify-center items-start lg:justify-center">
+            <div className="relative w-full max-w-lg aspect-square">
               <img
-                src="/assets/images/landing-page.png"
-                alt="Woman holding beautiful flowers"
+                src="/assets/images/public/landing-page.svg"
+                alt="Landing Page Flower Design"
                 className="w-full h-full object-contain rounded-2xl "
               />
             </div>

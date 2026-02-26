@@ -8,5 +8,8 @@ export const useInsertFeedback = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orders"] });
     },
+    //  onError: (error) => {
+    //   console.error("Error inserting feedback:", error);
+    // },
   });
 };

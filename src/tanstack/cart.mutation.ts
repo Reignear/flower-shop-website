@@ -9,9 +9,9 @@ export const useInsertCart = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
-    onError: (error) => {
-      console.error("Error inserting cart item:", error);
-    },
+    // onError: (error) => {
+    //   console.error("Error inserting cart item:", error);
+    // },
   });
 };
 
@@ -24,5 +24,8 @@ export const useDeleteCart = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["cart"] });
     },
+    // onError: (error) => {
+    //   console.error("Error deleting cart item:", error);
+    // },
   });
 };

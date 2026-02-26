@@ -18,6 +18,8 @@ import { Controller } from "react-hook-form";
 import { useUpdateProduct } from "@/tanstack/product.mutation";
 import { useCategory } from "@/tanstack/fetch.hook";
 import { useEffect } from "react";
+import { CustomToast } from "@/components/custom/custom-toast";
+
 interface ProductFormInsertProps {
   product_id: string;
   product: Product;
@@ -39,12 +41,15 @@ export default function ProductFormUpdate({
 
   const onSubmit = async (product: Product) => {
     try {
-      await updateProductMutation.mutateAsync({
-        product_id,
-        product,
-        image,
-        old_path,
-      });
+      await CustomToast(
+        updateProductMutation.mutateAsync({
+          product_id,
+          product,
+          image,
+          old_path,
+        }),
+        "edit",
+      );
       setOpenUpdate(false);
     } catch (error) {
       console.log("Error in updating product", error);
