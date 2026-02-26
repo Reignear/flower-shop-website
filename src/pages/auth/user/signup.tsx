@@ -33,7 +33,7 @@ export default function SignUp() {
   return (
     <AuthAnimationLayout>
       <div className="min-h-screen flex items-center justify-center p-4">
-        <div className="w-full max-w-lg min-w-md space-y-6">
+        <div className="w-full max-w-lg md:min-w-md space-y-6">
           <div className="flex flex-col items-center gap-4">
             <h1 className="text-3xl font-bold tracking-tight ">
               CELESTIAL BLOOM
@@ -179,6 +179,7 @@ export default function SignUp() {
                 <Button
                   type="submit"
                   className="w-full bg-black hover:bg-gray-800 text-white rounded-full"
+                  disabled
                 >
                   Sign In {loading && <LoaderCircle className="animate-spin" />}
                 </Button>

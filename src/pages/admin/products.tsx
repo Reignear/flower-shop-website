@@ -35,6 +35,7 @@ import { useCategory, useProduct } from "@/tanstack/fetch.hook";
 import ProductFormDelete from "@/components/form/product-form-delete";
 import ProductFormUpdate from "@/components/form/product-form-update";
 import { productBreadCrumb } from "@/data/admin-layout-data";
+import CustomSkeleton from "@/components/custom/custom-skeleton";
 
 export default function Product() {
   const {
@@ -50,13 +51,13 @@ export default function Product() {
     setOpenUpdate,
   } = useAdminProduct();
 
-  const { data: product = [] } = useProduct();
+  const { data: product = [], isLoading: isProductLoading } = useProduct();
   const { data: category = [] } = useCategory();
   const totalProducts = product?.length || 0;
   const filteredProducts =
     activeCategory === "all"
       ? product
-      : product?.filter((p) => p.category_id === activeCategory);
+      : product?.filter((p) => p.category === activeCategory);
 
   return (
     <AdminLayout breadCrumbs={productBreadCrumb}>
@@ -161,6 +162,14 @@ export default function Product() {
             </Button>
           </div>
         </div>
+
+        {isProductLoading && (
+          <div className="grid grid-cols-2 lg:grid-cols-4 gap-5">
+            {Array.from({ length: 4 }).map((_, index) => (
+              <CustomSkeleton key={index} type="product-card" />
+            ))}
+          </div>
+        )}
         {layout === "list" && (
           <div>
             <div className="bg-card rounded-lg border border-border overflow-hidden">
@@ -211,7 +220,7 @@ export default function Product() {
                           {product.code}
                         </td>
                         <td className="py-4 px-6 text-muted-foreground">
-                          {capitalizeFirstLetter(product.category_id)}
+                          {capitalizeFirstLetter(product.category)}
                         </td>
                         <td className="py-4 px-6 text-foreground font-semibold">
                           ₱ {product.price}
@@ -326,7 +335,7 @@ export default function Product() {
                       {capitalizeFirstLetter(prod.name)}
                     </h1>
                     <h5 className="text-sm text-muted-foreground">
-                      {capitalizeFirstLetter(prod.category_id)}
+                      {capitalizeFirstLetter(prod.category)}
                     </h5>
                     <h2 className="text-lg font-semibold">₱ {prod.price}</h2>
                     <div className="mt-4">

@@ -201,3 +201,8 @@
 .skeleton-effect {
   animation: var(--animate-pulse);
 }
+.love-light-regular {
+  font-family: "Love Light", cursive;
+  font-weight: 500;
+  font-style: normal;
+}

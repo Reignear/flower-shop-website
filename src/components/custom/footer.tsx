@@ -88,14 +88,14 @@ const Footer = () => {
                 className="flex items-center gap-2 text-sm opacity-80 hover:opacity-100 transition-opacity"
               >
                 <Phone size={16} />
-                <span>+1 (234) 567-890</span>
+                <span>+63 994-730-8109</span>
               </a>
               <a
                 href="mailto:hello@flo.com"
                 className="flex items-center gap-2 text-sm opacity-80 hover:opacity-100 transition-opacity"
               >
                 <Mail size={16} />
-                <span>celestial.bloom@gmail.com</span>
+                <span>clarissamagallanes49@gmail.com</span>
               </a>
               <div className="flex items-center gap-2 text-sm opacity-80">
                 <MapPin size={16} />
@@ -118,7 +118,7 @@ const Footer = () => {
           {/* Social Media Links */}
           <div className="flex gap-4">
             <a
-              href="https://facebook.com"
+              href="https://www.facebook.com/celestial.bloom.73955"
               target="_blank"
               rel="noopener noreferrer"
               className="flex p-2 items-center justify-center w-10 h-10 rounded-full bg-white/80"
@@ -135,7 +135,7 @@ const Footer = () => {
               </svg>
             </a>
             <a
-              href="https://instagram.com"
+              href="https://www.instagram.com/celestiyal_bloom"
               target="_blank"
               rel="noopener noreferrer"
               className="flex p-2 items-center justify-center w-10 h-10 rounded-full bg-white/80 "
@@ -152,7 +152,7 @@ const Footer = () => {
               </svg>
             </a>
             <a
-              href="https://twitter.com"
+              href="https://tiktok.com"
               target="_blank"
               rel="noopener noreferrer"
               className="flex p-2 items-center justify-center w-10 h-10 rounded-full bg-white/80 "

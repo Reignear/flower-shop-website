@@ -83,11 +83,12 @@ export default function SideBar({
                 <button
                   onClick={() => toggleDropdown(item.label)}
                   className={cn(
-                    "w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-all",
+                    `w-full flex items-center gap-3 px-4 py-3 rounded-lg transition-allors ${item.disabled && "cursor-not-allowed opacity-50"}`,
                     isActive
                       ? "bg-emerald-600 text-sidebar-primary-foreground"
                       : "text-sidebar-foreground hover:bg-emerald-100",
                   )}
+                  disabled={item.disabled}
                 >
                   <Icon className="w-5 h-5" />
                   <span className="font-medium flex-1 text-left">
@@ -104,7 +105,7 @@ export default function SideBar({
                 <Link
                   to={item.href}
                   className={cn(
-                    "flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ",
+                    `flex items-center gap-3 px-4 py-3 rounded-lg transition-colors ${item.disabled && "cursor-not-allowed opacity-50"}`,
                     isActive
                       ? "bg-emerald-600 text-sidebar-primary-foreground"
                       : "text-sidebar-foreground hover:bg-emerald-100",
@@ -134,7 +135,7 @@ export default function SideBar({
                         key={subItem.href}
                         to={subItem.href}
                         className={cn(
-                          "flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-sm",
+                          `flex items-center gap-3 px-4 py-2 rounded-lg transition-colors text-sm ${subItem.disabled && "cursor-not-allowed opacity-50"}`,
                           isSubActive
                             ? "bg-emerald-600 text-sidebar-primary-foreground"
                             : "text-sidebar-foreground hover:bg-emerald-100",

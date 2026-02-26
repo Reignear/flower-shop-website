@@ -13,7 +13,8 @@ interface CustomSkeletonProps {
     | "description-text"
     | "small-text"
     | "large-text"
-    | "feedback-card";
+    | "feedback-card"
+    | "category-card";
   length?: number;
   width?: number | string;
   height?: number | string;
@@ -97,6 +98,15 @@ export default function CustomSkeleton({
       return (
         <div className="bg-gray-200 w-full h-80 rounded-lg skeleton-effect">
           <Skeleton />
+        </div>
+      );
+    case "category-card":
+      return (
+        <div
+          key={key}
+          className="bg-gray-200 w-full h-100 rounded-lg skeleton-effect"
+        >
+          <Skeleton width={width || "100%"} height={height || 80} />
         </div>
       );
     default:

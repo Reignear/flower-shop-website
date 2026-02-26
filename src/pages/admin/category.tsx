@@ -32,6 +32,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import CustomSkeleton from "@/components/custom/custom-skeleton";
 export default function Category() {
   const {
     openInsert,
@@ -41,7 +42,7 @@ export default function Category() {
     setDeleteCategory,
   } = useAdminCategory();
 
-  const { data: categories = [] } = useCategory();
+  const { data: categories = [], isLoading: isCategoryLoading } = useCategory();
 
   return (
     <DashboardLayout breadCrumbs={categoryBreadCrumb}>
@@ -115,6 +116,13 @@ export default function Category() {
             </CardContent>
           </Card>
         </div>
+        {isCategoryLoading && (
+          <div className="grid grid-cols-3 gap-5">
+            {Array.from({ length: 3 }).map((_, index) => (
+              <CustomSkeleton key={index} type={"category-card"} />
+            ))}
+          </div>
+        )}
         <div className="grid grid-cols-3 gap-5">
           {categories.map((category) => (
             <div

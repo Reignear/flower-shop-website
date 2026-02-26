@@ -6,14 +6,14 @@ export default function WelcomeSection() {
       <div className="max-w-7xl mx-auto">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
           <div className="flex flex-col justify-center">
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-foreground mb-6 text-balance">
+            <h1 className="text-4xl md:text-5xl md:text-start text-center lg:text-6xl font-bold text-foreground mb-6 text-balance">
               Gift and Flower for Your Beloved
             </h1>
-            <p className="text-base md:text-lg text-muted-foreground mb-8 leading-relaxed">
+            <p className="text-base md:text-lg md:text-start text-center text-muted-foreground mb-8 leading-relaxed">
               Priding ourselves on the quality, bold colours and sustainability
               of our products, will give you a boost of confidence.
             </p>
-            <div className="flex gap-4 mb-12">
+            <div className=" gap-4 mb-12 hidden md:flex">
               <Link to="/user/signin">
                 <Button
                   size="lg"
@@ -26,7 +26,7 @@ export default function WelcomeSection() {
           </div>
 
           {/* Right Image */}
-          <div className="flex justify-center lg:justify-end">
+          <div className="flex justify-center items-start lg:justify-end">
             <div className="relative w-full max-w-md aspect-square">
               <img
                 src="/assets/images/landing-page.png"

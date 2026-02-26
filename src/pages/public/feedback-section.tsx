@@ -25,9 +25,12 @@ export default function FeedbackSection({ feedbacks }: FeedbackSectionProps) {
       </div>
 
       <div className="max-w-7xl mx-auto overflow-hidden">
-        <div className="flex flex-row gap-8   animate-scroll-left ">
+        <div className="flex flex-row gap-8  animate-scroll-left">
           {feedbacks?.map((feedback, index) => (
-            <Card key={index} className="p-6 bg-card border-border min-w-lg  ">
+            <Card
+              key={index}
+              className="p-6 bg-card border-border md:min-w-lg  "
+            >
               <div className="flex gap-1 mb-4">
                 {[...Array(feedback.rating)].map((_, i) => (
                   <Star

@@ -31,8 +31,8 @@ export default function SignUp() {
   };
   return (
     <AuthAnimationLayout>
-      <div className="min-h-screenflex items-center justify-center p-4">
-        <div className="w-full max-w-lg min-w-md space-y-6">
+      <div className="min-h-screenflex items-center justify-center md:p-4 p-10">
+        <div className="w-full max-w-lg  md:min-w-md space-y-6">
           <div className="flex flex-col items-center gap-4">
             <h1 className="text-3xl font-bold tracking-tight ">
               CELESTIAL BLOOM
@@ -64,10 +64,8 @@ export default function SignUp() {
                     {...register("email")}
                     className="border-gray-200"
                   />
-                  {errors && errors.email && (
-                    <p className="text-xs text-red-600">
-                      {errors.email.message}
-                    </p>
+                  {errors && errors.password && errors.email && (
+                    <p className="text-xs text-red-600">Wrong credentials</p>
                   )}
                 </div>
 
@@ -85,16 +83,15 @@ export default function SignUp() {
                     {...register("password")}
                     className="border-gray-200"
                   />
-                  {errors && errors.password && (
-                    <p className="text-xs text-red-600">
-                      {errors.password.message}
-                    </p>
+                  {errors && errors.password && errors.email && (
+                    <p className="text-xs text-red-600">Wrong credentials</p>
                   )}
                 </div>
 
                 <Button
                   type="submit"
                   className="w-full bg-black hover:bg-gray-800 text-white rounded-full"
+                  disabled
                 >
                   Sign In {loading && <LoaderCircle className="animate-spin" />}
                 </Button>

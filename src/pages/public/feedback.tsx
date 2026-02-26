@@ -23,7 +23,7 @@ export default function FeedbackPage() {
           </div>
           {isFeedbackLoading && (
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
-              {Array.from({ length: 6 }).map((_, index) => (
+              {Array.from({ length: 4 }).map((_, index) => (
                 <CustomSkeleton type="feedback-card" key={index} />
               ))}
             </div>

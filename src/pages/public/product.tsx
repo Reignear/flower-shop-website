@@ -1,4 +1,3 @@
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Filter } from "lucide-react";
 import PublicLayout from "@/components/layout/public-layout";
@@ -7,10 +6,11 @@ import { useCategory, useProduct } from "@/tanstack/fetch.hook";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
 import { usePublicProduct } from "@/hooks/use-public-product";
 import { Link } from "react-router-dom";
+import CustomSkeleton from "@/components/custom/custom-skeleton";
 
 export default function Product() {
   const { activeCategory, setActiveCategory } = usePublicProduct();
-  const { data: productsData } = useProduct();
+  const { data: productsData, isLoading: isProductsLoading } = useProduct();
   console.log(productsData);
   const { data: categoriesData } = useCategory();
   console.log(categoriesData);
@@ -70,13 +70,19 @@ export default function Product() {
                 ))}
               </div>
             </div>
-
+            {isProductsLoading && (
+              <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+                {Array.from({ length: 4 }).map((_, index) => (
+                  <CustomSkeleton key={index} type={"product-card"} />
+                ))}
+              </div>
+            )}
             {/* Products Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
               {filteredProducts.map((product: Product) => (
-                <Card
+                <div
                   key={product.id}
-                  className="group overflow-hidden bg-card border-border hover:shadow-lg transition-shadow flex flex-col"
+                  className="group overflow-hidden border rounded-2xl hover:shadow-lg transition-shadow flex flex-col"
                 >
                   <div className="relative aspect-square overflow-hidden bg-muted">
                     <img
@@ -104,7 +110,7 @@ export default function Product() {
                       <Button className="w-full">Add to Cart</Button>
                     </Link>
                   </div>
-                </Card>
+                </div>
               ))}
             </div>
 

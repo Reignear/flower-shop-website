@@ -1,6 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "../ui/button";
-
+import { Menu } from "lucide-react";
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet";
 interface NavbarProps {
   title: string;
   brandLogoUrl: string;
@@ -10,18 +11,24 @@ interface NavbarProps {
 
 const Navbar = ({ title, brandLogoUrl, navItems, extraItems }: NavbarProps) => {
   return (
-    <header className="bg-background border-b border-border z-10 sticky ">
-      <div className="max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-6 flex items-center justify-between">
-        <div className="flex items-center gap-3">
+    <header className=" bg-background border-b border-border z-10 sticky ">
+      <div className=" max-w-7xl mx-auto px-4 md:px-8 lg:px-12 py-6 grid grid-cols-3">
+        <div className=" flex items-center justify-start gap-3">
           <img
             src={brandLogoUrl}
             alt={title}
             className="h-12 w-12 object-cover rounded-full"
           />
-          <h1 className="text-2xl font-bold text-foreground">{title}</h1>
+          <h1 className="text-2xl hidden md:flex font-extrabold text-foreground love-light-regular">
+            {title}
+          </h1>
         </div>
-
-        <nav className="hidden md:flex items-center gap-8">
+        <div className="h-full w-full flex md:hidden items-center justify-center">
+          <h1 className="text-2xl   text-center font-extrabold text-foreground love-light-regular">
+            {title}
+          </h1>
+        </div>
+        <nav className="hidden md:flex items-center justify-center gap-8">
           {navItems.map((item) => (
             <Link
               key={item.href}
@@ -32,7 +39,7 @@ const Navbar = ({ title, brandLogoUrl, navItems, extraItems }: NavbarProps) => {
             </Link>
           ))}
         </nav>
-        <div className="flex gap-5">
+        <div className="hidden md:flex items-center justify-end gap-5">
           {extraItems?.map((item) => (
             <Link
               key={item.href}
@@ -42,6 +49,39 @@ const Navbar = ({ title, brandLogoUrl, navItems, extraItems }: NavbarProps) => {
               <Button variant={"link"}>{item.label}</Button>
             </Link>
           ))}
+        </div>
+        <div className="flex justify-end  md:hidden">
+          <Sheet>
+            <SheetTrigger>
+              <Menu className="h-5 w-5 mr-2" />
+            </SheetTrigger>
+            <SheetContent className="w-48">
+              <div className="p-5 flex flex-col justify-between h-full">
+                <div className="flex flex-col items-start">
+                  {navItems.map((item) => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className="text-sm text-foreground hover:text-primary transition "
+                    >
+                      <Button variant={"ghost"}>{item.label}</Button>
+                    </Link>
+                  ))}
+                </div>
+                <div>
+                  {extraItems?.map((item) => (
+                    <Link
+                      key={item.href}
+                      to={item.href}
+                      className="text-sm text-foreground hover:text-primary transition"
+                    >
+                      <Button variant={"link"}>{item.label}</Button>
+                    </Link>
+                  ))}
+                </div>
+              </div>
+            </SheetContent>
+          </Sheet>
         </div>
       </div>
     </header>
