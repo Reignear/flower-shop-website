@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import type { SignUpFormDataUser } from "@/utils/types";
 
 export const useSignUpUser = () => {
+  const [signUpError, setSignUpError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
@@ -23,5 +24,7 @@ export const useSignUpUser = () => {
     register,
     handleSubmit,
     errors,
+    signUpError,
+    setSignUpError,
   };
 };

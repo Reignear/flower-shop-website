@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,18 +14,31 @@ import { useSignInUser } from "@/hooks/use-signin-user";
 import { LoaderCircle } from "lucide-react";
 import { SignInUser } from "@/supabase/auth/user-signin";
 import type { SignInFormDataUser } from "@/utils/types";
+import toast from "react-hot-toast";
 
 export default function SignUp() {
-  const { loading, setLoading, register, handleSubmit, errors, navigate } =
-    useSignInUser();
+  const {
+    loading,
+    setLoading,
+    register,
+    handleSubmit,
+    navigate,
+    signInError,
+    setSignInError,
+  } = useSignInUser();
 
   const submitForm = async (data: SignInFormDataUser) => {
     try {
       setLoading(true);
-      await SignInUser(data.email, data.password);
+      const { error } = await SignInUser(data.email, data.password);
+      if (error) {
+        setSignInError(error.message);
+        return;
+      }
+      setSignInError(null);
       navigate("/user/dashboard");
-    } catch (error) {
-      console.log("Error in signin part", error);
+    } catch (error: any) {
+      toast.error(`${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -63,9 +77,6 @@ export default function SignUp() {
                     {...register("email")}
                     className="border-gray-200"
                   />
-                  {errors && errors.password && errors.email && (
-                    <p className="text-xs text-red-600">Wrong credentials</p>
-                  )}
                 </div>
 
                 <div className="space-y-2">
@@ -82,15 +93,17 @@ export default function SignUp() {
                     {...register("password")}
                     className="border-gray-200"
                   />
-                  {errors && errors.password && errors.email && (
-                    <p className="text-xs text-red-600">Wrong credentials</p>
-                  )}
                 </div>
+
+                {signInError && (
+                  <p className="text-xs text-center text-red-600">
+                    {signInError}
+                  </p>
+                )}
 
                 <Button
                   type="submit"
                   className="w-full bg-black hover:bg-gray-800 text-white rounded-full"
-                  disabled
                 >
                   Sign In {loading && <LoaderCircle className="animate-spin" />}
                 </Button>

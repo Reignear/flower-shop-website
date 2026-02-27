@@ -6,6 +6,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const useSignInUser = () => {
+  const [signInError, setSignInError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
   const {
@@ -22,5 +23,7 @@ export const useSignInUser = () => {
     handleSubmit,
     errors,
     navigate,
+    signInError,
+    setSignInError,
   };
 };

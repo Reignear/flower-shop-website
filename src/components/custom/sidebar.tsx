@@ -77,7 +77,7 @@ export default function SideBar({
           return (
             <div
               key={item.label}
-              className={`${isExpanded ? "bg-gray-100" : ""} mb-2`}
+              className={`${isExpanded ? "bg-gray-100 pb-2" : ""} `}
             >
               {hasDropdown ? (
                 <button

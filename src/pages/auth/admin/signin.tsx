@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -11,18 +12,33 @@ import type { SignInFormData } from "@/utils/types";
 import { SignInAdmin } from "@/supabase/auth/admin-signin";
 import { useSignInAdmin } from "@/hooks/use-signin-admin";
 import { LoaderCircle } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function Login() {
-  const { register, handleSubmit, errors, loading, setLoading, navigate } =
-    useSignInAdmin();
+  const {
+    register,
+    handleSubmit,
+    errors,
+    loading,
+    setLoading,
+    navigate,
+    signinError,
+    setSignInError,
+  } = useSignInAdmin();
 
   const submitForm = async (data: SignInFormData) => {
     try {
       setLoading(true);
-      await SignInAdmin(data.email, data.password);
+      const { error } = await SignInAdmin(data.email, data.password);
+      if (error) {
+        setSignInError(error.message);
+        toast.error(`${error.message}`);
+        return;
+      }
       navigate("/admin/dashboard");
-    } catch (error) {
-      console.log("Error in signin part", error);
+    } catch (error: any) {
+      setSignInError(error.message);
+      toast.error(`${error.message}`);
     } finally {
       setLoading(false);
     }
@@ -30,6 +46,7 @@ export default function Login() {
 
   return (
     <div className="min-h-screen bg-stone-50 flex items-center justify-center p-4">
+      <Toaster position="bottom-right" />
       <div className="space-y-5">
         <div className="flex flex-col items-center gap-2">
           <h1 className="text-3xl font-bold tracking-tight hover:text-gray-600 transition">
@@ -94,6 +111,11 @@ export default function Login() {
                     {errors.password && (
                       <p className="text-red-500 text-xs">
                         {errors.password.message}
+                      </p>
+                    )}
+                    {signinError && (
+                      <p className="text-red-500 text-center text-xs">
+                        {signinError}
                       </p>
                     )}
                   </div>

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button } from "@/components/ui/button";
 import {
   Card,
@@ -13,6 +14,7 @@ import { useSignUpUser } from "@/hooks/use-signup-user";
 import { SignUpUser } from "@/supabase/auth/user-signup";
 import type { SignUpFormDataUser } from "@/utils/types";
 import { LoaderCircle } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
 
 export default function SignUp() {
   const { loading, setLoading, navigate, register, handleSubmit, errors } =
@@ -23,8 +25,8 @@ export default function SignUp() {
       setLoading(true);
       await SignUpUser(data);
       navigate("/user/signin");
-    } catch (error) {
-      console.error("Error during user sign up:", error);
+    } catch (error: any) {
+      toast.error(`${error.message}`);
       setLoading(false);
     } finally {
       setLoading(false);
@@ -32,6 +34,7 @@ export default function SignUp() {
   };
   return (
     <AuthAnimationLayout>
+      <Toaster position="bottom-right" />
       <div className="min-h-screen flex items-center justify-center p-4">
         <div className="w-full max-w-lg md:min-w-md space-y-6">
           <Card className="border-gray-200 shadow-sm bg-white/95">
@@ -178,7 +181,6 @@ export default function SignUp() {
                 <Button
                   type="submit"
                   className="w-full bg-black hover:bg-gray-800 text-white rounded-full"
-                  disabled
                 >
                   Sign In {loading && <LoaderCircle className="animate-spin" />}
                 </Button>

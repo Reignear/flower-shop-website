@@ -2,13 +2,13 @@ import { supabase } from "@/supabase/client";
 import type { SignUp } from "@/utils/interface";
 
 export const SignUpUser = async (data: SignUp) => {
-  const { data: authData, error: authError } = await supabase.auth.signUp({
+  const { data: authData, error } = await supabase.auth.signUp({
     email: data.email,
     password: data.password,
   });
 
-  if (authError) {
-    throw authError;
+  if (error) {
+    throw error;
   }
   if (authData.user) {
     const { error: profileError } = await supabase.from("user_table").insert({
