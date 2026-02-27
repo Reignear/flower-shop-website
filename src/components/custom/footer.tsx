@@ -99,7 +99,7 @@ const Footer = () => {
               </a>
               <div className="flex items-center gap-2 text-sm opacity-80">
                 <MapPin size={16} />
-                <span>Balagunan, Sto Tomas Davao Del Norte</span>
+                <span>Balagunan, Sto Tomas, Davao Del Norte</span>
               </div>
             </div>
           </div>

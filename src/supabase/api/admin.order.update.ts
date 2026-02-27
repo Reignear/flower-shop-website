@@ -2,17 +2,17 @@ import { supabase } from "@/supabase/client";
 export const updateOrderStatus = async ({
   id,
   status,
-  reason,
+  remarks,
 }: {
   id: number;
   status: string;
-  reason?: string;
+  remarks?: string;
 }) => {
   console.log("Updating order status with:", { id, status });
   try {
     const { data, error } = await supabase
       .from("orders_table")
-      .update({ status: status, reason: reason ? reason : null })
+      .update({ status: status, remarks: remarks ? remarks : null })
       .eq("id", id)
       .select();
 

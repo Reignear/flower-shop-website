@@ -2,9 +2,8 @@ import { Card } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Separator } from "@/components/ui/separator";
-import { ChevronLeft } from "lucide-react";
 import AdminLayout from "@/components/layout/admin-layout";
-import { Link, useNavigate, useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useOrderById } from "@/tanstack/fetch.hook";
 import { getStatusBadgeColor } from "@/utils/status";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
@@ -16,6 +15,7 @@ import { useUpdateOrderStatus } from "@/tanstack/order-status-mutation";
 import { CustomToast } from "@/components/custom/custom-toast";
 import toast, { Toaster } from "react-hot-toast";
 import { Textarea } from "@/components/ui/textarea";
+import { usePendingBreadCrumb } from "@/data/admin-order-data";
 
 export default function OrderDetailsPage() {
   const navigate = useNavigate();
@@ -43,13 +43,13 @@ export default function OrderDetailsPage() {
   };
 
   // Decline Order
-  const submitDecline = async (data: { reason: string }) => {
+  const submitDecline = async (data: { remarks: string }) => {
     try {
       await CustomToast(
         updateOrderStatus.mutateAsync({
           id: Number(id),
           status: "declined",
-          reason: data.reason,
+          remarks: data.remarks,
         }),
         "edit",
       );
@@ -61,16 +61,9 @@ export default function OrderDetailsPage() {
     }
   };
   return (
-    <AdminLayout>
+    <AdminLayout breadCrumbs={usePendingBreadCrumb()}>
       <Toaster position="bottom-right" />
       <div className="p-8 space-y-6">
-        <Link to="/admin/order/pending">
-          <Button variant="ghost" className="gap-2">
-            <ChevronLeft className="w-4 h-4" />
-            Back
-          </Button>
-        </Link>
-
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
@@ -215,10 +208,10 @@ export default function OrderDetailsPage() {
                 <div className="space-y-4">
                   <div className="space-y-2">
                     <p className="text-sm text-muted-foreground">
-                      (If decline) Reason*
+                      (If decline) remarks*
                     </p>
                     <Textarea
-                      {...register("reason", { required: true })}
+                      {...register("remarks", { required: true })}
                     ></Textarea>
                   </div>
                   <div>
@@ -252,7 +245,7 @@ export default function OrderDetailsPage() {
                   </span>
                 </div>
                 <div className="flex justify-between">
-                  <span className="text-muted-foreground">Current Status:</span>
+                  <span className="text-muted-foreground">Payment Status:</span>
                   <Badge
                     className={`${getStatusBadgeColor(capitalizeFirstLetter(Order?.payment?.[0]?.status))} p-1 px-3`}
                   >

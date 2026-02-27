@@ -138,7 +138,10 @@ export default function OrderOnProcess() {
 
                     {/* Action Buttons */}
                     <div className="flex gap-2 pt-2">
-                      <Link to={""} className="w-full">
+                      <Link
+                        to={`/admin/order/on-process/${order.id}`}
+                        className="w-full"
+                      >
                         <Button variant={"customized"} className="w-full">
                           View Details
                         </Button>

@@ -211,5 +211,5 @@ export type Order = {
   delivery_date: string;
   user: User;
   feedback?: OrderFeedback[];
-  reason?: string;
+  remarks?: string;
 };

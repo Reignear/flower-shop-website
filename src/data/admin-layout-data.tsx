@@ -1,4 +1,4 @@
-import { useProductID } from "@/tanstack/fetch.hook";
+ 
 import {
   LayoutDashboard,
   MessageSquare,
@@ -9,7 +9,7 @@ import {
   Tag,
   Cuboid,
 } from "lucide-react";
-import { useParams } from "react-router-dom";
+ 
 export const navItems = [
   {
     label: "Dashboard",
@@ -61,29 +61,15 @@ export const roleDashboard = "Admin Dashboard";
 export const brandName = "Celestial Bloom";
 
 export const dashboardBreadCrumb = [
-  { label: "Admin", href: "/admin/dashboard" },
   { label: "Dashboard", href: "/admin/dashboard" },
 ];
 
 export const categoryBreadCrumb = [
-  { label: "Admin", href: "/admin/dashboard" },
+  { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Category", href: "/admin/category" },
 ];
 export const productBreadCrumb = [
-  { label: "Admin", href: "/admin/dashboard" },
+  { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Product", href: "/admin/products" },
 ];
 
-export function useViewProductBreadCrumb() {
-  const { id: productId } = useParams();
-  const { data: product } = useProductID(Number(productId));
-
-  return [
-    { label: "Admin", href: "/admin/dashboard" },
-    { label: "Product", href: "/admin/products" },
-    {
-      label: `${product?.name || "Loading..."}`,
-      href: `/admin/product/${productId}`,
-    },
-  ];
-}

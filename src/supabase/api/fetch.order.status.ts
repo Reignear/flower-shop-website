@@ -45,9 +45,9 @@ export const fetchOrderByStatus = async (status: string) => {
       .from("orders_table")
       .select(
         `*,
-          order_items_table (
+          order_items:order_items_table (
             *,
-            product: product_id (*)),
+          product: product_id (*)),
           payment: payment_table (*),
           shipping_address: user_address_table(*)
          `,

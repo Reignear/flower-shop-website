@@ -27,7 +27,6 @@ export const fetchOrders = async () => {
           status,
           total_amount,
           delivery_date,
-          reason,
           user: user_table (first_name, middle_name, last_name),
           shipping_address: user_address_table(barangay, city)
          `,

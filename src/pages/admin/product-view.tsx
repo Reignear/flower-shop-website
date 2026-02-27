@@ -10,7 +10,7 @@ import {
 } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import AdminLayout from "@/components/layout/admin-layout";
-import { useViewProductBreadCrumb } from "@/data/admin-layout-data";
+import { useViewProductBreadCrumb } from "@/data/admin-product-data";
 import { useParams } from "react-router-dom";
 import { useProductID } from "@/tanstack/fetch.hook";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
@@ -24,11 +24,10 @@ import { formatDate } from "@/utils/date";
 export default function ProductView() {
   const { id: productId } = useParams();
   const { data: product } = useProductID(Number(productId));
-  const breadCrumb = useViewProductBreadCrumb();
   const { imgLoaded, setImgLoaded } = useAdminProductView();
 
   return (
-    <AdminLayout breadCrumbs={breadCrumb}>
+    <AdminLayout breadCrumbs={useViewProductBreadCrumb()}>
       <div className="grid grid-cols-5 gap-5 p-5">
         <div className="col-span-2">
           <div className="relative aspect-square mb-4 bg-muted rounded-md overflow-hidden flex items-center justify-center ">
@@ -189,7 +188,7 @@ export default function ProductView() {
                         {capitalizeFirstLetter(fd.user.last_name)}
                       </p>
                       <p className="text-sm text-muted-foreground">
-                        {fd.created_at}
+                        {formatDate(fd.created_at)}
                       </p>
                     </div>
                     <div className="flex gap-0.5">

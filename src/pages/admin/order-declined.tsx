@@ -22,7 +22,7 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { Eye, LayoutGrid, Table as TableIcon } from "lucide-react";
-import {useAdminOrderDeclined} from "@/hooks/use-admin-order-declined";
+import { useAdminOrderDeclined } from "@/hooks/use-admin-order-declined";
 
 export default function OrderDeclined() {
   const { data: orders, isLoading: isOrdersLoading } =
@@ -137,7 +137,10 @@ export default function OrderDeclined() {
 
                     {/* Action Buttons */}
                     <div className="flex gap-2 pt-2">
-                      <Link to={""} className="w-full">
+                      <Link
+                        to={`/admin/order/declined/${order.id}`}
+                        className="w-full"
+                      >
                         <Button variant={"customized"} className="w-full">
                           View Details
                         </Button>

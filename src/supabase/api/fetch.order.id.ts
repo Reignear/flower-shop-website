@@ -27,6 +27,7 @@ export const fetchOrderByID = async (id: number) => {
           payment: payment_table (*, billing: billing_method_id (*)),
           shipping_address: user_address_table(*),
           feedback: order_feedback_table (*)
+          
          `,
       )
       .eq("id", id)
