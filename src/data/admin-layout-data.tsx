@@ -1,4 +1,3 @@
- 
 import {
   LayoutDashboard,
   MessageSquare,
@@ -9,7 +8,7 @@ import {
   Tag,
   Cuboid,
 } from "lucide-react";
- 
+
 export const navItems = [
   {
     label: "Dashboard",
@@ -47,6 +46,10 @@ export const navItems = [
   {
     label: "Feedback",
     href: "/admin/feedback",
+    items: [
+      { label: "Order Feedback", href: "/admin/feedback/order" },
+      { label: "Product Feedback", href: "/admin/feedback/product" },
+    ],
     icon: MessageSquare,
   },
   { label: "Branding", href: "/admin/branding", icon: Tag },
@@ -72,4 +75,3 @@ export const productBreadCrumb = [
   { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Product", href: "/admin/products" },
 ];
-

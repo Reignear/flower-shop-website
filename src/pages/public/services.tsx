@@ -26,7 +26,7 @@ const Services = () => {
         "Create your own bouquet by choosing flowers, colors, and styles that match your personal taste and occasion.",
       image: CustomizedBouquets,
       features: [
-        "Choose Your Flowers",
+        "Choose Your Type Flowers",
         "Personalized Wrapping",
         "Custom Message Cards",
       ],

@@ -1,24 +1,12 @@
-import CustomDialog from "@/components/custom/custom-dialog";
 import AdminLayout from "@/components/layout/admin-layout";
 import { Button } from "@/components/ui/button";
 import {
-  Plus,
-  Edit,
-  Trash2,
-  Eye,
   List,
   LayoutGrid,
   ArrowUpRight,
+  ChartNoAxesGantt,
+  Search,
 } from "lucide-react";
-import {
-  insertTitle,
-  insertDescription,
-  deleteTitle,
-  deleteDescription,
-  editTitle,
-  editDescription,
-} from "@/data/admin-product-data";
-import ProductFormInsert from "@/components/form/product-form-insert";
 import { useAdminProduct } from "@/hooks/use-admin-product";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
 import { Link } from "react-router-dom";
@@ -32,23 +20,19 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useCategory, useProduct } from "@/tanstack/fetch.hook";
-import ProductFormDelete from "@/components/form/product-form-delete";
-import ProductFormUpdate from "@/components/form/product-form-update";
 import { productBreadCrumb } from "@/data/admin-layout-data";
 import CustomSkeleton from "@/components/custom/custom-skeleton";
+import { Input } from "@/components/ui/input";
+import { filterProducts } from "@/utils/filter";
 
 export default function Product() {
   const {
-    openInsert,
-    setOpenInsert,
     layout,
     setLayout,
     activeCategory,
     setActiveCategory,
-    openDelete,
-    setOpenDelete,
-    openUpdate,
-    setOpenUpdate,
+    setSearch,
+    search,
   } = useAdminProduct();
 
   const { data: product = [], isLoading: isProductLoading } = useProduct();
@@ -56,36 +40,31 @@ export default function Product() {
   const totalProducts = product?.length || 0;
   const filteredProducts =
     activeCategory === "all"
-      ? product
-      : product?.filter((p) => p.category === activeCategory);
-
+      ? filterProducts(product, search)
+      : filterProducts(
+          product.filter((p) => p.category === activeCategory),
+          search,
+        );
   return (
     <AdminLayout breadCrumbs={productBreadCrumb}>
       <div className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-2">
-              Products Management
+              Products Overview
             </h1>
             <p className="text-muted-foreground">
-              Manage all products and inventory
+              View and manage all products in your inventory
             </p>
           </div>
-
-          <CustomDialog
-            open={openInsert}
-            openChange={setOpenInsert}
-            width="md:max-w-4xl"
-            title={insertTitle}
-            description={insertDescription}
-            trigger={
-              <Button>
-                <Plus className="w-5 h-5" /> Add New Product
+          <div className="flex items-center gap-2">
+            <Link to="/admin/products/manage">
+              <Button variant={"outline"}>
+                <ChartNoAxesGantt className="w-5 h-5" />
+                Manage Product
               </Button>
-            }
-          >
-            <ProductFormInsert setOpenInsert={setOpenInsert} />
-          </CustomDialog>
+            </Link>
+          </div>
         </div>
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
@@ -123,9 +102,18 @@ export default function Product() {
           </div>
         </div>
         <div className="flex justify-between w-full">
-          <div className="flex gap-2 mb-6 flex-wrap">
+          <div className="flex gap-2 mb-6 ">
+            <div className="flex items-center gap-2">
+              <Search className="text-muted-foreground w-5 h-5" />
+              <Input
+                className="w-sm"
+                placeholder="Search products name"
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+              />
+            </div>
             <Select value={activeCategory} onValueChange={setActiveCategory}>
-              <SelectTrigger className="w-full min-w-2xs max-w-xs">
+              <SelectTrigger className=" w-xxs">
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
@@ -155,8 +143,8 @@ export default function Product() {
               <LayoutGrid />
             </Button>
             <Button
-              variant={`${layout === "list" ? "customized" : "outline"}`}
-              onClick={() => setLayout("list")}
+              variant={`${layout === "table" ? "customized" : "outline"}`}
+              onClick={() => setLayout("table")}
             >
               <List />
             </Button>
@@ -170,7 +158,7 @@ export default function Product() {
             ))}
           </div>
         )}
-        {layout === "list" && (
+        {layout === "table" && (
           <div>
             <div className="bg-card rounded-lg border border-border overflow-hidden">
               <div className="overflow-x-auto">
@@ -192,9 +180,6 @@ export default function Product() {
 
                       <th className="text-left py-4 px-6 font-semibold text-muted-foreground">
                         Status
-                      </th>
-                      <th className="text-center  py-4 px-6 font-semibold text-muted-foreground">
-                        Actions
                       </th>
                     </tr>
                   </thead>
@@ -236,69 +221,6 @@ export default function Product() {
                           >
                             {capitalizeFirstLetter(product.status)}
                           </span>
-                        </td>
-                        <td className="py-4 px-6">
-                          <div className="flex items-center justify-center gap-2">
-                            <Link to={`/admin/products/${product.id}`}>
-                              <Button
-                                size="sm"
-                                variant="outline"
-                                className="border-border text-muted-foreground hover:bg-muted p-2 bg-transparent"
-                                title="View"
-                              >
-                                <Eye className="w-4 h-4" />
-                              </Button>
-                            </Link>
-                            <CustomDialog
-                              width="md:max-w-3xl"
-                              title={editTitle}
-                              description={editDescription}
-                              open={openUpdate === product.id}
-                              openChange={(open) =>
-                                setOpenUpdate(open ? product.id : null)
-                              }
-                              trigger={
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  className="border-border text-muted-foreground hover:bg-muted p-2 bg-transparent"
-                                  title="Edit"
-                                >
-                                  <Edit className="w-4 h-4" />
-                                </Button>
-                              }
-                            >
-                              <ProductFormUpdate
-                                product_id={product.id}
-                                product={product}
-                                old_path={product.image}
-                                setOpenUpdate={() => setOpenUpdate(null)}
-                              />
-                            </CustomDialog>
-                            <CustomDialog
-                              title={deleteTitle}
-                              description={deleteDescription}
-                              open={openDelete === product.id}
-                              openChange={(open) =>
-                                setOpenDelete(open ? product.id : null)
-                              }
-                              trigger={
-                                <Button
-                                  size="sm"
-                                  variant="outline"
-                                  className="border-border text-destructive hover:bg-destructive/20 p-2 bg-transparent"
-                                  title="Delete"
-                                >
-                                  <Trash2 className="w-4 h-4" />
-                                </Button>
-                              }
-                            >
-                              <ProductFormDelete
-                                product={product}
-                                setOpenDelete={() => setOpenDelete(null)}
-                              />
-                            </CustomDialog>
-                          </div>
                         </td>
                       </tr>
                     ))}

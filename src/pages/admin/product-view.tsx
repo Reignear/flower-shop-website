@@ -175,7 +175,7 @@ export default function ProductView() {
               </CardDescription>
             </CardHeader>
             <CardContent className="space-y-4">
-              {product?.feedback.map((fd: ProductFeedback) => (
+              {product?.feedback?.slice(0, 5).map((fd: ProductFeedback) => (
                 <div
                   key={fd.id}
                   className="border-t border-border pt-4 first:border-t-0 first:pt-0"

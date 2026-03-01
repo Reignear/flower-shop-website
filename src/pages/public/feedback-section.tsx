@@ -6,7 +6,7 @@ import { SquareArrowOutUpRight, Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface FeedbackSectionProps {
-  feedbacks: OrderFeedback[];
+  feedbacks: OrderFeedback[] | undefined;
 }
 export default function FeedbackSection({ feedbacks }: FeedbackSectionProps) {
   return (

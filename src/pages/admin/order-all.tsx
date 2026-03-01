@@ -27,7 +27,6 @@ import {
 export default function OrdersPage() {
   const { activeLayout, setActiveLayout } = useAdminOrderAll();
   const { data: orders, isLoading: isOrderLoading } = useOrder();
-  console.log("orders", orders);
   return (
     <AdminLayout className="p-8" breadCrumbs={orderAllBreadCrumb}>
       <div className="space-y-6">

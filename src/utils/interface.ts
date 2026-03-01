@@ -55,6 +55,7 @@ export interface ProductFeedback {
   rating: number;
   feedback: string;
   created_at: string;
+  status: string;
 }
 export interface OrderFeedback {
   id: number;
@@ -63,6 +64,7 @@ export interface OrderFeedback {
   rating: number;
   feedback: string;
   created_at: string;
+  status: string;
 }
 
 export interface Product {

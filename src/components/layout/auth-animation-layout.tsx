@@ -5,7 +5,7 @@ interface AuthAnimationLayoutProps {
 const AuthAnimationLayout = ({ children }: AuthAnimationLayoutProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 overflow-hidden">
-      <div className="hidden md:flex gap-2 h-screen overflow-hidden border">
+      <div className="hidden md:flex gap-2 h-screen overflow-hidden ">
         <div className="h-full w-full flex items-center justify-center">
           <img
             src="/assets/images/public/bouquet-collage.svg"

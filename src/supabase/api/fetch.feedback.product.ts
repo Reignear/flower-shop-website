@@ -1,14 +1,20 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { supabase } from "@/supabase/client";
 
-export const fetchFeedback = async () => {
-  const { data, error } = await supabase
+export const fetchFeedbackProduct = async ({ status }: { status: string }) => {
+  let query = supabase
     .from("product_feedback_table")
     .select(
-      "id, feedback, rating, created_at, user: user_table (id, first_name, middle_name, last_name), product: product_table (id, name, image )",
+      "id, feedback, rating, created_at, status, user: user_table (id, first_name, middle_name, last_name), product: product_table (id, name, image )",
     )
     .order("created_at", { ascending: false })
-    .limit(50);
+    .limit(100);
+
+  if (status !== "all") {
+    query = query.eq("status", status);
+  }
+
+  const { data, error } = await query;
 
   if (error) {
     console.error("Error fetching feedback:", error);

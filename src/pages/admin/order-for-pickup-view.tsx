@@ -20,13 +20,14 @@ export default function OrderForPickupView() {
   const navigate = useNavigate();
   const { data: Order, isLoading: isOrderLoading } = useOrderById(Number(id));
   const updateOrderMutation = useUpdateOrderStatus();
-
+  console.log("Fetched order details:", Order);
   const handleStatusUpdate = async () => {
     try {
       await CustomToast(
         updateOrderMutation.mutateAsync({
           id: Number(id),
           status: "delivered",
+          payment_gateway: Order?.payment?.[0]?.payment_gateway,
         }),
         "edit",
       );
@@ -34,7 +35,7 @@ export default function OrderForPickupView() {
         navigate("/admin/order/for-pickup");
       }, 1500);
     } catch (error) {
-      toast(`Error updating status: ${error}`);
+      toast.error(`Error updating status: ${error}`);
     }
   };
   return (

@@ -9,7 +9,8 @@ import { fetchOrders } from "@/supabase/api/fetch.order";
 import { fetchOrderByID } from "@/supabase/api/fetch.order.id";
 import { fetchOrderByStatus } from "@/supabase/api/fetch.order.status";
 import { fetchStats } from "@/supabase/api/fetch.landing";
-import { fetchFeedback } from "@/supabase/api/fetch.feedback";
+import { fetchFeedbackOrder } from "@/supabase/api/fetch.feedback.order";
+import { fetchFeedbackProduct } from "@/supabase/api/fetch.feedback.product";
 
 export const useCategory = () => {
   return useQuery({
@@ -131,10 +132,22 @@ export const useLanding = () => {
   });
 };
 
-export const useFeedback = () => {
+export const useFeedbackProduct = (status: string) => {
   return useQuery({
-    queryKey: ["feedback"],
-    queryFn: fetchFeedback,
+    queryKey: ["feedbackProduct", status],
+    queryFn: () => fetchFeedbackProduct({ status }),
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+};
+
+export const useFeedbackOrder = (status: string) => {
+  return useQuery({
+    queryKey: ["feedbackOrder", status],
+    queryFn: () => fetchFeedbackOrder({ status }),
     staleTime: 5 * 60 * 1000,
     retry: 3,
     retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),

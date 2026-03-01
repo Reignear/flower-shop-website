@@ -31,3 +31,4 @@ export type FeedBackFormValues = {
   rating: number;
   feedback: string;
 };
+export type FeedbackStatus = "published" | "pending";

@@ -5,7 +5,8 @@ import Product from "@/pages/public/product-section";
 import Stats from "@/pages/public/stats-section";
 import Feedback from "@/pages/public/feedback-section";
 import Services from "@/pages/public/services-section";
-import { useLanding } from "@/tanstack/fetch.hook";
+import { useFeedbackOrder, useLanding } from "@/tanstack/fetch.hook";
+import type { OrderFeedback } from "@/utils/interface";
 
 export default function Landing() {
   const { data } = useLanding();
@@ -16,7 +17,6 @@ export default function Landing() {
     experience: data?.experience || 0,
   };
 
-  // For any additional fields that might be missing, provide default values to avoid undefined errors
   const products = (data?.bestSeller || []).map((item: any) => ({
     id: item.id,
     name: item.name,
@@ -30,24 +30,26 @@ export default function Landing() {
     category: item.category || "",
   }));
 
-  const feedbacks = (data?.feedback || []).map((item: any) => ({
-    id: item.id,
-    feedback: item.feedback,
-    rating: item.rating,
-    user: {
-      id: item.user?.id || "",
-      first_name: item.user?.first_name || "",
-      middle_name: item.user?.middle_name || "",
-      last_name: item.user?.last_name || "",
-      email: item.user?.email || "",
-      birthdate: item.user?.birthdate || "",
-      role: item.user?.role || "",
-    },
-    created_at: item.created_at || "",
-    order: item.order?.id || "",
-  }));
-
-  console.log("Fetched feedback data:", feedbacks);
+  const { data: feedbackOrderData } = useFeedbackOrder("published");
+  const feedbacks = (feedbackOrderData as OrderFeedback[] | undefined)?.map(
+    (item: any) => ({
+      id: item.id,
+      feedback: item.feedback,
+      rating: item.rating,
+      status: item.status,
+      user: {
+        id: item.user?.id || "",
+        first_name: item.user?.first_name || "",
+        middle_name: item.user?.middle_name || "",
+        last_name: item.user?.last_name || "",
+        email: item.user?.email || "",
+        birthdate: item.user?.birthdate || "",
+        role: item.user?.role || "",
+      },
+      created_at: item.created_at || "",
+      order: item.order?.id || "",
+    }),
+  );
   return (
     <PublicLayout>
       <section>

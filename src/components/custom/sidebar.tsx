@@ -77,7 +77,7 @@ export default function SideBar({
           return (
             <div
               key={item.label}
-              className={`${isExpanded ? "bg-gray-100 pb-2" : ""} `}
+              className={`${isExpanded ? "bg-gray-100 " : ""} `}
             >
               {hasDropdown ? (
                 <button
@@ -118,7 +118,7 @@ export default function SideBar({
               {hasDropdown && (
                 <div
                   className={cn(
-                    "ml-6 pb-2 mt-2 space-y-1 overflow-hidden transition-all duration-300",
+                    "ml-6  mt-2 space-y-1 overflow-hidden transition-all duration-300",
                     isExpanded
                       ? "max-h-96 opacity-100"
                       : "max-h-0 opacity-0 pointer-events-none",

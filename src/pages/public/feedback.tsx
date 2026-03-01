@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { Star } from "lucide-react";
 import PublicLayout from "@/components/layout/public-layout";
-import { useFeedback } from "@/tanstack/fetch.hook";
+import { useFeedbackProduct } from "@/tanstack/fetch.hook";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
 import CustomSkeleton from "@/components/custom/custom-skeleton";
 
 export default function FeedbackPage() {
-  const { data, isLoading: isFeedbackLoading } = useFeedback();
-  console.log("Feedback", data);
+  const { data, isLoading: isFeedbackLoading } =
+    useFeedbackProduct("published");
+
   return (
     <PublicLayout>
       <main className="min-h-screen bg-background">
@@ -28,7 +29,6 @@ export default function FeedbackPage() {
               ))}
             </div>
           )}
-          {/* Feedback Grid */}
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
             {data?.map((feedback: any, index: number) => (
               <div
@@ -86,7 +86,6 @@ export default function FeedbackPage() {
             ))}
           </div>
 
-          {/* Feedback Count */}
           <div className="text-center mt-8 text-muted-foreground">
             Showing {data?.length} of {data?.length} feedbacks
           </div>
