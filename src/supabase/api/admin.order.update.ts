@@ -7,7 +7,7 @@ export const updateOrderStatus = async ({
 }: {
   id: number;
   status: string;
-  payment_gateway: string;
+  payment_gateway?: string;
   remarks?: string;
 }) => {
   try {

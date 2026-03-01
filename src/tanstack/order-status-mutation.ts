@@ -8,8 +8,6 @@ export const useUpdateOrderStatus = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["orderByStatus"] });
     },
-    // onError: (error) => {
-    //   console.error("Error updating order status:", error);
-    // },
+
   });
 };
