@@ -6,7 +6,6 @@ import {
   ShoppingBag,
   MessageSquare,
   Star,
-  SquareArrowOutUpRight,
 } from "lucide-react";
 
 import { dashboardBreadCrumb } from "@/data/admin-layout-data";
