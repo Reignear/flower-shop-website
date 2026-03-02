@@ -15,6 +15,7 @@ import { SignUpUser } from "@/supabase/auth/user-signup";
 import type { SignUpFormDataUser } from "@/utils/types";
 import { LoaderCircle } from "lucide-react";
 import toast, { Toaster } from "react-hot-toast";
+import { CustomToast } from "@/components/custom/custom-toast";
 
 export default function SignUp() {
   const { loading, setLoading, navigate, register, handleSubmit, errors } =
@@ -23,8 +24,10 @@ export default function SignUp() {
   const submitForm = async (data: SignUpFormDataUser) => {
     try {
       setLoading(true);
-      await SignUpUser(data);
-      navigate("/user/signin");
+      await CustomToast(SignUpUser(data), "insert");
+      setTimeout(() => {
+        navigate("/user/signin");
+      }, 1000);
     } catch (error: any) {
       toast.error(`${error.message}`);
       setLoading(false);

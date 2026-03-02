@@ -3,7 +3,7 @@ import {
   insertPayPal,
   insertBankTransfer,
   insertCOD,
-} from "@/supabase/api/admin.billing.method.insert";
+} from "@/supabase/api/admin.branding.billing.insert";
 import { useQueryClient, useMutation } from "@tanstack/react-query";
 
 export const useInsertGcash = () => {

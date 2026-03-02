@@ -14,7 +14,7 @@ export interface SignUp {
   firstName: string;
   middleName: string;
   lastName: string;
-  birthdate: string;
+  birthdate?: string;
   email: string;
   password: string;
 }

@@ -9,14 +9,27 @@ import {
   useInsertPayPal,
   useInsertBankTransfer,
   useInsertCOD,
-} from "@/tanstack/billing.method.mutation";
+} from "@/tanstack/branding.billing.mutation";
 import type {
   BankTransferMethod,
   GcashMethod,
   PayPalMethod,
 } from "@/utils/interface";
 import { CustomToast } from "@/components/custom/custom-toast";
-export function BrandingBillingFormInsert() {
+
+interface BrandingBillingFormInsertProps {
+  is_gcash?: boolean;
+  is_paypal?: boolean;
+  is_bank?: boolean;
+  is_cod?: boolean;
+}
+
+export function BrandingBillingFormInsert({
+  is_gcash,
+  is_paypal,
+  is_bank,
+  is_cod,
+}: BrandingBillingFormInsertProps) {
   const {
     activePaymentMethod,
     setActivePaymentMethod,
@@ -26,7 +39,6 @@ export function BrandingBillingFormInsert() {
     handleSubmitPayPal,
     registerBank,
     handleSubmitBankTransfer,
-    // registerCOD,
     handleSubmitCOD,
   } = useAdminBranding();
 
@@ -85,36 +97,36 @@ export function BrandingBillingFormInsert() {
           {/* GCash */}
           <Label
             htmlFor="gcash"
-            className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer"
+            className={`border p-5 flex items-center gap-3 rounded-lg cursor-pointer ${is_gcash ? "opacity-50 pointer-events-none" : ""}`}
           >
-            <RadioGroupItem value="gcash" id="gcash" />
+            <RadioGroupItem value="gcash" id="gcash" disabled={is_gcash} />
             <span>GCash</span>
           </Label>
 
           {/* Cash on Delivery */}
           <Label
             htmlFor="cod"
-            className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer"
+            className={`border p-5 flex items-center gap-3 rounded-lg cursor-pointer ${is_cod ? "opacity-50 pointer-events-none" : ""}`}
           >
-            <RadioGroupItem value="cod" id="cod" />
+            <RadioGroupItem value="cod" id="cod" disabled={is_cod} />
             <span>Cash on Delivery</span>
           </Label>
 
           {/* PayPal */}
           <Label
             htmlFor="paypal"
-            className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer"
+            className={`border p-5 flex items-center gap-3 rounded-lg cursor-pointer ${is_paypal ? "opacity-50 pointer-events-none" : ""}`}
           >
-            <RadioGroupItem value="paypal" id="paypal" />
+            <RadioGroupItem value="paypal" id="paypal" disabled={is_paypal} />
             <span>PayPal</span>
           </Label>
 
           {/* Bank Transfer */}
           <Label
             htmlFor="bank"
-            className="border p-5 flex items-center gap-3 rounded-lg cursor-pointer"
+            className={`border p-5 flex items-center gap-3 rounded-lg cursor-pointer ${is_bank ? "opacity-50 pointer-events-none" : ""}`}
           >
-            <RadioGroupItem value="bank" id="bank" />
+            <RadioGroupItem value="bank" id="bank" disabled={is_bank} />
             <span>Bank Transfer</span>
           </Label>
         </div>

@@ -147,7 +147,20 @@ const AdminBrandingBilling = () => {
               description={addPaymentMethodData.description}
               trigger={<Button>Add Payment Method</Button>}
             >
-              <BrandingBillingFormInsert />
+              <BrandingBillingFormInsert
+                is_gcash={billingMethods
+                  ?.map((method) => method.method_type)
+                  .includes("gcash")}
+                is_paypal={billingMethods
+                  ?.map((method) => method.method_type)
+                  .includes("paypal")}
+                is_bank={billingMethods
+                  ?.map((method) => method.method_type)
+                  .includes("bank")}
+                is_cod={billingMethods
+                  ?.map((method) => method.method_type)
+                  .includes("cod")}
+              />
             </CustomDialog>
           </div>
         </div>

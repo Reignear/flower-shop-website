@@ -11,6 +11,8 @@ import { fetchOrderByStatus } from "@/supabase/api/fetch.order.status";
 import { fetchStats } from "@/supabase/api/fetch.landing";
 import { fetchFeedbackOrder } from "@/supabase/api/fetch.feedback.order";
 import { fetchFeedbackProduct } from "@/supabase/api/fetch.feedback.product";
+import { fetchAnalyticsData } from "@/supabase/api/fetch.analytics";
+import { fetchDashboardData } from "@/supabase/api/fetch.dashboard";
 
 export const useCategory = () => {
   return useQuery({
@@ -155,3 +157,28 @@ export const useFeedbackOrder = (status: string) => {
     refetchOnReconnect: true,
   });
 };
+
+export const useAnalytics = () => {
+  return useQuery({
+    queryKey: ["analytics"],
+    queryFn: fetchAnalyticsData,
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+};
+
+export const useDashboard = () => {
+  return useQuery({
+    queryKey: ["dashboard"],
+    queryFn: fetchDashboardData,
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+};
+

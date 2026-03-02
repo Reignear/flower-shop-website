@@ -1,10 +1,42 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { CustomToast } from "@/components/custom/custom-toast";
 import AdminLayout from "@/components/layout/admin-layout";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Save, UserRoundPlus } from "lucide-react";
+import { AdminSettingsBreadCrumb } from "@/data/admin-settings-data";
+import { useAdminSettings } from "@/hooks/use-admin-settings";
+import { SignUpAdmin } from "@/supabase/auth/admin-signup";
+import type { SignUpFormData } from "@/utils/types";
+import { UserRoundPlus } from "lucide-react";
+import toast, { Toaster } from "react-hot-toast";
+
 export default function Settings() {
+  const {
+    navigate,
+    register,
+    handleSubmit,
+    errors,
+    isLoading,
+    setIsLoading,
+    reset,
+  } = useAdminSettings();
+
+  const submitForm = async (data: SignUpFormData) => {
+    try {
+      setIsLoading(true);
+      await CustomToast(SignUpAdmin(data), "insert");
+      reset();
+      setIsLoading(false);
+      setTimeout(() => {
+        navigate("/admin/settings");
+      }, 1000);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
   return (
-    <AdminLayout>
+    <AdminLayout breadCrumbs={AdminSettingsBreadCrumb}>
+      <Toaster position="bottom-right" />
       <div className="p-8 max-full">
         <div className="mb-8">
           <h1 className="text-4xl font-bold text-foreground mb-2">
@@ -15,61 +47,102 @@ export default function Settings() {
           </p>
         </div>
 
-       
         {/* Business Settings */}
-        
-        <div className="bg-card rounded-lg border border-border p-6 mb-6">
-          <h2 className="text-lg font-semibold text-foreground mb-6">
-            Admin Settings (Create New Admin Account)
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-            <div className="grid grid-cols-3 gap-2">
+        <form onSubmit={handleSubmit(submitForm)}>
+          <div className="bg-card rounded-lg border border-border p-6 mb-6">
+            <h2 className="text-lg font-semibold text-foreground mb-6">
+              Admin Settings (Create New Admin Account)
+            </h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+              <div className="grid grid-cols-3 gap-2">
+                <div>
+                  <label className="text-sm text-muted-foreground mb-2 block">
+                    First Name
+                  </label>
+                  <Input type="text" {...register("firstName")}></Input>{" "}
+                  {errors.firstName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.firstName.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="text-sm text-muted-foreground mb-2 block">
+                    Middle Name
+                  </label>
+                  <Input type="text" {...register("middleName")}></Input>
+                  {errors.middleName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.middleName.message}
+                    </p>
+                  )}
+                </div>
+                <div>
+                  <label className="text-sm text-muted-foreground mb-2 block">
+                    Last Name
+                  </label>
+                  <Input type="text" {...register("lastName")}></Input>{" "}
+                  {errors.lastName && (
+                    <p className="text-red-500 text-xs mt-1">
+                      {errors.lastName.message}
+                    </p>
+                  )}
+                </div>
+              </div>
               <div>
                 <label className="text-sm text-muted-foreground mb-2 block">
-                  First Name
+                  Birthdate
                 </label>
+                <Input type="date" {...register("birthdate")}></Input>{" "}
+                {errors.birthdate && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.birthdate.message}
+                  </p>
+                )}
+              </div>
 
-                <Input type="text"></Input>
+              <div>
+                <label className="text-sm text-muted-foreground mb-2 block">
+                  Email
+                </label>
+                <Input type="email" {...register("email")}></Input>{" "}
+                {errors.email && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.email.message}
+                  </p>
+                )}
+              </div>
+              <div></div>
+              <div>
+                <label className="text-sm text-muted-foreground mb-2 block">
+                  Password
+                </label>
+                <Input type="password" {...register("password")}></Input>{" "}
+                {errors.password && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.password.message}
+                  </p>
+                )}
               </div>
               <div>
                 <label className="text-sm text-muted-foreground mb-2 block">
-                  Middle Name
+                  Confirm Password
                 </label>
-                <Input type="text"></Input>
+                <Input type="password" {...register("confirmPassword")}></Input>{" "}
+                {errors.confirmPassword && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.confirmPassword.message}
+                  </p>
+                )}
               </div>
-              <div>
-                <label className="text-sm text-muted-foreground mb-2 block">
-                  Last Name
-                </label>
-                <Input type="text"></Input>
-              </div>
             </div>
-            <div>
-              <label className="text-sm text-muted-foreground mb-2 block">
-                Email
-              </label>
-
-              <Input type="email"></Input>
-            </div>
-            <div>
-              <label className="text-sm text-muted-foreground mb-2 block">
-                Password
-              </label>
-              <Input type="password"></Input>
-            </div>
-            <div>
-              <label className="text-sm text-muted-foreground mb-2 block">
-                Confirm Password
-              </label>
-              <Input type="password"></Input>
-            </div>
+            <Button type="submit" disabled={isLoading}>
+              <UserRoundPlus /> {isLoading ? "Creating..." : "Create Admin"}
+            </Button>
           </div>
-          <Button>
-            <UserRoundPlus /> Create Admin
-          </Button>
-        </div>
+        </form>
 
-        {/* Notification Settings */}
+        {/* Notification Settings
         <div className="bg-card rounded-lg border border-border p-6 mb-6 space-y-4">
           <h2 className="text-lg font-semibold text-foreground mb-6">
             Notification Preferences
@@ -131,9 +204,9 @@ export default function Settings() {
             <Save className="w-4 h-4" />
             Save Preferences
           </Button>
-        </div>
+        </div> */}
 
-        {/* Security Settings */}
+        {/* Security Settings
         <div className="bg-card rounded-lg border border-border p-6">
           <h2 className="text-lg font-semibold text-foreground mb-6">
             Security
@@ -144,7 +217,7 @@ export default function Settings() {
             <Button variant="outline">View Activity Log</Button>
             <Button variant="outline">Reset All Analytics Data</Button>
           </div>
-        </div>
+        </div> */}
       </div>
     </AdminLayout>
   );

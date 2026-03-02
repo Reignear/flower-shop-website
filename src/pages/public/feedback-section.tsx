@@ -70,6 +70,11 @@ export default function FeedbackSection({ feedbacks }: FeedbackSectionProps) {
               </div>
             </Card>
           ))}
+          {feedbacks?.length === 0 && (
+            <p className="text-muted-foreground text-center w-full">
+              No feedback available at the moment.
+            </p>
+          )}
         </div>
         <div>
           <Link to="/feedback" className="flex justify-start mt-8">

@@ -19,10 +19,12 @@ import { useAdminFeedbackProduct } from "@/hooks/use-admin-feedback-product";
 import {
   deleteFeedbackDescription,
   deleteFeedbackTitle,
+  feedbackProductBreadcrumbs,
 } from "@/data/admin-feedback-product-data";
 import { CustomToast } from "@/components/custom/custom-toast";
 import { useUpdateFeedbackProductStatus } from "@/tanstack/feedback.mutation";
 import FeedbackProductFormDelete from "@/components/form/feedback-product-form-delete";
+import { averageRating } from "@/utils/rating";
 
 export default function FeedbackProduct() {
   const { data, isLoading } = useFeedbackProduct("all");
@@ -54,7 +56,7 @@ export default function FeedbackProduct() {
   };
 
   return (
-    <AdminLayout>
+    <AdminLayout breadCrumbs={feedbackProductBreadcrumbs}>
       <Toaster position="bottom-right" />
       <div className="p-8">
         <div className="mb-8">
@@ -72,22 +74,34 @@ export default function FeedbackProduct() {
             <p className="text-muted-foreground text-sm mb-2">
               Total Feedbacks
             </p>
-            <p className="text-3xl font-bold text-foreground">487</p>
+            <p className="text-3xl font-bold text-foreground">
+              {data?.length || 0}
+            </p>
             <p className="text-xs text-muted-foreground mt-2">This month</p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
             <p className="text-muted-foreground text-sm mb-2">Avg Rating</p>
-            <p className="text-3xl font-bold text-chart-5">4.7★</p>
+            <p className="text-3xl font-bold fill-yellow-400 text-yellow-400">
+              {(
+                averageRating(data?.map((feedback) => feedback.rating) || []) ||
+                0
+              ).toFixed(1)}{" "}
+              ★
+            </p>
             <p className="text-xs text-muted-foreground mt-2">Out of 5.0</p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
             <p className="text-muted-foreground text-sm mb-2">Published</p>
-            <p className="text-3xl font-bold text-chart-4">412</p>
+            <p className="text-3xl font-bold text-chart-4">
+              {data?.filter((f: any) => f.status === "published").length || 0}
+            </p>
             <p className="text-xs text-muted-foreground mt-2">Live on site</p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
             <p className="text-muted-foreground text-sm mb-2">Pending Review</p>
-            <p className="text-3xl font-bold text-chart-1">24</p>
+            <p className="text-3xl font-bold text-chart-1">
+              {data?.filter((f: any) => f.status === "pending").length || 0}
+            </p>
             <p className="text-xs text-muted-foreground mt-2">
               Awaiting approval
             </p>

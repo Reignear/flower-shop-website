@@ -5,7 +5,7 @@ import {
   Settings,
   BarChart3,
   ChartColumnStacked,
-  Tag,
+  // Tag,
   Cuboid,
 } from "lucide-react";
 
@@ -52,7 +52,7 @@ export const navItems = [
     ],
     icon: MessageSquare,
   },
-  { label: "Branding", href: "/admin/branding", icon: Tag },
+  // { label: "Branding", href: "/admin/branding", icon: Tag },
   {
     label: "Settings",
     href: "/admin/settings",

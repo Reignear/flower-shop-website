@@ -3,6 +3,7 @@ import type { signInFormValidationAdmin } from "@/validation/validation-signin-a
 import type { signInFormValidationUser } from "@/validation/validation-signin-user";
 import type { Session, User } from "@supabase/supabase-js";
 import * as z from "zod";
+import type { signUpFormValidationAdmin } from "@/validation/validation-signup-admin";
 
 export type Category =
   | "all"
@@ -11,6 +12,7 @@ export type Category =
   | "gifts"
   | "arrangements";
 export type SignInFormData = z.infer<typeof signInFormValidationAdmin>;
+export type SignUpFormData = z.infer<typeof signUpFormValidationAdmin>;
 export type SignUpFormDataUser = z.infer<typeof signUpFormValidationUser>;
 export type SignInFormDataUser = z.infer<typeof signInFormValidationUser>;
 export type UserRole = "admin" | "user";

@@ -8,3 +8,5 @@ npm i @tanstack/react-query
 npm i react-loading-skeleton
 npm install react-hot-toast
 npm install motion
+npm install @mui/material @emotion/react @emotion/styled
+npm install @mui/x-charts@^8.0.0

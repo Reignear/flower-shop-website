@@ -1,39 +1,42 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminLayout from "@/components/layout/admin-layout";
 import {
-  LineChart,
-  Line,
-  XAxis,
-  YAxis,
-  CartesianGrid,
-  Tooltip,
-  Legend,
-  ResponsiveContainer,
-  PieChart,
-  Pie,
-  Cell,
-} from "recharts";
-import { TrendingUp, Users, ShoppingBag, MessageSquare } from "lucide-react";
-import { Card } from "@/components/ui/card";
-import {dashboardBreadCrumb} from "@/data/admin-layout-data";
-const salesData = [
-  { month: "Jan", sales: 12000, revenue: 24000, orders: 124 },
-  { month: "Feb", sales: 15000, revenue: 28000, orders: 156 },
-  { month: "Mar", sales: 18000, revenue: 32000, orders: 189 },
-  { month: "Apr", sales: 16000, revenue: 30000, orders: 172 },
-  { month: "May", sales: 22000, revenue: 38000, orders: 218 },
-  { month: "Jun", sales: 25000, revenue: 42000, orders: 245 },
-];
+  TrendingUp,
+  Users,
+  ShoppingBag,
+  MessageSquare,
+  Star,
+  SquareArrowOutUpRight,
+} from "lucide-react";
 
-const categoryData = [
-  { name: "Bouquets", value: 45, sales: 18000 },
-  { name: "Gifts", value: 25, sales: 10000 },
-  { name: "Invitations", value: 20, sales: 8000 },
-  { name: "Services", value: 10, sales: 4000 },
-];
-
-const COLORS = ["#3b82f6", "#8b5cf6", "#ec4899", "#f59e0b"];
+import { dashboardBreadCrumb } from "@/data/admin-layout-data";
+import {
+  useDashboard,
+  useFeedbackOrder,
+  useProduct,
+  useAnalytics,
+} from "@/tanstack/fetch.hook";
+import { Card, CardContent } from "@/components/ui/card";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableHead,
+  TableHeader,
+  TableRow,
+} from "@/components/ui/table";
+import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { getInitials } from "@/utils/name-fallback";
+import { Separator } from "@/components/ui/separator";
+import { capitalizeFirstLetter } from "@/utils/capitalize";
+import CustomPieChart from "@/components/custom/custom-piechart";
+import { Link } from "react-router-dom";
 
 export default function Dashboard() {
+  const { data } = useDashboard();
+  const { data: product } = useProduct();
+  const { data: feedbacks } = useFeedbackOrder("all");
+  const { data: analytics } = useAnalytics();
   return (
     <AdminLayout breadCrumbs={dashboardBreadCrumb}>
       <div className="p-8">
@@ -48,22 +51,21 @@ export default function Dashboard() {
         </div>
 
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
           <div className="bg-card border border-border rounded-lg p-6">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">
                   Total Revenue
                 </p>
-                <p className="text-3xl font-bold text-foreground">$164,000</p>
+                <p className="text-3xl font-bold text-foreground">
+                  ₱ {data?.totalRevenue || 0}
+                </p>
               </div>
               <div className="w-12 h-12 bg-chart-1/20 rounded-lg flex items-center justify-center">
                 <TrendingUp className="w-6 h-6 text-chart-1" />
               </div>
             </div>
-            <p className="text-xs text-muted-foreground mt-4">
-              +18% from last month
-            </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6">
@@ -72,15 +74,14 @@ export default function Dashboard() {
                 <p className="text-sm text-muted-foreground mb-1">
                   Total Orders
                 </p>
-                <p className="text-3xl font-bold text-foreground">904</p>
+                <p className="text-3xl font-bold text-foreground">
+                  {data?.totalOrders || 0}
+                </p>
               </div>
               <div className="w-12 h-12 bg-chart-2/20 rounded-lg flex items-center justify-center">
                 <ShoppingBag className="w-6 h-6 text-chart-2" />
               </div>
             </div>
-            <p className="text-xs text-muted-foreground mt-4">
-              +24% from last month
-            </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6">
@@ -89,15 +90,14 @@ export default function Dashboard() {
                 <p className="text-sm text-muted-foreground mb-1">
                   Total Customers
                 </p>
-                <p className="text-3xl font-bold text-foreground">2,547</p>
+                <p className="text-3xl font-bold text-foreground">
+                  {data?.totalCustomers || 0}
+                </p>
               </div>
               <div className="w-12 h-12 bg-chart-4/20 rounded-lg flex items-center justify-center">
                 <Users className="w-6 h-6 text-chart-4" />
               </div>
             </div>
-            <p className="text-xs text-muted-foreground mt-4">
-              +31% from last month
-            </p>
           </div>
 
           <div className="bg-card border border-border rounded-lg p-6">
@@ -106,79 +106,128 @@ export default function Dashboard() {
                 <p className="text-sm text-muted-foreground mb-1">
                   Feedback Received
                 </p>
-                <p className="text-3xl font-bold text-foreground">487</p>
+                <p className="text-3xl font-bold text-foreground">
+                  {data?.totalFeedback || 0}
+                </p>
               </div>
               <div className="w-12 h-12 bg-chart-5/20 rounded-lg flex items-center justify-center">
                 <MessageSquare className="w-6 h-6 text-chart-5" />
               </div>
             </div>
-            <p className="text-xs text-muted-foreground mt-4">
-              Avg Rating: 4.7★
-            </p>
           </div>
         </div>
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-5">
+          <Link
+            to="/admin/analytics"
+            className="col-span-2 group transition-all duration-300 hover:scale-105"
+          >
+            <Card className="group-hover:shadow-lg group-hover:shadow-chart-1/20 group-hover:border-chart-1/50 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-linear-to-r from-chart-1/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <CardContent className="md:h-65 relative z-10">
+                <div className="flex items-center justify-between mb-2">
+                  <h1 className="text-lg font-semibold">
+                    Order Distribution by Category
+                  </h1>
+                </div>
+                <CustomPieChart data={analytics?.categoryDistribution || []} />
+              </CardContent>
+            </Card>
+          </Link>
 
-        {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
-          {/* Sales & Revenue Chart */}
-          <Card className="col-span-2 p-6">
-            <h2 className="text-lg font-semibold text-foreground mb-6">
-              Sales & Revenue Trend
-            </h2>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={salesData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="month" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="sales"
-                  stroke="var(--color-chart-1)"
-                  strokeWidth={2}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="revenue"
-                  stroke="var(--color-chart-2)"
-                  strokeWidth={2}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-          </Card>
+          <Link
+            to="/admin/products"
+            className="group transition-all duration-300 hover:scale-105"
+          >
+            <Card className="group-hover:shadow-lg group-hover:shadow-chart-2/20 group-hover:border-chart-2/50 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-linear-to-r from-chart-2/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <CardContent className="md:h-65 relative z-10">
+                <div className="flex items-center justify-between mb-2">
+                  <h1 className="text-lg font-semibold">Latest Products</h1>
+                </div>
+                <Table>
+                  <TableHeader>
+                    <TableRow>
+                      <TableHead>Product</TableHead>
+                      <TableHead>Name</TableHead>
+                      <TableHead>Price</TableHead>
+                    </TableRow>
+                  </TableHeader>
+                  <TableBody>
+                    {product?.slice(0, 3).map((item) => (
+                      <TableRow key={item.id}>
+                        <TableCell>
+                          <img
+                            src={`${item.image_url}`}
+                            alt=""
+                            className="w-10 h-10 object-cover rounded-md group-hover:scale-110 transition-transform duration-300"
+                          />
+                        </TableCell>
+                        <TableCell>{item.name}</TableCell>
+                        <TableCell>₱ {item.price}</TableCell>
+                      </TableRow>
+                    ))}
+                  </TableBody>
+                </Table>
+              </CardContent>
+            </Card>
+          </Link>
 
-          {/* Category Distribution */}
-          <div className="bg-card rounded-lg p-6 border border-border">
-            <h2 className="text-lg font-semibold text-foreground mb-6">
-              Category Distribution
-            </h2>
-            <ResponsiveContainer width="100%" height={350}>
-              <PieChart>
-                <Pie
-                  data={categoryData}
-                  cx="50%"
-                  cy="50%"
-                  labelLine={false}
-                  label={({ name, value }) => `${name} ${value}%`}
-                  outerRadius={100}
-                  fill="hsl(var(--chart-1))"
-                  dataKey="value"
-                >
-                  {COLORS.map((color, index) => (
-                    <Cell key={`cell-${index}`} fill={color} />
-                  ))}
-                </Pie>
-                <Tooltip
-                  contentStyle={{
-                    backgroundColor: "hsl(var(--card))",
-                    border: "1px solid hsl(var(--border))",
-                  }}
-                  labelStyle={{ color: "hsl(var(--foreground))" }}
-                />
-              </PieChart>
-            </ResponsiveContainer>
-          </div>
+          <Link
+            to="/admin/feedback/order"
+            className="group transition-all duration-300 hover:scale-105"
+          >
+            <Card className="group-hover:shadow-lg group-hover:shadow-chart-5/20 group-hover:border-chart-5/50 transition-all duration-300 relative overflow-hidden">
+              <div className="absolute inset-0 bg-linear-to-r from-chart-5/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+              <CardContent className="md:h-65 relative z-10">
+                <div className="flex items-center justify-between mb-2">
+                  <h1 className="text-lg font-semibold">Recent Feedbacks</h1>
+                </div>
+                {feedbacks?.slice(0, 3).map((item: any) => (
+                  <div key={item.id}>
+                    <div className="mb-2 flex gap-2 items-center">
+                      <div>
+                        <Avatar className="h-12 w-12 group-hover:scale-110 transition-transform duration-300">
+                          <AvatarFallback>
+                            {getInitials(
+                              item.user?.first_name +
+                                " " +
+                                item.user?.last_name,
+                            )}
+                          </AvatarFallback>
+                        </Avatar>
+                      </div>
+                      <div>
+                        <div className="flex">
+                          {[...Array(5)].map((_, i) => (
+                            <Star
+                              key={i}
+                              size={14}
+                              className={
+                                i < item.rating
+                                  ? "fill-yellow-400 text-yellow-400 group-hover:scale-110 transition-transform duration-300"
+                                  : "text-gray-300"
+                              }
+                            />
+                          ))}
+                        </div>
+                        <p className="text-sm text-muted-foreground">
+                          -{capitalizeFirstLetter(item.user?.first_name)}{" "}
+                          {capitalizeFirstLetter(item.user?.last_name)}
+                        </p>
+                        <p className="text-sm">{item.feedback}</p>
+                      </div>
+                    </div>
+                    <Separator className="my-2" />
+                  </div>
+                ))}
+                {feedbacks?.length === 0 && (
+                  <p className="text-sm text-center text-muted-foreground">
+                    No feedbacks received yet.
+                  </p>
+                )}
+              </CardContent>
+            </Card>
+          </Link>
         </div>
       </div>
     </AdminLayout>
