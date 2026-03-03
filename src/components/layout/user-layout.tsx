@@ -2,16 +2,27 @@ import SideBar from "@/components/custom/sidebar";
 import { navItems, roleDashboard, brandName } from "@/data/user-layout-data";
 import { UserSignOut } from "@/supabase/auth/user-signout";
 import { ChevronRight } from "lucide-react";
-import { Link } from "react-router-dom";
+import toast from "react-hot-toast";
+import { Link, useNavigate } from "react-router-dom";
 interface UserLayoutProps {
   children: React.ReactNode;
   breadCrumbs?: { label: string; href: string }[];
 }
 const UserLayout = ({ children, breadCrumbs }: UserLayoutProps) => {
+  const navigate = useNavigate();
+  const handleLogout = async () => {
+    const { error } = await UserSignOut();
+    if (error) {
+      toast.error(error?.message || "Logout failed");
+    } else {
+      navigate("/user/signin");
+    }
+  };
+
   return (
     <div className="flex min-h-screen bg-background">
       <SideBar
-        signOutFunction={UserSignOut}
+        logoutFunction={handleLogout}
         redirectPath="/"
         navItems={navItems}
         roleDashboard={roleDashboard}
