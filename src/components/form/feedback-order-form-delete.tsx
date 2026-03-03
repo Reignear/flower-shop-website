@@ -18,9 +18,7 @@ export default function FeedbackOrderFormDelete({
         "delete",
       );
     } catch (error: any) {
-      toast.error(
-        error.message || "An error occurred while deleting feedback.",
-      );
+      toast.error(error.message);
     }
   };
 

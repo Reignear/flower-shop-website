@@ -1,10 +1,8 @@
 import { Button } from "@/components/ui/button";
 import DashboardLayout from "@/components/layout/admin-layout";
 import { Plus, Edit, Trash2, Eye, Ellipsis } from "lucide-react";
-import { Card, CardContent } from "@/components/ui/card";
 import CustomDialog from "@/components/custom/custom-dialog";
 import CategoryFormInsert from "@/components/form/category-form-insert";
-
 import type { Category } from "@/utils/interface";
 import CategoryFormSelect from "@/components/form/category-form-select";
 import CategoryFormUpdate from "@/components/form/category-form-update";
@@ -33,6 +31,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import CustomSkeleton from "@/components/custom/custom-skeleton";
+import { Toaster } from "react-hot-toast";
 export default function Category() {
   const {
     openInsert,
@@ -45,6 +44,7 @@ export default function Category() {
 
   return (
     <DashboardLayout breadCrumbs={categoryBreadCrumb}>
+      <Toaster />
       <div className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
@@ -70,53 +70,6 @@ export default function Category() {
             <CategoryFormInsert setOpenInsert={setOpenInsert} />
           </CustomDialog>
         </div>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-          <Card>
-            <CardContent>
-              <p className="text-muted-foreground text-sm mb-2">
-                Total Categories
-              </p>
-              <p className="text-xl md:text-3xl font-bold text-foreground">
-                {categories.length}
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent>
-              <p className="text-muted-foreground text-sm mb-2">
-                Active Categories
-              </p>
-              <p className="text-xl md:text-3xl font-bold text-foreground"></p>
-              <p className="text-xs text-muted-foreground mt-2">
-                Currently listed
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent>
-              <p className="text-muted-foreground text-sm mb-2">
-                Total Products
-              </p>
-              <p className="text-xl md:text-3xl font-bold text-foreground">
-                sdsds
-              </p>
-              <p className="text-xs text-muted-foreground mt-2">
-                All categories
-              </p>
-            </CardContent>
-          </Card>
-          <Card>
-            <CardContent>
-              <p className="text-muted-foreground text-sm mb-2">
-                Total Revenue
-              </p>
-              <p className="text-xl md:text-3xl font-bold text-foreground"></p>
-              <p className="text-xs text-muted-foreground mt-2">
-                All categories
-              </p>
-            </CardContent>
-          </Card>
-        </div>
         {isCategoryLoading && (
           <div className="grid grid-cols-3 gap-5">
             {Array.from({ length: 3 }).map((_, index) => (
@@ -124,10 +77,10 @@ export default function Category() {
             ))}
           </div>
         )}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-5">
           {categories.map((category) => (
             <div
-              className="border border-border rounded-lg h-100 relative"
+              className="border border-border rounded-lg h-full relative"
               key={category.id}
             >
               <DropdownMenu>
@@ -194,7 +147,7 @@ export default function Category() {
                         trigger={
                           <Button
                             variant={"ghost"}
-                            className="  font-normal flex items-center justify-between w-full  cursor-pointer"
+                            className="font-normal flex items-center justify-between w-full  cursor-pointer"
                           >
                             Delete <Trash2 className="h-5 w-5 text-red-500" />
                           </Button>
@@ -209,7 +162,7 @@ export default function Category() {
                   </DropdownMenuGroup>
                 </DropdownMenuContent>
               </DropdownMenu>
-              <div className="h-60 w-full overflow-hidden rounded-t-lg flex items-center justify-center">
+              <div className="h-40 md:h-60 w-full overflow-hidden rounded-t-lg flex items-center justify-center">
                 <img
                   src={category.image_url}
                   alt={category.name}

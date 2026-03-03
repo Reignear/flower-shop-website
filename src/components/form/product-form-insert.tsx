@@ -20,6 +20,7 @@ import { useCategory } from "@/tanstack/fetch.hook";
 import { generateCode } from "@/utils/code";
 import { CustomToast } from "@/components/custom/custom-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import toast from "react-hot-toast";
 interface ProductFormInsertProps {
   setOpenInsert: (open: boolean) => void;
 }
@@ -41,9 +42,9 @@ export default function ProductFormInsert({
         "insert",
       );
       setOpenInsert(false);
-    } catch (error) {
-      console.log("Error in inserting product", error);
-    }
+   } catch (error: any) {
+           toast.error(error.message);
+         }
   };
 
   return (

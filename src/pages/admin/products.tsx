@@ -45,6 +45,7 @@ export default function Product() {
           product.filter((p) => p.category === activeCategory),
           search,
         );
+  console.log(product);
   return (
     <AdminLayout breadCrumbs={productBreadCrumb}>
       <div className="p-8">
@@ -75,30 +76,55 @@ export default function Product() {
             <p className="text-xl md:text-3xl  font-bold text-foreground">
               {totalProducts}
             </p>
-            <p className="text-xs text-muted-foreground mt-2">8 variants</p>
+            <p className="text-xs text-muted-foreground mt-2">
+              Under {category?.length} category
+            </p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
             <p className="text-muted-foreground text-xs md:text-sm mb-2">
               Active Listings
             </p>
-            <p className="text-xl md:text-3xl font-bold text-foreground">46</p>
-            <p className="text-xs text-muted-foreground mt-2">2 archived</p>
-          </div>
-          <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-xs md:text-sm mb-2">
-              Low Stock Items
+            <p className="text-xl md:text-3xl font-bold text-foreground">
+              {product.filter((item) => item.status === "available").length}
             </p>
-            <p className="text-xl md:text-3xl  font-bold text-chart-5">3</p>
             <p className="text-xs text-muted-foreground mt-2">
-              Needs restocking
+              {product.filter((item) => item.status === "unavailable").length}{" "}
+              Unavailable
             </p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
             <p className="text-muted-foreground text-xs md:text-sm mb-2">
-              Total Inventory Value
+              Total Unavailable Value
+            </p>
+            <p className="text-xl md:text-3xl  font-bold text-chart-5">
+              ₱{" "}
+              {product
+                .filter((item) => item.status === "unavailable")
+                .reduce((sum, curr) => sum + curr.price, 0)
+                .toLocaleString()}
+            </p>
+            <p className="text-xs text-muted-foreground mt-2">
+              {totalProducts > 0
+                ? Math.round(
+                    (product.filter((item) => item.status === "unavailable")
+                      .length /
+                      totalProducts) *
+                      100,
+                  )
+                : 0}
+              % percent of the available
+            </p>
+          </div>
+          <div className="bg-card rounded-lg p-6 border border-border">
+            <p className="text-muted-foreground text-xs md:text-sm mb-2">
+              Total Available Value
             </p>
             <p className="text-xl md:text-3xl font-bold text-foreground">
-              ₱ 18,450
+              ₱{" "}
+              {product
+                .filter((item) => item.status === "available")
+                .reduce((sum, curr) => sum + curr.price, 0)
+                .toLocaleString()}
             </p>
             <p className="text-xs text-muted-foreground mt-2">
               Current stock value

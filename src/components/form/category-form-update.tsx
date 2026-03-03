@@ -10,6 +10,7 @@ import { useUpdateCategory } from "@/tanstack/category.mutation";
 import { useEffect } from "react";
 import { CustomToast } from "@/components/custom/custom-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import toast from "react-hot-toast";
 interface CategoryFormEditProps {
   category_id: string;
   category: Category;
@@ -35,8 +36,8 @@ export default function CategoryFormEdit({
         old_path: old_path,
       }) ,"edit",);
       setEditCategory(null);
-    } catch (error) {
-      console.log("Error in updating category", error);
+   } catch (error: any) {
+      toast.error(error.message);
     }
   };
 

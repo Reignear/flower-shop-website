@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Separator } from "@/components/ui/separator";
@@ -16,7 +17,7 @@ import type {
   PayPalMethod,
 } from "@/utils/interface";
 import { CustomToast } from "@/components/custom/custom-toast";
-
+import toast from "react-hot-toast";
 interface BrandingBillingFormInsertProps {
   is_gcash?: boolean;
   is_paypal?: boolean;
@@ -49,13 +50,12 @@ export function BrandingBillingFormInsert({
 
   const submitGcash = async (data: GcashMethod) => {
     try {
-      console.log("Submitting GCash data:", data);
       await CustomToast(
         insertGcashMutation.mutateAsync({ gcash: data }),
         "insert",
       );
-    } catch (error) {
-      console.log("Error in inserting gcash billing method", error);
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
   const submitPayPal = async (data: PayPalMethod) => {
@@ -64,8 +64,8 @@ export function BrandingBillingFormInsert({
         insertPayPalMutation.mutateAsync({ paypal: data }),
         "insert",
       );
-    } catch (error) {
-      console.log("Error in inserting PayPal billing method", error);
+       } catch (error: any) {
+      toast.error(error.message);
     }
   };
   const submitBankTransfer = async (data: BankTransferMethod) => {
@@ -74,15 +74,15 @@ export function BrandingBillingFormInsert({
         insertBankTransferMutation.mutateAsync({ bank: data }),
         "insert",
       );
-    } catch (error) {
-      console.log("Error in inserting bank transfer billing method", error);
+       } catch (error: any) {
+      toast.error(error.message);
     }
   };
   const submitCOD = async () => {
     try {
       await CustomToast(insertCODMutation.mutateAsync(), "insert");
-    } catch (error) {
-      console.log("Error in inserting COD billing method", error);
+       } catch (error: any) {
+      toast.error(error.message);
     }
   };
 

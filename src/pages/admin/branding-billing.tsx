@@ -12,6 +12,7 @@ import { GCashLogo } from "@/components/icons/Gcash";
 import { PayPalLogo } from "@/components/icons/Paypal";
 import { BankLogo } from "@/components/icons/Bank";
 import { CODLogo } from "@/components/icons/COD";
+import { Toaster } from "react-hot-toast";
 
 const PaymentMethodCard = ({ method }: { method: any }) => {
   const getLogoComponent = (type: any) => {
@@ -132,6 +133,7 @@ const AdminBrandingBilling = () => {
 
   return (
     <AdminBrandingLayout>
+      <Toaster position="bottom-right" />
       <div className="space-y-6">
         <div className="flex items-center justify-between">
           <div>

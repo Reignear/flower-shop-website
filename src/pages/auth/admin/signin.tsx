@@ -62,7 +62,7 @@ export default function Login() {
                 <img
                   src="/assets/images/celestial-bloom-logo.webp"
                   alt="Celestial Bloom"
-                  className=""
+                  className="md:h-full md:w-full h-40 w-40"
                 />
               </div>
               <div className="flex items-center justify-center">

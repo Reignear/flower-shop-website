@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable react-hooks/incompatible-library */
 import { capitalizeFirstLetter } from "@/utils/capitalize";
 import type { Category } from "@/utils/interface";
@@ -6,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { useForm } from "react-hook-form";
 import { useDeleteCategory } from "@/tanstack/category.mutation";
 import { CustomToast } from "@/components/custom/custom-toast";
+import toast from "react-hot-toast";
 interface CategoryFormDeleteProps {
   category: Category;
   setDeleteCategory: (open: boolean) => void;
@@ -27,9 +29,9 @@ export default function CategoryFormDelete({
           "delete",
         );
         setDeleteCategory(false);
-      } catch (error) {
-        console.log("Error in deleting category", error);
-      }
+         } catch (error: any) {
+           toast.error(error.message);
+         }
     }
   };
   return (

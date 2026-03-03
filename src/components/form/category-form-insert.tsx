@@ -9,6 +9,7 @@ import { handleImageChange, ImagePreview } from "@/utils/image";
 import { useInsertCategory } from "@/tanstack/category.mutation";
 import { CustomToast } from "@/components/custom/custom-toast";
 import { ScrollArea } from "@/components/ui/scroll-area";
+import toast from "react-hot-toast";
 
 interface CategoryFormInsertProps {
   setOpenInsert: (open: boolean) => void;
@@ -26,8 +27,8 @@ export default function CategoryFormInsert({
         "insert",
       );
       setOpenInsert(false);
-    } catch (error) {
-      console.log("Error in inserting category", error);
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 

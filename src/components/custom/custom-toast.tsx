@@ -3,10 +3,6 @@ import { motion } from "framer-motion";
 
 const getMessages = (action?: "edit" | "delete" | "insert") => {
   switch (action) {
-    // case "transition":
-    //   return {
-    //     loading: "Transitioning...",
-    //   };
     case "edit":
       return {
         loading: "Updating...",

@@ -245,7 +245,7 @@ export default function FeedbackOrder() {
                         className="w-full sm:w-auto"
                       >
                         <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                        <span className="ml-1 sm:hidden"> Delete</span>
+                        <span className="ml-1 sm:hidden">Delete</span>
                       </Button>
                     }
                   >

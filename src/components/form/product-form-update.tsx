@@ -20,7 +20,7 @@ import { useCategory } from "@/tanstack/fetch.hook";
 import { useEffect } from "react";
 import { CustomToast } from "@/components/custom/custom-toast";
 import { ScrollArea } from "../ui/scroll-area";
-
+import toast from "react-hot-toast";
 interface ProductFormInsertProps {
   product_id: string;
   product: Product;
@@ -52,8 +52,8 @@ export default function ProductFormUpdate({
         "edit",
       );
       setOpenUpdate(false);
-    } catch (error) {
-      console.log("Error in updating product", error);
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
 

@@ -126,7 +126,7 @@ export default function OrderForPickupView() {
               <Separator />
               <div className="flex justify-between pt-4">
                 <p className="font-semibold text-foreground">Total Amount:</p>
-                <p className="text-2xl font-bold text-primary">
+                <p className="text-xl md:text-2xl  font-bold text-primary">
                   ₱{Order?.total_amount.toLocaleString()}
                 </p>
               </div>

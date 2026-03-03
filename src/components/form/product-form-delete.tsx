@@ -1,9 +1,11 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { capitalizeFirstLetter } from "@/utils/capitalize";
 import type { Product } from "@/utils/interface";
 import { Button } from "@/components/ui/button";
 import { useDeleteProduct } from "@/tanstack/product.mutation";
 import { useAdminProduct } from "@/hooks/use-admin-product";
 import { CustomToast } from "@/components/custom/custom-toast";
+import { toast } from "react-hot-toast";
 interface ProductFormDeleteProps {
   product: Product;
   setOpenDelete: () => void;
@@ -23,9 +25,9 @@ export default function ProductFormDelete({
         "delete",
       );
       setOpenDelete();
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error: any) {
+         toast.error(error.message);
+       }
   };
 
   return (
