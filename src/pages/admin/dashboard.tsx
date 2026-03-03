@@ -41,76 +41,76 @@ export default function Dashboard() {
       <div className="p-8">
         {/* Header */}
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">
+          <h1 className="md:text-4xl text-2xl font-bold  md:text-start text-center text-foreground mb-2">
             Admin Dashboard
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground md:text-start text-center md:text-base text-sm">
             Welcome back! Here's your business overview
           </p>
         </div>
 
         {/* KPI Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-6">
-          <div className="bg-card border border-border rounded-lg p-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-6">
+          <div className="bg-card border border-border rounded-lg p-3 md:p-6">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">
                   Total Revenue
                 </p>
-                <p className="text-3xl font-bold text-foreground">
+                <p className="md:text-3xl text-2xl font-bold text-foreground">
                   ₱ {data?.totalRevenue || 0}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-chart-1/20 rounded-lg flex items-center justify-center">
-                <TrendingUp className="w-6 h-6 text-chart-1" />
+              <div className="md:w-12 md:h-12 w-8 h-8 bg-chart-1/20 rounded-lg flex items-center justify-center">
+                <TrendingUp className="md:w-6 md:h-6 w-3 h-3 text-chart-1" />
               </div>
             </div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-6">
+          <div className="bg-card border border-border rounded-lg p-3 md:p-6">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">
                   Total Orders
                 </p>
-                <p className="text-3xl font-bold text-foreground">
+                <p className="md:text-3xl text-2xl font-bold text-foreground">
                   {data?.totalOrders || 0}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-chart-2/20 rounded-lg flex items-center justify-center">
-                <ShoppingBag className="w-6 h-6 text-chart-2" />
+              <div className="md:w-12 md:h-12 w-8 h-8 bg-chart-2/20 rounded-lg flex items-center justify-center">
+                <ShoppingBag className="md:w-6 md:h-6 w-3 h-3 text-chart-2" />
               </div>
             </div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-6">
+          <div className="bg-card border border-border rounded-lg p-3 md:p-6">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">
                   Total Customers
                 </p>
-                <p className="text-3xl font-bold text-foreground">
+                <p className="md:text-3xl text-2xl font-bold text-foreground">
                   {data?.totalCustomers || 0}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-chart-4/20 rounded-lg flex items-center justify-center">
-                <Users className="w-6 h-6 text-chart-4" />
+              <div className="md:w-12 md:h-12 w-8 h-8 bg-chart-4/20 rounded-lg flex items-center justify-center">
+                <Users className="md:w-6 md:h-6 w-3 h-3 text-chart-4" />
               </div>
             </div>
           </div>
 
-          <div className="bg-card border border-border rounded-lg p-6">
+          <div className="bg-card border border-border rounded-lg p-3 md:p-6">
             <div className="flex justify-between items-start">
               <div>
                 <p className="text-sm text-muted-foreground mb-1">
                   Feedback Received
                 </p>
-                <p className="text-3xl font-bold text-foreground">
+                <p className="md:text-3xl text-2xl font-bold text-foreground">
                   {data?.totalFeedback || 0}
                 </p>
               </div>
-              <div className="w-12 h-12 bg-chart-5/20 rounded-lg flex items-center justify-center">
-                <MessageSquare className="w-6 h-6 text-chart-5" />
+              <div className="md:w-12 md:h-12 w-8 h-8 bg-chart-5/20 rounded-lg flex items-center justify-center">
+                <MessageSquare className="md:w-6 md:h-6 w-3 h-3 text-chart-5" />
               </div>
             </div>
           </div>
@@ -135,7 +135,7 @@ export default function Dashboard() {
 
           <Link
             to="/admin/products"
-            className="group transition-all duration-300 hover:scale-105"
+            className="group transition-all duration-300 hover:scale-105 md:col-span-1 col-span-2"
           >
             <Card className="group-hover:shadow-lg group-hover:shadow-chart-2/20 group-hover:border-chart-2/50 transition-all duration-300 relative overflow-hidden">
               <div className="absolute inset-0 bg-linear-to-r from-chart-2/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
@@ -173,7 +173,7 @@ export default function Dashboard() {
 
           <Link
             to="/admin/feedback/order"
-            className="group transition-all duration-300 hover:scale-105"
+            className="group transition-all duration-300 hover:scale-105 md:col-span-1 col-span-2"
           >
             <Card className="group-hover:shadow-lg group-hover:shadow-chart-5/20 group-hover:border-chart-5/50 transition-all duration-300 relative overflow-hidden">
               <div className="absolute inset-0 bg-linear-to-r from-chart-5/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300" />

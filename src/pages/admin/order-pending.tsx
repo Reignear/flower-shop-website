@@ -25,7 +25,7 @@ import {
 import { Eye, LayoutGrid, Table as TableIcon } from "lucide-react";
 
 export default function OrderPending() {
-  const { data: orders, isLoading: isOrdersLoading } =
+  const { data: orders, isLoading: isOrderLoading } =
     useOrderByStatus("pending");
 
   const { activeLayout, setActiveLayout } = useAdminOrderPending();
@@ -35,9 +35,11 @@ export default function OrderPending() {
         {/* Page Header */}
         <div className="flex items-center justify-between">
           <div>
-            <h2 className="text-3xl font-bold text-gray-900">Pending Orders</h2>
-            <p className="text-gray-600 mt-1">
-              Manage and track pending customer orders
+            <h2 className="text-xl md:text-3xl font-bold text-gray-900">
+              Orders
+            </h2>
+            <p className="text-gray-600 mt-1 text-sm md:text-base">
+              Manage and track all customer orders
             </p>
           </div>
           <div className="grid grid-cols-2 gap-1">
@@ -55,15 +57,15 @@ export default function OrderPending() {
             </Button>
           </div>
         </div>
-        {isOrdersLoading && (
+        {isOrderLoading && (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {Array.from({ length: 4 }).map((_, index) => (
-              <CustomSkeleton key={index} type="product-card" />
+              <CustomSkeleton type="product-card" key={index} />
             ))}
           </div>
         )}
         {/* Orders Grid */}
-        {activeLayout === "grid" && !isOrdersLoading && (
+        {activeLayout === "grid" && !isOrderLoading && (
           <div>
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {orders?.map((order: Order) => (
@@ -71,14 +73,14 @@ export default function OrderPending() {
                   key={order.id}
                   className="overflow-hidden hover:shadow-lg transition-shadow duration-200 border-gray-200"
                 >
-                  <div className="p-6 space-y-4">
+                  <div className=" p-3 md:p-6 md:space-y-4 space-y-2">
                     {/* Order Header */}
                     <div className="flex items-start justify-between">
                       <div>
                         <p className="text-sm text-gray-500 font-medium">
                           Order Ref. ID
                         </p>
-                        <p className="text-2xl font-bold text-gray-900">
+                        <p className="text-lg md:text-2xl font-bold text-gray-900">
                           #{order.reference_number}
                         </p>
                       </div>
@@ -91,22 +93,22 @@ export default function OrderPending() {
                     <Separator />
                     <div className="grid grid-cols-2 gap-4 bg-gray-50 -mx-6 px-6 py-4">
                       <div>
-                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+                        <p className="text-xs md:text-sm text-gray-500 font-medium uppercase tracking-wide">
                           Customer
                         </p>
-                        <p className="text-gray-900 font-medium mt-1">
-                          {capitalizeFirstLetter(order?.user?.first_name)}{" "}
-                          {capitalizeFirstLetter(order?.user?.middle_name)}{" "}
-                          {capitalizeFirstLetter(order?.user?.last_name)}
+                        <p className="text-gray-900 font-medium mt-1 md:text-base text-sm">
+                          {capitalizeFirstLetter(order?.user.first_name)}{" "}
+                          {capitalizeFirstLetter(order?.user.middle_name)}{" "}
+                          {capitalizeFirstLetter(order?.user.last_name)}
                         </p>
                       </div>
                       <div>
-                        <p className="text-xs text-gray-500 font-medium uppercase tracking-wide">
+                        <p className="text-xs md:text-sm text-gray-500 font-medium uppercase tracking-wide">
                           Location
                         </p>
-                        <p className="text-gray-900 font-medium mt-1">
-                          {order?.shipping_address?.barangay},{" "}
-                          {order?.shipping_address?.city}
+                        <p className="text-gray-900 font-medium mt-1 md:text-base text-sm">
+                          {order?.shipping_address.barangay},{" "}
+                          {order?.shipping_address.city}
                         </p>
                       </div>
                     </div>
@@ -114,31 +116,36 @@ export default function OrderPending() {
                     {/* Order Details */}
                     <div className="grid grid-cols-2 gap-4 pt-2">
                       <div>
-                        <p className="text-sm text-gray-500">Order Date</p>
-                        <p className="font-semibold text-gray-900">
-                          {formatDate(order?.order_date)}
+                        <p className="text-xs md:text-sm text-gray-500 ">
+                          Order Date
+                        </p>
+                        <p className="font-semibold text-gray-900 md:text-base text-sm">
+                          {formatDate(order.order_date)}
                         </p>
                       </div>
                       <div>
-                        <p className="text-sm text-gray-500">Delivery Date</p>
-                        <p className="font-semibold text-gray-900">
-                          {formatDate(order?.delivery_date)}
+                        <p className="text-xs md:text-sm text-gray-500">
+                          Delivery Date
+                        </p>
+                        <p className="font-semibold text-gray-900 md:text-base text-sm">
+                          {formatDate(order.delivery_date)}
                         </p>
                       </div>
                     </div>
 
                     {/* Total Amount */}
+
                     <div className="bg-emerald-50 rounded-lg p-4 border border-emerald-200">
                       <p className="text-sm text-gray-600">Total Amount</p>
-                      <p className="text-3xl font-bold text-emerald-700">
-                        ₱{order?.total_amount}
+                      <p className="text-lg md:text-3xl font-bold text-emerald-700">
+                        ₱{order.total_amount}
                       </p>
                     </div>
 
                     {/* Action Buttons */}
                     <div className="flex gap-2 pt-2">
                       <Link
-                        to={`/admin/order/pending/${order.id}`}
+                        to={`/admin/order/${order.status}/${order.id}`}
                         className="w-full"
                       >
                         <Button variant={"customized"} className="w-full">
@@ -159,8 +166,7 @@ export default function OrderPending() {
             )}
           </div>
         )}
-
-        {activeLayout === "table" && !isOrdersLoading && (
+        {activeLayout === "table" && !isOrderLoading && (
           <div>
             <Table>
               <TableCaption>

@@ -9,6 +9,7 @@ import { handleImageChange, ImagePreview } from "@/utils/image";
 import { useUpdateCategory } from "@/tanstack/category.mutation";
 import { useEffect } from "react";
 import { CustomToast } from "@/components/custom/custom-toast";
+import { ScrollArea } from "@/components/ui/scroll-area";
 interface CategoryFormEditProps {
   category_id: string;
   category: Category;
@@ -44,57 +45,59 @@ export default function CategoryFormEdit({
   }, [category.image_url, setImage]);
 
   return (
-    <form onSubmit={handleSubmit(onSubmit)}>
-      <div className="space-y-5">
-        <div className="space-y-2">
-          <Label>Image</Label>
-          <label className="max-w relative block h-40 rounded-md shadow-xs hover:cursor-pointer">
-            {image ? (
-              <img
-                src={ImagePreview(image)}
-                alt={category.name}
-                className="h-full w-full rounded-md object-cover"
-              />
-            ) : (
-              <div>
-                <div className="flex h-40 w-full items-center justify-center rounded-md bg-gray-200">
-                  <h1 className="text-muted-foreground text-sm">
-                    No image selected
-                  </h1>
+    <ScrollArea className="md:h-120 h-80">
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <div className="space-y-5">
+          <div className="space-y-2">
+            <Label>Image</Label>
+            <label className="max-w relative block h-40 rounded-md shadow-xs hover:cursor-pointer">
+              {image ? (
+                <img
+                  src={ImagePreview(image)}
+                  alt={category.name}
+                  className="h-full w-full rounded-md object-cover"
+                />
+              ) : (
+                <div>
+                  <div className="flex h-40 w-full items-center justify-center rounded-md bg-gray-200">
+                    <h1 className="text-muted-foreground text-sm">
+                      No image selected
+                    </h1>
+                  </div>
                 </div>
-              </div>
-            )}
-            <Input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e: any) => {
-                handleImageChange(e, setImage);
-              }}
-            />
-          </label>
-        </div>
-        <div className="space-y-2">
-          <Label>Name:</Label>
-          <Input defaultValue={category.name} {...register("name")}></Input>
-        </div>
-        <div className="space-y-2">
-          <Label>Description:</Label>
-          <Textarea
-            defaultValue={category.description ?? ""}
-            {...register("description")}
-          ></Textarea>
-        </div>
+              )}
+              <Input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e: any) => {
+                  handleImageChange(e, setImage);
+                }}
+              />
+            </label>
+          </div>
+          <div className="space-y-2">
+            <Label>Name:</Label>
+            <Input defaultValue={category.name} {...register("name")}></Input>
+          </div>
+          <div className="space-y-2">
+            <Label>Description:</Label>
+            <Textarea
+              defaultValue={category.description ?? ""}
+              {...register("description")}
+            ></Textarea>
+          </div>
 
-        <Button
-          type="submit"
-          variant={"default"}
-          className="cursor-pointer w-full"
-          disabled={updateCategoryMutation.isPending}
-        >
-          {updateCategoryMutation.isPending ? "Saving..." : "Save"}
-        </Button>
-      </div>
-    </form>
+          <Button
+            type="submit"
+            variant={"customized"}
+            className="cursor-pointer w-full"
+            disabled={updateCategoryMutation.isPending}
+          >
+            {updateCategoryMutation.isPending ? "Saving..." : "Save"}
+          </Button>
+        </div>
+      </form>
+    </ScrollArea>
   );
 }

@@ -48,16 +48,16 @@ export default function Product() {
   return (
     <AdminLayout breadCrumbs={productBreadCrumb}>
       <div className="p-8">
-        <div className="flex justify-between items-center mb-8">
-          <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">
+        <div className="flex md:flex-row flex-col justify-between items-center md:mb-8 mb-4 gap-5">
+          <div className="w-full">
+            <h1 className="md:text-4xl text-2xl font-bold text-foreground mb-2 md:text-start text-center ">
               Products Overview
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground md:text-base text-sm md:text-start text-center">
               View and manage all products in your inventory
             </p>
           </div>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center justify-end w-full gap-2">
             <Link to="/admin/products/manage">
               <Button variant={"outline"}>
                 <ChartNoAxesGantt className="w-5 h-5" />
@@ -67,10 +67,10 @@ export default function Product() {
           </div>
         </div>
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-card rounded-lg p-6 border border-border">
             <p className="text-muted-foreground text-sm mb-2">Total Products</p>
-            <p className="text-3xl font-bold text-foreground">
+            <p className="text-xl md:text-3xl  font-bold text-foreground">
               {totalProducts}
             </p>
             <p className="text-xs text-muted-foreground mt-2">8 variants</p>
@@ -79,14 +79,14 @@ export default function Product() {
             <p className="text-muted-foreground text-sm mb-2">
               Active Listings
             </p>
-            <p className="text-3xl font-bold text-foreground">46</p>
+            <p className="text-xl md:text-3xl  font-bold text-foreground">46</p>
             <p className="text-xs text-muted-foreground mt-2">2 archived</p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
             <p className="text-muted-foreground text-sm mb-2">
               Low Stock Items
             </p>
-            <p className="text-3xl font-bold text-chart-5">3</p>
+            <p className="text-xl md:text-3xl  font-bold text-chart-5">3</p>
             <p className="text-xs text-muted-foreground mt-2">
               Needs restocking
             </p>
@@ -95,25 +95,27 @@ export default function Product() {
             <p className="text-muted-foreground text-sm mb-2">
               Total Inventory Value
             </p>
-            <p className="text-3xl font-bold text-foreground">$18,450</p>
+            <p className="text-xl md:text-3xl font-bold text-foreground">
+              ₱ 18,450
+            </p>
             <p className="text-xs text-muted-foreground mt-2">
               Current stock value
             </p>
           </div>
         </div>
-        <div className="flex justify-between w-full">
+        <div className="flex  justify-between w-full gap-2">
           <div className="flex gap-2 mb-6 ">
             <div className="flex items-center gap-2">
               <Search className="text-muted-foreground w-5 h-5" />
               <Input
-                className="w-sm"
+                className="md:w-sm"
                 placeholder="Search products name"
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
               />
             </div>
             <Select value={activeCategory} onValueChange={setActiveCategory}>
-              <SelectTrigger className=" w-xxs">
+              <SelectTrigger className="w-xxs">
                 <SelectValue placeholder="Select a category" />
               </SelectTrigger>
               <SelectContent>
@@ -189,7 +191,7 @@ export default function Product() {
                         key={product.id}
                         className="border-b border-border hover:bg-muted/30 transition"
                       >
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-6 md:text-base text-sm ">
                           <div className="flex items-center gap-10">
                             <img
                               src={product.image_url}
@@ -201,17 +203,17 @@ export default function Product() {
                             </span>
                           </div>
                         </td>
-                        <td className="py-4 px-6 text-muted-foreground">
+                        <td className="py-4 px-6 text-muted-foreground md:text-base text-sm">
                           {product.code}
                         </td>
-                        <td className="py-4 px-6 text-muted-foreground">
+                        <td className="py-4 px-6 text-muted-foreground md:text-base text-sm">
                           {capitalizeFirstLetter(product.category)}
                         </td>
-                        <td className="py-4 px-6 text-foreground font-semibold">
-                          ₱ {product.price}
+                        <td className="py-4 px-6 text-foreground font-semibold md:text-base text-sm">
+                          ₱{product.price}
                         </td>
 
-                        <td className="py-4 px-6">
+                        <td className="py-4 px-6 md:text-base text-sm">
                           <span
                             className={`px-5 py-2 rounded-full text-xs font-semibold ${
                               product.status === "available"
@@ -245,7 +247,7 @@ export default function Product() {
                   className="rounded-lg max-w-2xs h-full overflow-hidden border border-border"
                   key={prod.id}
                 >
-                  <div className="h-70">
+                  <div className="md:h-70 h-40">
                     <img
                       src={prod.image_url}
                       alt={capitalizeFirstLetter(prod.name)}
@@ -253,13 +255,15 @@ export default function Product() {
                     />
                   </div>
                   <div className="text-start p-2">
-                    <h1 className="text-xl font-bold">
+                    <h1 className="md:text-xl text-base font-bold">
                       {capitalizeFirstLetter(prod.name)}
                     </h1>
-                    <h5 className="text-sm text-muted-foreground">
+                    <h5 className="md:text-sm text-xs text-muted-foreground">
                       {capitalizeFirstLetter(prod.category)}
                     </h5>
-                    <h2 className="text-lg font-semibold">₱ {prod.price}</h2>
+                    <h2 className="md:text-lg text-base font-semibold">
+                      ₱ {prod.price}
+                    </h2>
                     <div className="mt-4">
                       <Link to={`/admin/products/${prod.id}`}>
                         <Button className="w-full mt-2" variant={"customized"}>

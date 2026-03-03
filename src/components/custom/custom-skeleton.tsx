@@ -2,7 +2,6 @@ import { OrbitProgress } from "react-loading-indicators";
 import Skeleton from "react-loading-skeleton";
 
 interface CustomSkeletonProps {
-  key?: number | string;
   type:
     | "order-card"
     | "product-card"
@@ -22,7 +21,6 @@ interface CustomSkeletonProps {
 }
 
 export default function CustomSkeleton({
-  key,
   type,
   width,
   height,
@@ -30,19 +28,13 @@ export default function CustomSkeleton({
   switch (type) {
     case "order-card":
       return (
-        <div
-          key={key}
-          className="bg-gray-200 w-full h-80 rounded-lg skeleton-effect"
-        >
+        <div className="bg-gray-200 w-full h-80 rounded-lg skeleton-effect">
           <Skeleton width={width || "100%"} height={height || 80} />
         </div>
       );
     case "product-card":
       return (
-        <div
-          key={key}
-          className="bg-gray-200 w-full h-80 rounded-lg skeleton-effect"
-        >
+        <div className="bg-gray-200 w-full h-80 rounded-lg skeleton-effect">
           <Skeleton width={width || "100%"} height={height || 80} />
         </div>
       );
@@ -103,7 +95,6 @@ export default function CustomSkeleton({
     case "category-card":
       return (
         <div
-          key={key}
           className="bg-gray-200 w-full h-100 rounded-lg skeleton-effect"
         >
           <Skeleton width={width || "100%"} height={height || 80} />

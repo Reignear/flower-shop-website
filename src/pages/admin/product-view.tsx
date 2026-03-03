@@ -28,9 +28,9 @@ export default function ProductView() {
 
   return (
     <AdminLayout breadCrumbs={useViewProductBreadCrumb()}>
-      <div className="grid grid-cols-5 gap-5 p-5">
+      <div className="grid md:grid-cols-5 grid-cols-1  md:gap-5 p-5">
         <div className="col-span-2">
-          <div className="relative aspect-square mb-4 bg-muted rounded-md overflow-hidden flex items-center justify-center ">
+          <div className="relative aspect-square mb-4 w-full bg-muted rounded-md overflow-hidden flex items-center justify-center ">
             {!imgLoaded && <CustomSkeleton type="photo-full" />}
             <img
               src={product?.image_url}
@@ -49,17 +49,17 @@ export default function ProductView() {
                 <Badge variant="secondary" className="mb-2 p-2 px-5">
                   {capitalizeFirstLetter(product?.category.name)}
                 </Badge>
-                <h1 className="text-3xl font-bold text-foreground">
+                <h1 className="text-xl md:text-3xl font-bold text-foreground">
                   {capitalizeFirstLetter(product?.name) || (
                     <Skeleton width={200} />
                   )}
                 </h1>
-                <p className="text-muted-foreground mt-1">
+                <p className="text-muted-foreground mt-1 md:text-base text-sm">
                   Code: {product?.code}
                 </p>
               </div>
               <div className="text-center space-y-2">
-                <div className="text-3xl font-bold text-primary">
+                <div className=" text-xl md:text-3xl font-bold text-primary">
                   ₱{product?.price}
                 </div>
                 <span
@@ -103,7 +103,7 @@ export default function ProductView() {
               </span>
             </div>
 
-            <p className="text-muted-foreground mt-4">{product?.description}</p>
+            <p className="md:text-base text-sm text-muted-foreground mt-4">{product?.description}</p>
           </div>
 
           <Card>

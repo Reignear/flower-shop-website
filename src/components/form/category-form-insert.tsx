@@ -8,6 +8,7 @@ import type { Category } from "@/utils/interface";
 import { handleImageChange, ImagePreview } from "@/utils/image";
 import { useInsertCategory } from "@/tanstack/category.mutation";
 import { CustomToast } from "@/components/custom/custom-toast";
+import { ScrollArea } from "@/components/ui/scroll-area";
 
 interface CategoryFormInsertProps {
   setOpenInsert: (open: boolean) => void;
@@ -31,54 +32,57 @@ export default function CategoryFormInsert({
   };
 
   return (
-    <form onSubmit={handleSubmit(submitForm)}>
-      <div className="space-y-5">
-        <div className="space-y-2">
-          <Label>Image</Label>
-          <label className="max-w relative block h-40 rounded-md shadow-xs hover:cursor-pointer">
-            {image ? (
-              <img
-                src={ImagePreview(image)}
-                alt=""
-                className="h-full w-full rounded-md object-cover"
-              />
-            ) : (
-              <div>
-                <div className="flex h-40 w-full items-center justify-center rounded-md bg-gray-200">
-                  <h1 className="text-muted-foreground text-sm">
-                    No image selected
-                  </h1>
+    <ScrollArea className="md:h-120 h-80">
+      <form onSubmit={handleSubmit(submitForm)}>
+        <div className="space-y-5">
+          <div className="space-y-2">
+            <Label>Image</Label>
+            <label className="max-w relative block h-40 rounded-md shadow-xs hover:cursor-pointer">
+              {image ? (
+                <img
+                  src={ImagePreview(image)}
+                  alt=""
+                  className="h-full w-full rounded-md object-cover"
+                />
+              ) : (
+                <div>
+                  <div className="flex h-40 w-full items-center justify-center rounded-md bg-gray-200">
+                    <h1 className="text-muted-foreground text-sm">
+                      No image selected
+                    </h1>
+                  </div>
                 </div>
-              </div>
-            )}
-            <Input
-              type="file"
-              accept="image/*"
-              className="hidden"
-              onChange={(e: any) => {
-                handleImageChange(e, setImage);
-              }}
-            />
-          </label>
+              )}
+              <Input
+                type="file"
+                accept="image/*"
+                className="hidden"
+                onChange={(e: any) => {
+                  handleImageChange(e, setImage);
+                }}
+              />
+            </label>
+          </div>
+          <div className="space-y-2">
+            <Label>Name</Label>
+            <Input {...register("name", { required: true })} />
+          </div>
+          <div className="space-y-2">
+            <Label>Description</Label>
+            <Textarea {...register("description", { required: true })} />
+          </div>
+          <div>
+            <Button
+              className="w-full"
+              variant={"customized"}
+              disabled={insertCategoryMutation.isPending}
+              type="submit"
+            >
+              {insertCategoryMutation.isPending ? "Submitting..." : "Submit"}
+            </Button>
+          </div>
         </div>
-        <div className="space-y-2">
-          <Label>Name</Label>
-          <Input {...register("name", { required: true })} />
-        </div>
-        <div className="space-y-2">
-          <Label>Description</Label>
-          <Textarea {...register("description", { required: true })} />
-        </div>
-        <div>
-          <Button
-            className="w-full"
-            disabled={insertCategoryMutation.isPending}
-            type="submit"
-          >
-            {insertCategoryMutation.isPending ? "Submitting..." : "Submit"}
-          </Button>
-        </div>
-      </div>
-    </form>
+      </form>
+    </ScrollArea>
   );
 }

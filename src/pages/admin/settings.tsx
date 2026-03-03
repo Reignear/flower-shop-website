@@ -39,10 +39,10 @@ export default function Settings() {
       <Toaster position="bottom-right" />
       <div className="p-8 max-full">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">
+          <h1 className="text-2xl md:text-4xl font-bold text-foreground mb-2">
             Admin Settings
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-muted-foreground text-sm md:text-base">
             Configure your store, business, and admin settings
           </p>
         </div>
@@ -50,46 +50,44 @@ export default function Settings() {
         {/* Business Settings */}
         <form onSubmit={handleSubmit(submitForm)}>
           <div className="bg-card rounded-lg border border-border p-6 mb-6">
-            <h2 className="text-lg font-semibold text-foreground mb-6">
+            <h2 className="text-base md:text-lg font-semibold text-foreground mb-6">
               Admin Settings (Create New Admin Account)
             </h2>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
-              <div className="grid grid-cols-3 gap-2">
-                <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">
-                    First Name
-                  </label>
-                  <Input type="text" {...register("firstName")}></Input>{" "}
-                  {errors.firstName && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {errors.firstName.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">
-                    Middle Name
-                  </label>
-                  <Input type="text" {...register("middleName")}></Input>
-                  {errors.middleName && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {errors.middleName.message}
-                    </p>
-                  )}
-                </div>
-                <div>
-                  <label className="text-sm text-muted-foreground mb-2 block">
-                    Last Name
-                  </label>
-                  <Input type="text" {...register("lastName")}></Input>{" "}
-                  {errors.lastName && (
-                    <p className="text-red-500 text-xs mt-1">
-                      {errors.lastName.message}
-                    </p>
-                  )}
-                </div>
+            <div className="grid grid-cols-2 md:grid-cols-6 gap-4 mb-6">
+              <div>
+                <label className="text-sm text-muted-foreground mb-2 block">
+                  First Name
+                </label>
+                <Input type="text" {...register("firstName")}></Input>{" "}
+                {errors.firstName && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.firstName.message}
+                  </p>
+                )}
               </div>
               <div>
+                <label className="text-sm text-muted-foreground mb-2 block">
+                  Middle Name
+                </label>
+                <Input type="text" {...register("middleName")}></Input>
+                {errors.middleName && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.middleName.message}
+                  </p>
+                )}
+              </div>
+              <div>
+                <label className="text-sm text-muted-foreground mb-2 block">
+                  Last Name
+                </label>
+                <Input type="text" {...register("lastName")}></Input>{" "}
+                {errors.lastName && (
+                  <p className="text-red-500 text-xs mt-1">
+                    {errors.lastName.message}
+                  </p>
+                )}
+              </div>
+              <div className="col-span-1  md:col-span-3">
                 <label className="text-sm text-muted-foreground mb-2 block">
                   Birthdate
                 </label>
@@ -100,8 +98,7 @@ export default function Settings() {
                   </p>
                 )}
               </div>
-
-              <div>
+              <div className=" col-span-2 md:col-span-3">
                 <label className="text-sm text-muted-foreground mb-2 block">
                   Email
                 </label>
@@ -112,8 +109,7 @@ export default function Settings() {
                   </p>
                 )}
               </div>
-              <div></div>
-              <div>
+              <div className="col-span-1  md:col-span-6">
                 <label className="text-sm text-muted-foreground mb-2 block">
                   Password
                 </label>
@@ -124,7 +120,7 @@ export default function Settings() {
                   </p>
                 )}
               </div>
-              <div>
+              <div className=" col-span-1 md:col-span-6">
                 <label className="text-sm text-muted-foreground mb-2 block">
                   Confirm Password
                 </label>
@@ -136,7 +132,7 @@ export default function Settings() {
                 )}
               </div>
             </div>
-            <Button type="submit" disabled={isLoading}>
+            <Button type="submit" disabled={isLoading} variant={"customized"}>
               <UserRoundPlus /> {isLoading ? "Creating..." : "Create Admin"}
             </Button>
           </div>

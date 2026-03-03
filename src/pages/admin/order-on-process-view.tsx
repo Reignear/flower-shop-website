@@ -56,15 +56,15 @@ export default function OrderOnProcessView() {
         {/* Header */}
         <div className="flex items-start justify-between">
           <div>
-            <h2 className="text-3xl font-bold text-foreground">
+            <h2 className="text-xl md:text-3xl font-bold text-foreground">
               Reference No.{Order?.reference_number}
             </h2>
-            <p className="text-muted-foreground mt-1">
+            <p className="text-muted-foreground mt-1 md:text-base text-sm">
               Manage order details and status
             </p>
           </div>
           <Badge
-            className={`${getStatusBadgeColor(Order?.status)} border-0 px-4 py-2 text-base`}
+            className={`${getStatusBadgeColor(Order?.status)} border-0 px-4 py-2 text-sm md:text-base`}
           >
             {formatDashText(capitalizeFirstLetter(Order?.status))}
           </Badge>
@@ -137,7 +137,7 @@ export default function OrderOnProcessView() {
               <Separator />
               <div className="flex justify-between pt-4">
                 <p className="font-semibold text-foreground">Total Amount:</p>
-                <p className="text-2xl font-bold text-primary">
+                <p className="text-xl md:text-2xl font-bold text-primary">
                   ₱{Order?.total_amount.toLocaleString()}
                 </p>
               </div>

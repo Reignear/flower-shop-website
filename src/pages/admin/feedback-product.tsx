@@ -60,16 +60,16 @@ export default function FeedbackProduct() {
       <Toaster position="bottom-right" />
       <div className="p-8">
         <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">
+          <h1 className="text-xl md:text-4xl font-bold text-foreground mb-2">
             Feedback Management
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-sm md:text-base text-muted-foreground">
             Review and manage customer feedback
           </p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-card rounded-lg p-6 border border-border">
             <p className="text-muted-foreground text-sm mb-2">
               Total Feedbacks
@@ -146,9 +146,9 @@ export default function FeedbackProduct() {
           {filteredData?.map((feedback: any) => (
             <div
               key={feedback.id}
-              className="bg-card rounded-lg border border-border p-6 hover:border-emerald-500/50 transition flex flex-row w-full gap-5"
+              className="bg-card rounded-lg border border-border p-6 hover:border-emerald-500/50 transition flex md:flex-row flex-col w-full gap-5"
             >
-              <div className="shrink-0 h-35 w-35 bg-chart-1/20 rounded-md overflow-hidden">
+              <div className="shrink-0 md:h-35 md:w-35 h-15 w-15 bg-chart-1/20 rounded-md overflow-hidden">
                 <img
                   src={feedback.product.image_url}
                   className="w-full h-full object-cover rounded-md"
@@ -178,12 +178,11 @@ export default function FeedbackProduct() {
                       {[...Array(5)].map((_, i) => (
                         <Star
                           key={i}
-                          size={16}
-                          className={
+                          className={`w-3 h-3 sm:w-4 sm:h-4 ${
                             i < feedback.rating
                               ? "fill-yellow-400 text-yellow-400"
                               : "text-gray-300"
-                          }
+                          }`}
                         />
                       ))}
                     </div>
@@ -199,7 +198,7 @@ export default function FeedbackProduct() {
                   {capitalizeFirstLetter(feedback.feedback)}
                 </p>
 
-                <div className="flex justify-between items-center">
+                  <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center md:space-y-0 space-y-2">
                   <p className="text-xs text-muted-foreground">
                     {formatDate(feedback.created_at)}
                   </p>

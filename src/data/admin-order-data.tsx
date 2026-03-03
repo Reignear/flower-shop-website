@@ -13,7 +13,7 @@ export const orderPendingBreadCrumb = [
 ];
 
 export const orderDeliveredBreadCrumb = [
-  { label: "AdDashboardmin", href: "/admin/dashboard" },
+  { label: "Dashboard", href: "/admin/dashboard" },
   { label: "Orders", href: "/admin/order" },
   { label: "Delivered Orders", href: "/admin/order/delivered" },
 ];

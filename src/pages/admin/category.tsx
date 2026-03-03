@@ -48,10 +48,10 @@ export default function Category() {
       <div className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">
+            <h1 className="text-2xl md:text-4xl font-bold text-foreground mb-2">
               Category Management
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm md:text-base">
               Manage all product categories
             </p>
           </div>
@@ -59,7 +59,7 @@ export default function Category() {
             title={insertTitle}
             description={insertDescription}
             trigger={
-              <Button>
+              <Button variant={"outline"}>
                 <Plus className="w-5 h-5" />
                 Add New Category
               </Button>
@@ -70,13 +70,13 @@ export default function Category() {
             <CategoryFormInsert setOpenInsert={setOpenInsert} />
           </CustomDialog>
         </div>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
           <Card>
             <CardContent>
               <p className="text-muted-foreground text-sm mb-2">
                 Total Categories
               </p>
-              <p className="text-3xl font-bold text-foreground">
+              <p className="text-xl md:text-3xl font-bold text-foreground">
                 {categories.length}
               </p>
             </CardContent>
@@ -86,7 +86,7 @@ export default function Category() {
               <p className="text-muted-foreground text-sm mb-2">
                 Active Categories
               </p>
-              <p className="text-3xl font-bold text-foreground"></p>
+              <p className="text-xl md:text-3xl font-bold text-foreground"></p>
               <p className="text-xs text-muted-foreground mt-2">
                 Currently listed
               </p>
@@ -97,7 +97,9 @@ export default function Category() {
               <p className="text-muted-foreground text-sm mb-2">
                 Total Products
               </p>
-              <p className="text-3xl font-bold text-foreground">sdsds</p>
+              <p className="text-xl md:text-3xl font-bold text-foreground">
+                sdsds
+              </p>
               <p className="text-xs text-muted-foreground mt-2">
                 All categories
               </p>
@@ -108,7 +110,7 @@ export default function Category() {
               <p className="text-muted-foreground text-sm mb-2">
                 Total Revenue
               </p>
-              <p className="text-3xl font-bold text-foreground"></p>
+              <p className="text-xl md:text-3xl font-bold text-foreground"></p>
               <p className="text-xs text-muted-foreground mt-2">
                 All categories
               </p>
@@ -122,7 +124,7 @@ export default function Category() {
             ))}
           </div>
         )}
-        <div className="grid grid-cols-3 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           {categories.map((category) => (
             <div
               className="border border-border rounded-lg h-100 relative"

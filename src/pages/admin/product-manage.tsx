@@ -74,10 +74,10 @@ export default function ProductManage() {
       <div className="p-8 space-y-5">
         <div className="flex items-center justify-between">
           <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">
+            <h1 className="text-2xl md:text-4xl font-bold text-foreground mb-2">
               Products Management
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground text-sm md:text-base">
               Manage all products and inventory
             </p>
           </div>
@@ -176,7 +176,7 @@ export default function ProductManage() {
                         {capitalizeFirstLetter(product.category)}
                       </td>
                       <td className="py-4 px-6 text-foreground font-semibold">
-                        ₱ {product.price}
+                        ₱{product.price}
                       </td>
 
                       <td className="py-4 px-6">

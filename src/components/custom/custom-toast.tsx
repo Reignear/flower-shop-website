@@ -37,7 +37,7 @@ export const CustomToast = (
   const { loading, success, error } = getMessages(action);
 
   const toastStyles = {
-    base: "flex items-center gap-3 p-4 rounded-lg shadow-lg text-sm font-medium",
+    base: "flex items-center gap-3 p-4 rounded-lg shadow-lg md:text-sm text-xs font-medium",
     loading: "bg-yellow-100 text-yellow-800 border border-yellow-300",
     success: "bg-green-100 text-green-800 border border-green-300",
     error: "bg-red-100 text-red-800 border border-red-300",

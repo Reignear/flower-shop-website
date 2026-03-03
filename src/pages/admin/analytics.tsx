@@ -17,10 +17,10 @@ export default function AnalyticsPage() {
       <div className="p-8">
         <div className="flex justify-between items-center mb-8">
           <div>
-            <h1 className="text-4xl font-bold text-foreground mb-2">
+            <h1 className="md:text-4xl text-2xl font-bold text-foreground mb-2">
               Analytics
             </h1>
-            <p className="text-muted-foreground">
+            <p className="text-muted-foreground md:text-base text-sm">
               Detailed insights and performance metrics
             </p>
           </div>
