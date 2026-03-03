@@ -59,32 +59,34 @@ export default function FeedbackOrder() {
   return (
     <AdminLayout breadCrumbs={feedbackOrderBreadcrumbs}>
       <Toaster position="bottom-right" />
-      <div className="p-8">
-        <div className="mb-8">
-          <h1 className="text-xl md:text-4xl font-bold text-foreground mb-2">
+      <div className="p-4 sm:p-6 lg:p-8">
+        <div className="mb-6 sm:mb-8">
+          <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-foreground mb-2">
             Feedback Management
           </h1>
-          <p className="text-sm md:text-base text-muted-foreground">
+          <p className="text-sm sm:text-base text-muted-foreground">
             Review and manage customer feedback
           </p>
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
-          <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 md:gap-6 mb-6 sm:mb-8">
+          <div className="bg-card rounded-lg p-4 sm:p-6 border border-border">
+            <p className="text-muted-foreground text-xs sm:text-sm mb-2">
               Total Feedbacks
             </p>
-            <p className="text-3xl font-bold text-foreground">
+            <p className="text-2xl sm:text-3xl font-bold text-foreground">
               {data?.length || 0}
             </p>
             <p className="text-xs text-muted-foreground mt-2">
               Since website launch
             </p>
           </div>
-          <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">Avg Rating</p>
-            <p className="text-3xl font-bold fill-yellow-400 text-yellow-400">
+          <div className="bg-card rounded-lg p-4 sm:p-6 border border-border">
+            <p className="text-muted-foreground text-xs sm:text-sm mb-2">
+              Avg Rating
+            </p>
+            <p className="text-2xl sm:text-3xl font-bold fill-yellow-400 text-yellow-400">
               {(
                 averageRating(data?.map((feedback) => feedback.rating) || []) ||
                 0
@@ -93,16 +95,20 @@ export default function FeedbackOrder() {
             </p>
             <p className="text-xs text-muted-foreground mt-2">Out of 5.0</p>
           </div>
-          <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">Published</p>
-            <p className="text-3xl font-bold text-chart-4">
+          <div className="bg-card rounded-lg p-4 sm:p-6 border border-border">
+            <p className="text-muted-foreground text-xs sm:text-sm mb-2">
+              Published
+            </p>
+            <p className="text-2xl sm:text-3xl font-bold text-chart-4">
               {data?.filter((f: any) => f.status === "published").length || 0}
             </p>
             <p className="text-xs text-muted-foreground mt-2">Live on site</p>
           </div>
-          <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">Pending Review</p>
-            <p className="text-3xl font-bold text-chart-1">
+          <div className="bg-card rounded-lg p-4 sm:p-6 border border-border">
+            <p className="text-muted-foreground text-xs sm:text-sm mb-2">
+              Pending Review
+            </p>
+            <p className="text-2xl sm:text-3xl font-bold text-chart-1">
               {data?.filter((f: any) => f.status === "pending").length || 0}
             </p>
             <p className="text-xs text-muted-foreground mt-2">
@@ -116,30 +122,40 @@ export default function FeedbackOrder() {
           <Button
             variant={`${filter === "all" ? "customized" : "outline"}`}
             onClick={() => handleClick("all")}
+            size="sm"
+            className="text-xs sm:text-sm"
           >
             All Feedbacks
           </Button>
           <Button
             variant={`${filter === "published" ? "customized" : "outline"}`}
             onClick={() => handleClick("published")}
+            size="sm"
+            className="text-xs sm:text-sm"
           >
             Published
           </Button>
           <Button
             variant={`${filter === "pending" ? "customized" : "outline"}`}
             onClick={() => handleClick("pending")}
+            size="sm"
+            className="text-xs sm:text-sm"
           >
             Pending
           </Button>
           <Button
             variant={`${filter === "5-stars" ? "customized" : "outline"}`}
             onClick={() => handleClick("5-stars")}
+            size="sm"
+            className="text-xs sm:text-sm"
           >
             5 Stars
           </Button>
           <Button
             variant={`${filter === "4-stars-below" ? "customized" : "outline"}`}
             onClick={() => handleClick("4-stars-below")}
+            size="sm"
+            className="text-xs sm:text-sm"
           >
             4 Stars & Below
           </Button>
@@ -149,28 +165,28 @@ export default function FeedbackOrder() {
           {filteredData?.map((feedback: any, index: number) => (
             <div
               key={index}
-              className="bg-card rounded-lg border border-border p-6 hover:border-primary/50 transition"
+              className="bg-card rounded-lg border border-border p-4 sm:p-6 hover:border-primary/50 transition"
             >
-              <div className="flex justify-between items-start mb-4">
-                <div className="flex-1">
+              <div className="flex flex-col sm:flex-row justify-between items-start gap-4 mb-4">
+                <div className="flex-1 w-full">
                   <div className="flex items-center gap-3 mb-2">
-                    <div className="w-10 h-10 bg-chart-1/20 rounded-full flex items-center justify-center">
-                      <MessageCircle className="w-5 h-5 text-chart-1" />
+                    <div className="w-8 h-8 sm:w-10 sm:h-10 bg-chart-1/20 rounded-full flex items-center justify-center shrink-0">
+                      <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-chart-1" />
                     </div>
-                    <div>
-                      <p className="text-foreground font-semibold">
+                    <div className="min-w-0 flex-1">
+                      <p className="text-sm sm:text-base text-foreground font-semibold truncate">
                         {capitalizeFirstLetter(feedback.user.first_name)}{" "}
                         {capitalizeFirstLetter(feedback.user.middle_name)}{" "}
                         {capitalizeFirstLetter(feedback.user.last_name)}
                       </p>
-                      <p className="text-xs text-muted-foreground">
+                      <p className="text-xs text-muted-foreground truncate">
                         Order # {feedback.order.reference_number}
                       </p>
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-3">
-                  <div className="flex gap-1">
+                <div className="flex items-center gap-2 sm:gap-3 shrink-0">
+                  <div className="flex gap-0.5 sm:gap-1">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
@@ -183,44 +199,53 @@ export default function FeedbackOrder() {
                     ))}
                   </div>
                   <span
-                    className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadgeColor(feedback.status)}`}
+                    className={`px-2 sm:px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadgeColor(feedback.status)}`}
                   >
                     {capitalizeFirstLetter(feedback.status)}
                   </span>
                 </div>
               </div>
 
-              <p className="text-muted-foreground mb-4 leading-relaxed">
+              <p className="text-sm sm:text-base text-muted-foreground mb-4 leading-relaxed">
                 {capitalizeFirstLetter(feedback.feedback)}
               </p>
 
-              <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center md:space-y-0 space-y-2">
+              <div className="flex flex-col lg:flex-row lg:justify-between lg:items-center gap-3">
                 <p className="text-xs text-muted-foreground">
                   {formatDate(feedback.created_at)}
                 </p>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <Button
                     disabled={feedback.status === "pending"}
                     variant={`${feedback.status === "pending" ? "outline" : "customized"}`}
                     onClick={() => handleStatusChange(feedback.id, "pending")}
+                    size="sm"
+                    className="w-full sm:w-auto text-xs sm:text-sm"
                   >
-                    <ClockCheck className="w-4 h-4" />
-                    Set to Pending
+                    <ClockCheck className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">Set to </span>Pending
                   </Button>
                   <Button
                     disabled={feedback.status === "published"}
                     variant={`${feedback.status === "published" ? "outline" : "customized"}`}
                     onClick={() => handleStatusChange(feedback.id, "published")}
+                    size="sm"
+                    className="w-full sm:w-auto text-xs sm:text-sm"
                   >
-                    <CheckCircle className="w-4 h-4" />
-                    Set to Published
+                    <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4 mr-1 sm:mr-2" />
+                    <span className="hidden sm:inline">Set to </span>Published
                   </Button>
                   <CustomDialog
                     title={deleteFeedbackTitle}
                     description={deleteFeedbackDescription}
                     trigger={
-                      <Button variant="destructive">
-                        <Trash2 className="w-4 h-4" />
+                      <Button
+                        variant="destructive"
+                        size="sm"
+                        className="w-full sm:w-auto"
+                      >
+                        <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                        <span className="ml-1 sm:hidden"> Delete</span>
                       </Button>
                     }
                   >
@@ -233,7 +258,9 @@ export default function FeedbackOrder() {
           {isLoading && <CustomSkeleton type="description-text" height={12} />}
           {!isLoading && filteredData?.length === 0 && (
             <div className="text-center py-10">
-              <p className="text-muted-foreground">No feedbacks found.</p>
+              <p className="text-muted-foreground text-sm sm:text-base">
+                No feedbacks found.
+              </p>
             </div>
           )}
         </div>

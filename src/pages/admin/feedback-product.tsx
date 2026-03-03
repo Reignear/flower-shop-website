@@ -69,19 +69,21 @@ export default function FeedbackProduct() {
         </div>
 
         {/* Stats */}
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 mb-8">
           <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">
+            <p className="text-muted-foreground text-xs sm:text-sm mb-2">
               Total Feedbacks
             </p>
-            <p className="text-3xl font-bold text-foreground">
+            <p className="text-2xl sm:text-3xl font-bold text-foreground">
               {data?.length || 0}
             </p>
             <p className="text-xs text-muted-foreground mt-2">This month</p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">Avg Rating</p>
-            <p className="text-3xl font-bold fill-yellow-400 text-yellow-400">
+            <p className="text-muted-foreground text-xs sm:text-sm mb-2">
+              Avg Rating
+            </p>
+            <p className="text-2xl sm:text-3xl font-bold fill-yellow-400 text-yellow-400">
               {(
                 averageRating(data?.map((feedback) => feedback.rating) || []) ||
                 0
@@ -90,16 +92,20 @@ export default function FeedbackProduct() {
             </p>
             <p className="text-xs text-muted-foreground mt-2">Out of 5.0</p>
           </div>
-          <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">Published</p>
-            <p className="text-3xl font-bold text-chart-4">
+          <div className="bg-card rounded-lg p-4 sm:p-6 border border-border">
+            <p className="text-muted-foreground text-xs sm:text-sm mb-2">
+              Published
+            </p>
+            <p className="text-2xl sm:text-3xl font-bold text-chart-4">
               {data?.filter((f: any) => f.status === "published").length || 0}
             </p>
             <p className="text-xs text-muted-foreground mt-2">Live on site</p>
           </div>
-          <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">Pending Review</p>
-            <p className="text-3xl font-bold text-chart-1">
+          <div className="bg-card rounded-lg p-4 sm:p-6 border border-border">
+            <p className="text-muted-foreground text-xs sm:text-sm mb-2">
+              Pending Review
+            </p>
+            <p className="text-2xl sm:text-3xl font-bold text-chart-1">
               {data?.filter((f: any) => f.status === "pending").length || 0}
             </p>
             <p className="text-xs text-muted-foreground mt-2">
@@ -113,32 +119,37 @@ export default function FeedbackProduct() {
           <Button
             variant={`${filter === "all" ? "customized" : "outline"}`}
             onClick={() => handleClick("all")}
+            className="text-xs sm:text-sm"
           >
-            All Feedbacks
+            All
           </Button>
           <Button
             variant={`${filter === "published" ? "customized" : "outline"}`}
             onClick={() => handleClick("published")}
+            className="text-xs sm:text-sm"
           >
             Published
           </Button>
           <Button
             variant={`${filter === "pending" ? "customized" : "outline"}`}
             onClick={() => handleClick("pending")}
+            className="text-xs sm:text-sm"
           >
             Pending
           </Button>
           <Button
             variant={`${filter === "5-stars" ? "customized" : "outline"}`}
             onClick={() => handleClick("5-stars")}
+            className="text-xs sm:text-sm"
           >
-            5 Stars
+            5⭐
           </Button>
           <Button
             variant={`${filter === "4-stars-below" ? "customized" : "outline"}`}
             onClick={() => handleClick("4-stars-below")}
+            className="text-xs sm:text-sm"
           >
-            4 Stars & Below
+            ≤4⭐
           </Button>
         </div>
 
@@ -146,34 +157,35 @@ export default function FeedbackProduct() {
           {filteredData?.map((feedback: any) => (
             <div
               key={feedback.id}
-              className="bg-card rounded-lg border border-border p-6 hover:border-emerald-500/50 transition flex md:flex-row flex-col w-full gap-5"
+              className="bg-card rounded-lg border border-border p-3 md:p-6 hover:border-emerald-500/50 transition flex flex-col sm:flex-row w-full gap-3 sm:gap-5"
             >
-              <div className="shrink-0 md:h-35 md:w-35 h-15 w-15 bg-chart-1/20 rounded-md overflow-hidden">
+              <div className="shrink-0 self-center sm:self-start w-20 h-20 sm:w-24 sm:h-24 md:h-35 md:w-35 bg-chart-1/20 rounded-md overflow-hidden">
                 <img
                   src={feedback.product.image_url}
                   className="w-full h-full object-cover rounded-md"
+                  alt={feedback.product.name}
                 />
               </div>
-              <div className="flex-1">
-                <div className="flex justify-between items-start mb-4">
-                  <div className="flex-1">
-                    <div className="flex items-center gap-3 mb-2">
-                      <div className="w-10 h-10 bg-chart-1/20 rounded-full flex items-center justify-center">
-                        <MessageCircle className="w-5 h-5 text-chart-1" />
+              <div className="flex-1 min-w-0">
+                <div className="flex justify-between items-start mb-4 gap-3">
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-2 sm:gap-3 mb-2">
+                      <div className="w-8 h-8 sm:w-10 sm:h-10 bg-chart-1/20 rounded-full flex items-center justify-center">
+                        <MessageCircle className="w-4 h-4 sm:w-5 sm:h-5 text-chart-1" />
                       </div>
-                      <div>
-                        <p className="text-foreground font-semibold">
+                      <div className="min-w-0 flex-1">
+                        <p className="text-sm sm:text-base text-foreground font-semibold truncate">
                           {capitalizeFirstLetter(feedback.user.first_name)}{" "}
                           {capitalizeFirstLetter(feedback.user.middle_name)}{" "}
                           {capitalizeFirstLetter(feedback.user.last_name)}
                         </p>
-                        <p className="text-xs text-muted-foreground">
+                        <p className="text-xs text-muted-foreground truncate">
                           {capitalizeFirstLetter(feedback.product.name)}
                         </p>
                       </div>
                     </div>
                   </div>
-                  <div className="flex items-center gap-3">
+                  <div className="flex flex-col sm:flex-row items-end sm:items-center gap-2 shrink-0">
                     <div className="flex gap-1">
                       {[...Array(5)].map((_, i) => (
                         <Star
@@ -187,7 +199,7 @@ export default function FeedbackProduct() {
                       ))}
                     </div>
                     <span
-                      className={`px-3 py-1 rounded-full text-xs font-semibold ${getStatusBadgeColor(feedback.status)}`}
+                      className={`px-2 py-1 sm:px-3 sm:py-1 rounded-full text-xs font-semibold ${getStatusBadgeColor(feedback.status)}`}
                     >
                       {capitalizeFirstLetter(feedback.status)}
                     </span>
@@ -198,18 +210,20 @@ export default function FeedbackProduct() {
                   {capitalizeFirstLetter(feedback.feedback)}
                 </p>
 
-                  <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center md:space-y-0 space-y-2">
+                <div className="flex flex-col md:flex-row md:justify-between items-start md:items-center md:space-y-0 space-y-2">
                   <p className="text-xs text-muted-foreground">
                     {formatDate(feedback.created_at)}
                   </p>
-                  <div className="flex items-center gap-2">
+                  <div className="flex flex-wrap items-center gap-2 w-full md:w-auto">
                     <Button
                       disabled={feedback.status === "pending"}
                       variant={`${feedback.status === "pending" ? "outline" : "customized"}`}
                       onClick={() => handleStatusChange(feedback.id, "pending")}
+                      className="flex-1 sm:flex-none text-xs sm:text-sm"
                     >
-                      <ClockCheck className="w-4 h-4" />
-                      Set to Pending
+                      <ClockCheck className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span className="hidden sm:inline">To Pending</span>
+                      <span className="sm:hidden">Pending</span>
                     </Button>
                     <Button
                       disabled={feedback.status === "published"}
@@ -217,16 +231,22 @@ export default function FeedbackProduct() {
                       onClick={() =>
                         handleStatusChange(feedback.id, "published")
                       }
+                      className="flex-1 sm:flex-none text-xs sm:text-sm"
                     >
-                      <CheckCircle className="w-4 h-4" />
-                      Set to Published
+                      <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
+                      <span className="hidden sm:inline">To Publish</span>
+                      <span className="sm:hidden">Publish</span>
                     </Button>
                     <CustomDialog
                       title={deleteFeedbackTitle}
                       description={deleteFeedbackDescription}
                       trigger={
-                        <Button variant="destructive">
-                          <Trash2 className="w-4 h-4" />
+                        <Button
+                          variant="destructive"
+                          className="flex-1 sm:flex-none text-xs sm:text-sm"
+                        >
+                          <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
+                          <span className="sm:hidden">Delete</span>
                         </Button>
                       }
                     >

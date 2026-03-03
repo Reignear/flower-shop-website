@@ -69,21 +69,23 @@ export default function Product() {
         {/* Stats */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-8">
           <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">Total Products</p>
+            <p className="text-muted-foreground text-xs md:text-sm mb-2">
+              Total Products
+            </p>
             <p className="text-xl md:text-3xl  font-bold text-foreground">
               {totalProducts}
             </p>
             <p className="text-xs text-muted-foreground mt-2">8 variants</p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">
+            <p className="text-muted-foreground text-xs md:text-sm mb-2">
               Active Listings
             </p>
-            <p className="text-xl md:text-3xl  font-bold text-foreground">46</p>
+            <p className="text-xl md:text-3xl font-bold text-foreground">46</p>
             <p className="text-xs text-muted-foreground mt-2">2 archived</p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">
+            <p className="text-muted-foreground text-xs md:text-sm mb-2">
               Low Stock Items
             </p>
             <p className="text-xl md:text-3xl  font-bold text-chart-5">3</p>
@@ -92,7 +94,7 @@ export default function Product() {
             </p>
           </div>
           <div className="bg-card rounded-lg p-6 border border-border">
-            <p className="text-muted-foreground text-sm mb-2">
+            <p className="text-muted-foreground text-xs md:text-sm mb-2">
               Total Inventory Value
             </p>
             <p className="text-xl md:text-3xl font-bold text-foreground">
@@ -103,8 +105,8 @@ export default function Product() {
             </p>
           </div>
         </div>
-        <div className="flex  justify-between w-full gap-2">
-          <div className="flex gap-2 mb-6 ">
+        <div className="flex md:flex-row flex-col justify-between w-full gap-2">
+          <div className="flex gap-2  md:mb-6 ">
             <div className="flex items-center gap-2">
               <Search className="text-muted-foreground w-5 h-5" />
               <Input
@@ -137,7 +139,7 @@ export default function Product() {
               </SelectContent>
             </Select>
           </div>
-          <div className="flex mb-6 items-center justify-center gap-2">
+          <div className="flex mb-6 items-center  justify-end w-full gap-2">
             <Button
               variant={`${layout === "grid" ? "customized" : "outline"}`}
               onClick={() => setLayout("grid")}

@@ -15,6 +15,7 @@ interface CustomDialogProps {
   children: React.ReactNode;
   trigger: React.ReactNode;
   open?: boolean;
+
   openChange?: (open: boolean) => void;
 }
 
