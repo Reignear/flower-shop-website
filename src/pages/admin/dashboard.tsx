@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminLayout from "@/components/layout/admin-layout";
 import {
@@ -6,7 +5,6 @@ import {
   Users,
   ShoppingBag,
   MessageSquare,
-  SquareArrowOutUpRight,
   Star,
 } from "lucide-react";
 
