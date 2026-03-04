@@ -3,21 +3,17 @@ import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useOrder } from "@/tanstack/fetch.hook";
 import type { Order } from "@/utils/interface";
-import {
-  getOrderStats,
-  orderBreadCrumb,
-  tabItems,
-} from "@/data/user-order-data";
+import { getOrderStats, tabItems } from "@/data/user-order-data";
 import { Link, useLocation } from "react-router-dom";
 interface OrderProps {
   children: React.ReactNode;
+  breadCrumbs?: { label: string; href: string }[];
 }
-export default function Order({ children }: OrderProps) {
+export default function Order({ children, breadCrumbs }: OrderProps) {
   const { data: orders } = useOrder();
 
   const location = useLocation();
   const pathname = location.pathname;
-  // Filtering logic
 
   // Stats calculations
   const totalOrders = orders?.length || 0;
@@ -36,7 +32,7 @@ export default function Order({ children }: OrderProps) {
   );
 
   return (
-    <UserLayout breadCrumbs={orderBreadCrumb}>
+    <UserLayout breadCrumbs={breadCrumbs}>
       <div className="min-h-screen bg-linear-to-br from-gray-50 to-gray-100 dark:from-gray-900 dark:to-gray-800">
         {/* Header Section */}
         <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
@@ -86,23 +82,18 @@ export default function Order({ children }: OrderProps) {
         {/* Main Content */}
         <div className="px-6 py-8">
           <div className="mb-8">
-            <div className="flex flex-col md:flex-row gap-4 mb-6">
-              <div className="flex gap-2 flex-wrap">
-                {tabItems.map((tab, index) => {
-                  const isActive =
-                    pathname === tab.href ||
-                    pathname.startsWith(tab.href + "/");
-                  return (
-                    <Link to={tab.href} key={index}>
-                      <Button
-                        variant={`${isActive ? "customized" : "outline"}`}
-                      >
-                        {tab.label}
-                      </Button>
-                    </Link>
-                  );
-                })}
-              </div>
+            <div className="grid grid-cols-4 md:flex  md:flex-row md:gap-2 gap-1 md:mb-6">
+              {tabItems.map((tab, index) => {
+                const isActive =
+                  pathname === tab.href || pathname.startsWith(tab.href + "/");
+                return (
+                  <Link to={tab.href} key={index} >
+                    <Button variant={`${isActive ? "customized" : "outline"}`} className="w-full">
+                      {tab.label}
+                    </Button>
+                  </Link>
+                );
+              })}
             </div>
           </div>
 

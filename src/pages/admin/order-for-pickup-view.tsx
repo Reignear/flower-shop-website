@@ -4,7 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useOrderById } from "@/tanstack/fetch.hook";
-import { capitalizeFirstLetter } from "@/utils/capitalize";
+import { capitalizeAll, capitalizeFirstLetter } from "@/utils/capitalize";
 import { formatDashText } from "@/utils/dash-formatter";
 import { formatDate } from "@/utils/date";
 import type { OrderItem } from "@/utils/interface";
@@ -12,15 +12,15 @@ import { getStatusBadgeColor } from "@/utils/status";
 import toast, { Toaster } from "react-hot-toast";
 import { useNavigate, useParams } from "react-router-dom";
 import { CustomToast } from "@/components/custom/custom-toast";
-import { useUpdateOrderStatus } from "@/tanstack/order-status-mutation";
+import { useAdminUpdateOrderStatus } from "@/tanstack/order-mutation";
 import { useForPickupBreadCrumb } from "@/data/admin-order-data";
 
 export default function OrderForPickupView() {
   const { id: id } = useParams();
   const navigate = useNavigate();
   const { data: Order, isLoading: isOrderLoading } = useOrderById(Number(id));
-  const updateOrderMutation = useUpdateOrderStatus();
-  console.log("Fetched order details:", Order);
+
+  const updateOrderMutation = useAdminUpdateOrderStatus();
   const handleStatusUpdate = async () => {
     try {
       await CustomToast(
@@ -31,6 +31,7 @@ export default function OrderForPickupView() {
         }),
         "edit",
       );
+
       setTimeout(() => {
         navigate("/admin/order/for-pickup");
       }, 1500);
@@ -200,6 +201,14 @@ export default function OrderForPickupView() {
                   <span className="text-muted-foreground">Total Amount:</span>
                   <span className="font-semibold text-foreground">
                     ₱{Order?.total_amount.toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">
+                    Payment Method:{" "}
+                  </span>
+                  <span className="font-semibold text-foreground">
+                    {capitalizeAll(Order?.payment?.[0]?.billing?.method_type)}
                   </span>
                 </div>
                 <div className="flex justify-between">

@@ -1,21 +1,21 @@
 import { CustomOrderStepper } from "@/components/custom/custom-order-stepper";
+import CustomSkeleton from "@/components/custom/custom-skeleton";
+import UserLayout from "@/components/layout/user-layout";
 import { Button } from "@/components/ui/button";
 import { useOrderById } from "@/tanstack/fetch.hook";
-import { Package, MapPin, CreditCard, Truck, Clock } from "lucide-react";
-import { useParams } from "react-router-dom";
-import UserLayout from "@/components/layout/user-layout";
 import { capitalizeAll, capitalizeFirstLetter } from "@/utils/capitalize";
-import type { OrderItem } from "@/utils/interface";
-import { getStepperStatus, getStatusBadgeColor } from "@/utils/status";
-import { useOrderViewBreadCrumb } from "@/data/user-order-view-data";
 import { formatDate } from "@/utils/date";
-import CustomSkeleton from "@/components/custom/custom-skeleton";
+import type { OrderItem } from "@/utils/interface";
+import { getStatusBadgeColor, getStepperStatus } from "@/utils/status";
+import { Clock, CreditCard, MapPin, Package, Truck } from "lucide-react";
+import { useParams } from "react-router-dom";
+import {useViewOnProcessBreadCrumb} from "@/data/user-order-data";
 
-export default function OrderView() {
+export default function OrderOnProcessView() {
   const { id: id } = useParams();
   const { data: order, isLoading: isOrderLoading } = useOrderById(Number(id));
   return (
-    <UserLayout breadCrumbs={useOrderViewBreadCrumb()}>
+    <UserLayout breadCrumbs={useViewOnProcessBreadCrumb()}>
       <div className="min-h-screen bg-linear-to-br from-slate-50 to-slate-100 p-4 md:p-10">
         <div className="mx-auto space-y-4 md:space-y-6">
           {/* Header */}
@@ -300,10 +300,6 @@ export default function OrderView() {
 
           {/* Action Buttons */}
           <div className="flex flex-col md:flex-row gap-3 md:gap-4 md:justify-end">
-            <Button className="p-4 md:p-6 bg-emerald-500 hover:bg-emerald-600 text-white font-medium gap-2">
-              Download Invoice
-            </Button>
-
             <Button className="p-4 md:p-6 bg-emerald-500 hover:bg-emerald-600 text-white font-medium gap-2">
               Track Order
             </Button>

@@ -46,8 +46,8 @@ export const fetchOrderByStatus = async (status: string) => {
       .select(
         `*,
           order_items:order_items_table (
-            *,
-          product: product_id (*)),
+            *, product: product_id (*)
+          ),
           payment: payment_table (*),
           shipping_address: user_address_table(*)
          `,
@@ -74,7 +74,7 @@ export const fetchOrderByStatus = async (status: string) => {
             // Return the order item with the image URL included in the product details
             return {
               ...item,
-              product_id: {
+              product: {
                 ...item.product,
                 image_url: image_url?.signedUrl || "",
               },

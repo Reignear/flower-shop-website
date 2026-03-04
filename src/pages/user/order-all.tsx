@@ -16,20 +16,22 @@ import { useOrder } from "@/tanstack/fetch.hook";
 import type { Order as OrderType, OrderItem } from "@/utils/interface";
 import Order from "./order";
 import CustomSkeleton from "@/components/custom/custom-skeleton";
+import { capitalizeFirstLetter } from "@/utils/capitalize";
+import { orderBreadCrumb } from "@/data/user-order-data";
 
 const OrderAll = () => {
-  const { data: orders, isLoading: isOrdersLoading } = useOrder();
-  console.log(orders);
+  const { data: Orders, isLoading: isOrdersLoading } = useOrder();
   const { imgLoaded, setImgLoaded } = useUserOrder();
+
   return (
-    <Order>
-      {orders?.map((order: OrderType, index: number) => (
+    <Order breadCrumbs={orderBreadCrumb}>
+      {Orders?.map((order: OrderType, index: number) => (
         <Card
           key={index}
           className="overflow-hidden transition-all duration-300 hover:shadow-lg border-0 bg-to-br from-white to-gray-50 dark:from-gray-900 dark:to-gray-800 hover:ring-2 ring-1 ring-emerald-200 hover:ring-emerald-500"
         >
           <div className="px-4 md:px-6 py-4 border-b border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-900">
-            <div className="flex items-start gap-3 md:gap-4">
+            <div className="flex flex-col md:flex-row items-start gap-3 md:gap-4">
               <div className="flex gap-2 md:gap-3 shrink-0">
                 {order.order_items.map((item: OrderItem, index: number) => (
                   <div className="shrink-0" key={index}>
@@ -64,7 +66,7 @@ const OrderAll = () => {
                         Order: {order.reference_number || order.id}
                       </h3>
                     </div>
-                    <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
+                    <p className="text-sm text-gray-600 dark:text-gray-400 mb-2 line-clamp-2">
                       {order.order_items.map((item, index) => (
                         <span key={item.id}>
                           {item.product.name}{" "}
@@ -73,7 +75,7 @@ const OrderAll = () => {
                       ))}
                     </p>
                     <div className="flex items-center gap-2 md:gap-4">
-                      <span className="inline-block px-2 md:px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs font-semibold rounded-full">
+                      <span className="inline-block px-2 md:px-3 py-1 bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 text-xs md:text-base font-semibold rounded-full">
                         Qty:{" "}
                         {order.order_items.map((item, index) => (
                           <span key={index}>
@@ -85,7 +87,7 @@ const OrderAll = () => {
                     </div>
                   </div>
                   <div className="text-left md:text-right">
-                    <p className="text-lg md:text-2xl font-bold text-emerald-600">
+                    <p className="text-xl md:text-2xl font-bold text-emerald-600">
                       ₱{order.total_amount.toFixed(2)}
                     </p>
                   </div>
@@ -96,7 +98,7 @@ const OrderAll = () => {
 
           {/* Stepper Section */}
           <div className="px-4 md:px-6 py-4 md:py-6 bg-gray-50 dark:bg-gray-800/50 border-b border-gray-200 dark:border-gray-700">
-            <p className="text-xs md:text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 md:mb-4">
+            <p className="text-sm font-semibold text-gray-700 dark:text-gray-300 mb-3 md:mb-4">
               Order Status
             </p>
             <CustomOrderStepper status={getStepperStatus(order.status)} />
@@ -109,7 +111,7 @@ const OrderAll = () => {
                 <Calendar className="w-4 h-4 text-emerald-400 mt-1 shrink-0" />
                 <div className="min-w-0">
                   <p className="text-xs text-gray-500">Order Date</p>
-                  <p className="text-xs md:text-sm font-mono font-medium text-gray-900 dark:text-white truncate">
+                  <p className="text-sm font-mono font-medium text-gray-900 dark:text-white truncate">
                     {order.order_date ? `${order.order_date}` : "No order date"}
                   </p>
                 </div>
@@ -118,7 +120,7 @@ const OrderAll = () => {
                 <Package className="w-4 h-4 md:w-5 md:h-5 text-emerald-400 mt-1 shrink-0" />
                 <div className="min-w-0">
                   <p className="text-xs text-gray-500">Reference</p>
-                  <p className="text-xs md:text-sm font-mono font-medium text-gray-900 dark:text-white truncate">
+                  <p className="text-sm font-mono font-medium text-gray-900 dark:text-white truncate">
                     {order.reference_number || "N/A"}
                   </p>
                 </div>
@@ -127,8 +129,8 @@ const OrderAll = () => {
                 <MapPin className="w-4 h-4 text-emerald-400 mt-1 shrink-0" />
                 <div className="min-w-0">
                   <p className="text-xs text-gray-500">Status</p>
-                  <p className="text-xs md:text-sm font-mono font-medium text-gray-900 dark:text-white capitalize truncate">
-                    {order.status}
+                  <p className="text-sm font-mono font-medium text-gray-900 dark:text-white capitalize truncate">
+                    {capitalizeFirstLetter(order.status)}
                   </p>
                 </div>
               </div>
@@ -136,7 +138,7 @@ const OrderAll = () => {
                 <CalendarCheck2 className="w-4 h-4 text-emerald-400 mt-1 shrink-0" />
                 <div className="min-w-0">
                   <p className="text-xs text-gray-500">Delivery Date</p>
-                  <p className="text-xs md:text-sm font-mono font-medium text-gray-900 dark:text-white capitalize truncate">
+                  <p className="text-sm font-mono font-medium text-gray-900 dark:text-white capitalize truncate">
                     {order.delivery_date
                       ? `${order.delivery_date}`
                       : "No delivery date"}
@@ -146,21 +148,25 @@ const OrderAll = () => {
             </div>
           </div>
           {/* Footer */}
-          <div className="px-4 md:px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700 flex flex-col md:grid md:grid-cols-2 gap-3">
-            <Link to={`/user/order/${order.id}`} className="w-full">
+          <div className="px-4 md:px-6 py-4 bg-gray-50 dark:bg-gray-800/50 border-t border-gray-200 dark:border-gray-700  ">
+            <Link
+              to={`/user/order/${order.status}/${order.id}`}
+              className="w-full"
+            >
               <Button className="bg-emerald-600 hover:bg-emerald-700 text-white font-medium gap-2 w-full">
                 View Details
                 <ChevronRight className="w-4 h-4" />
               </Button>
             </Link>
-
-            <Button variant="outline" className="w-full">
-              Track Order
-            </Button>
           </div>
         </Card>
       ))}
       {isOrdersLoading && <CustomSkeleton type="order-card" />}
+      {Orders && Orders.length === 0 && (
+        <div className="text-center py-10">
+          <p className="text-gray-500 text-sm">No orders found.</p>
+        </div>
+      )}
     </Order>
   );
 };

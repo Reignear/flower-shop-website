@@ -1,9 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminLayout from "@/components/layout/admin-layout";
 import { Badge } from "@/components/ui/badge";
 import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useOrderById } from "@/tanstack/fetch.hook";
-import { capitalizeFirstLetter } from "@/utils/capitalize";
+import { capitalizeFirstLetter, capitalizeAll } from "@/utils/capitalize";
 import { formatDashText } from "@/utils/dash-formatter";
 import { formatDate } from "@/utils/date";
 import type { OrderItem } from "@/utils/interface";
@@ -21,7 +22,7 @@ import {
 } from "@/components/ui/select";
 import { useAdminOrderOnProcessView } from "@/hooks/use-admin-order-on-process-view";
 import { CustomToast } from "@/components/custom/custom-toast";
-import { useUpdateOrderStatus } from "@/tanstack/order-status-mutation";
+import { useAdminUpdateOrderStatus } from "@/tanstack/order-mutation";
 import { useOnProcessBreadCrumb } from "@/data/admin-order-data";
 
 export default function OrderOnProcessView() {
@@ -30,7 +31,7 @@ export default function OrderOnProcessView() {
   const { data: Order, isLoading: isOrderLoading } = useOrderById(Number(id));
   const { selectedStatus, setSelectedStatus } = useAdminOrderOnProcessView();
 
-  const updateOrderMutation = useUpdateOrderStatus();
+  const updateOrderMutation = useAdminUpdateOrderStatus();
 
   const handleStatusChange = async (value: string) => {
     setSelectedStatus(value);
@@ -39,14 +40,16 @@ export default function OrderOnProcessView() {
         updateOrderMutation.mutateAsync({
           id: Number(id),
           status: value,
+          payment_gateway: Order?.payment?.[0]?.payment_gateway,
         }),
         "edit",
       );
       setTimeout(() => {
         navigate("/admin/order/on-process");
       }, 1500);
-    } catch (error) {
+    } catch (error: any) {
       toast(`Error updating status: ${error}`);
+      console.log(error.message);
     }
   };
   return (
@@ -219,6 +222,14 @@ export default function OrderOnProcessView() {
                   <span className="text-muted-foreground">Total Amount:</span>
                   <span className="font-semibold text-foreground">
                     ₱{Order?.total_amount.toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">
+                    Payment Method:{" "}
+                  </span>
+                  <span className="font-semibold text-foreground">
+                    {capitalizeAll(Order?.payment?.[0]?.billing?.method_type)}
                   </span>
                 </div>
                 <div className="flex justify-between">

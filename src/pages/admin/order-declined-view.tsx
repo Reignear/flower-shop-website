@@ -14,7 +14,6 @@ import { useParams } from "react-router-dom";
 export default function OrderDeclinedView() {
   const { id: id } = useParams();
   const { data: Order } = useOrderById(Number(id));
-
   return (
     <AdminLayout breadCrumbs={useDeclinedBreadCrumb()}>
       <div className="p-8 space-y-6">

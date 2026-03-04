@@ -41,7 +41,7 @@ export default function NotFoundPage  () {
         {/* CTA Buttons */}
         <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto justify-center pt-4">
             <Button size="lg" className="w-full sm:w-auto"  onClick={() => navigate(-1)}>
-              Back to Home
+              Back
             </Button>
         </div>
 

@@ -27,6 +27,7 @@ export type Status =
   | "on-process"
   | "for-pickup"
   | "delivered"
+  | "cancelled"
   | "declined";
 export type FeedBackFormValues = {
   productId: number;

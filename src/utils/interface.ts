@@ -203,7 +203,7 @@ export type Order = {
   user_id: string;
   order_date: string;
   order_items: OrderItem[];
-  payment: Payment;
+  payment: Payment[];
   total_amount: number;
   status: string;
   shipping_fee: number;

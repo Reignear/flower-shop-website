@@ -5,6 +5,7 @@ export function getStepperStatus(status: string): Status {
   if (status === "for-pickup") return "for-pickup";
   if (status === "on-process") return "on-process";
   if (status === "delivered") return "delivered";
+  if (status === "cancelled") return "cancelled";
   if (status === "declined") return "declined";
   return "pending";
 }
@@ -19,6 +20,8 @@ export function getStatusBadgeColor(status: string) {
     case "delivered":
       return "bg-green-100 text-green-700";
     case "declined":
+      return "bg-red-100 text-red-700";
+    case "cancelled":
       return "bg-red-100 text-red-700";
     case "ready-for-pickup":
       return "bg-green-100 text-green-700";

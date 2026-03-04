@@ -4,7 +4,7 @@ import { Card } from "@/components/ui/card";
 import { Separator } from "@/components/ui/separator";
 import { useDeliveredBreadCrumb } from "@/data/admin-order-data";
 import { useOrderById } from "@/tanstack/fetch.hook";
-import { capitalizeFirstLetter } from "@/utils/capitalize";
+import { capitalizeAll, capitalizeFirstLetter } from "@/utils/capitalize";
 import { formatDashText } from "@/utils/dash-formatter";
 import { formatDate } from "@/utils/date";
 import type { OrderItem } from "@/utils/interface";
@@ -170,6 +170,14 @@ export default function OrderDeliveredView() {
                   <span className="text-muted-foreground">Total Amount:</span>
                   <span className="font-semibold text-foreground">
                     ₱{Order?.total_amount.toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">
+                    Payment Method:{" "}
+                  </span>
+                  <span className="font-semibold text-foreground">
+                    {capitalizeAll(Order?.payment?.[0]?.billing?.method_type)}
                   </span>
                 </div>
                 <div className="flex justify-between">

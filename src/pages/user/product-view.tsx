@@ -40,7 +40,7 @@ export default function ProductView() {
         "insert",
       );
     } catch (error: any) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
 
@@ -62,7 +62,7 @@ export default function ProductView() {
           </div>
           <div className="space-y-6">
             <div className="space-y-3">
-              <div className="mb-2 flex items-center gap-2">
+              <div className="text-sm md:text-base mb-2 flex items-center gap-2">
                 {isProductLoading ? (
                   <CustomSkeleton type="small-text" width={8} />
                 ) : (
@@ -71,7 +71,7 @@ export default function ProductView() {
                   </Badge>
                 )}
               </div>
-              <h1 className="text-3xl font-bold text-gray-900">
+              <h1 className="text-xl md:text-3xl font-bold text-gray-900">
                 {isProductLoading ? (
                   <CustomSkeleton type="large-text" />
                 ) : (
@@ -81,7 +81,7 @@ export default function ProductView() {
               {isProductLoading ? (
                 <CustomSkeleton type="small-text" width={8} />
               ) : (
-                <div className="mt-4 flex items-center gap-2">
+                <div className="mt-4 flex items-center gap-2 text-sm md:text-base">
                   <div className="flex">
                     {[...Array(5)].map((_, i) => (
                       <Star
@@ -101,7 +101,7 @@ export default function ProductView() {
                       />
                     ))}
                   </div>
-                  <span className="text-sm text-gray-600">
+                  <span className="text-xs md:text-sm text-gray-600">
                     ({product?.feedback?.length} reviews)
                   </span>
                 </div>
@@ -112,7 +112,7 @@ export default function ProductView() {
                 {isProductLoading ? (
                   <CustomSkeleton type="large-text" width={10} />
                 ) : (
-                  <span className="text-3xl font-bold text-gray-900">
+                  <span className="text-xl md:text-3xl font-bold text-gray-900">
                     ₱{product?.price}
                   </span>
                 )}
@@ -122,7 +122,9 @@ export default function ProductView() {
             {/* Quantity & Actions */}
             <div className="space-y-4">
               <div className="flex items-center gap-4">
-                <span className="text-sm font-medium">Quantity:</span>
+                <span className="text-xs md:text-sm font-medium">
+                  Quantity:
+                </span>
                 <div className="flex items-center border border-gray-300 rounded-lg">
                   <button
                     onClick={() => setQuantity(Math.max(1, quantity - 1))}
@@ -148,7 +150,7 @@ export default function ProductView() {
                     +
                   </button>
                 </div>
-                <span className="text-xs text-gray-500">
+                <span className="text-xs md:text-sm text-gray-500">
                   {isProductLoading ? (
                     <div className="bg-gray-200 w-16 h-4 rounded-lg skeleton-effect ">
                       <Skeleton width={80} />
@@ -161,7 +163,7 @@ export default function ProductView() {
 
               <div className="flex gap-3">
                 <Button
-                  className="flex-1 gap-2 bg-blue-600 hover:bg-blue-700"
+                  className={`w-full  bg-blue-600 hover:bg-blue-700 ${product?.status !== "available" ? "cursor-not-allowed " : ""}`}
                   disabled={
                     product?.status !== "available" ||
                     insertCartMutation.isPending
@@ -203,8 +205,10 @@ export default function ProductView() {
               <div className="flex gap-3">
                 <Truck className="text-blue-600 shrink-0" size={20} />
                 <div>
-                  <p className="font-medium text-gray-900">Free Shipping</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="md:text-base text-sm font-medium text-gray-900">
+                    Free Shipping
+                  </p>
+                  <p className="md:text-sm text-xs text-gray-600">
                     On orders over ₱1200 and within Sto Tomas DDN
                   </p>
                 </div>
@@ -213,8 +217,10 @@ export default function ProductView() {
               <div className="flex gap-3">
                 <Shield className="text-blue-600 shrink-0" size={20} />
                 <div>
-                  <p className="font-medium text-gray-900">Secure Payment</p>
-                  <p className="text-sm text-gray-600">
+                  <p className="md:text-base text-sm font-medium text-gray-900">
+                    Secure Payment
+                  </p>
+                  <p className="md:text-sm text-xs text-gray-600">
                     30% must be given as downpayment for secure transaction
                   </p>
                 </div>
@@ -234,13 +240,17 @@ export default function ProductView() {
             <TabsContent value="description" className="space-y-4">
               <Card>
                 <CardHeader>
-                  <CardTitle>Product Description</CardTitle>
+                  <CardTitle className="md:text-base text-sm">
+                    Product Description
+                  </CardTitle>
                 </CardHeader>
                 <CardContent className="space-y-4">
                   {isProductLoading ? (
                     <CustomSkeleton type="description-text" />
                   ) : (
-                    <p className="text-gray-700">{product?.description}</p>
+                    <p className="text-gray-700 md:text-base text-sm">
+                      {product?.description}
+                    </p>
                   )}
                 </CardContent>
               </Card>
@@ -249,21 +259,23 @@ export default function ProductView() {
             {/* Reviews Tab */}
             <TabsContent value="reviews" className="space-y-6">
               {/* Existing Reviews */}
-              <div className="space-y-4">
-                <h3 className="text-xl font-semibold">Customer Reviews</h3>
+              <div className="space-y-4 border p-4 rounded-lg shadow-sm">
+                <h3 className="md:text-base text-sm font-semibold">
+                  Customer Reviews
+                </h3>
                 {isProductLoading ? (
                   Array.from({ length: 3 }).map((_, i) => (
                     <CustomSkeleton key={i} type="description-text" />
                   ))
                 ) : (
-                  <span className="text-gray-600 text-center" />
+                  <span className="text-gray-600 text-center " />
                 )}
                 {product?.feedback.map((feedback: ProductFeedback) => (
                   <Card key={feedback.id}>
                     <CardContent>
                       <div className="flex items-start justify-between mb-2">
                         <div>
-                          <p className="font-semibold text-gray-900">
+                          <p className="font-semibold text-gray-900 md:text-base text-sm">
                             {capitalizeFirstLetter(feedback.user.first_name)}{" "}
                             {capitalizeFirstLetter(feedback.user.last_name)}
                           </p>
@@ -290,7 +302,7 @@ export default function ProductView() {
                   </Card>
                 ))}
                 {!isProductLoading && product?.feedback.length === 0 && (
-                  <p className="text-gray-600 text-center">
+                  <p className="text-gray-600 text-center md:text-base text-sm">
                     No reviews yet. Be the first to review this product!
                   </p>
                 )}
@@ -299,7 +311,9 @@ export default function ProductView() {
           </Tabs>
         </div>
         <div className="mt-12">
-          <h2 className="mb-6 text-2xl font-bold">Related Products</h2>
+          <h2 className="mb-6 text-lg md:text-2xl font-bold">
+            Related Products
+          </h2>
           <div className="grid gap-6 grid-cols-2 md:grid-cols-4">
             {isProductLoading
               ? Array.from({ length: 4 }).map((_, i) => (
@@ -318,9 +332,9 @@ export default function ProductView() {
                       prefetch="viewport"
                       onClick={() => setImgLoaded(false)}
                     >
-                      <Card
+                      <div
                         key={item.id}
-                        className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer"
+                        className="overflow-hidden hover:shadow-lg transition-shadow cursor-pointer border rounded-lg"
                       >
                         <div className="aspect-square overflow-hidden flex items-center justify-center">
                           {!imgLoaded && (
@@ -339,12 +353,12 @@ export default function ProductView() {
                             onLoad={() => setImgLoaded(true)}
                           />
                         </div>
-                        <CardContent className="pt-4">
-                          <p className="font-medium text-gray-900">
+                        <div className="p-4">
+                          <p className="font-medium text-gray-900 text-sm md:text-base">
                             {item.name}
                           </p>
                           <div className="mt-2 flex items-center justify-between">
-                            <span className="font-bold text-gray-900">
+                            <span className="font-bold text-gray-900 text-sm md:text-base">
                               ₱{item.price}
                             </span>
                             <div className="flex">
@@ -368,8 +382,8 @@ export default function ProductView() {
                               ))}
                             </div>
                           </div>
-                        </CardContent>
-                      </Card>
+                        </div>
+                      </div>
                     </Link>
                   ),
                 )}

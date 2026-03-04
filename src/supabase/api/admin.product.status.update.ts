@@ -9,7 +9,7 @@ export const updateProductStatus = async ({
 }) => {
   const { data, error } = await supabase
     .from("product_table")
-    .update({ status })
+    .update({ status: status })
     .eq("id", id)
     .select("*")
     .single();

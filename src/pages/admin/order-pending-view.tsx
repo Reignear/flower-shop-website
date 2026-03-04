@@ -6,12 +6,12 @@ import AdminLayout from "@/components/layout/admin-layout";
 import { useNavigate, useParams } from "react-router-dom";
 import { useOrderById } from "@/tanstack/fetch.hook";
 import { getStatusBadgeColor } from "@/utils/status";
-import { capitalizeFirstLetter } from "@/utils/capitalize";
+import { capitalizeAll, capitalizeFirstLetter } from "@/utils/capitalize";
 import { formatDashText } from "@/utils/dash-formatter";
 import type { OrderItem } from "@/utils/interface";
 import { formatDate } from "@/utils/date";
 import { useAdminOrderPendingView } from "@/hooks/use-admin-order-pending-view";
-import { useUpdateOrderStatus } from "@/tanstack/order-status-mutation";
+import { useAdminUpdateOrderStatus } from "@/tanstack/order-mutation";
 import { CustomToast } from "@/components/custom/custom-toast";
 import toast, { Toaster } from "react-hot-toast";
 import { Textarea } from "@/components/ui/textarea";
@@ -21,7 +21,8 @@ export default function OrderDetailsPage() {
   const navigate = useNavigate();
   const { id: id } = useParams();
   const { data: Order, isLoading: isOrderLoading } = useOrderById(Number(id));
-  const updateOrderStatus = useUpdateOrderStatus();
+  const updateOrderStatus = useAdminUpdateOrderStatus();
+
   const { register, handleSubmit } = useAdminOrderPendingView();
 
   // Accept Order
@@ -31,6 +32,7 @@ export default function OrderDetailsPage() {
         updateOrderStatus.mutateAsync({
           id: Number(id),
           status: "on-process",
+          payment_gateway: Order?.payment?.[0]?.payment_gateway,
         }),
         "edit",
       );
@@ -242,6 +244,14 @@ export default function OrderDetailsPage() {
                   <span className="text-muted-foreground">Total Amount:</span>
                   <span className="font-semibold text-foreground">
                     ₱{Order?.total_amount.toLocaleString()}
+                  </span>
+                </div>
+                <div className="flex justify-between">
+                  <span className="text-muted-foreground">
+                    Payment Method:{" "}
+                  </span>
+                  <span className="font-semibold text-foreground">
+                    {capitalizeAll(Order?.payment?.[0]?.billing?.method_type)}
                   </span>
                 </div>
                 <div className="flex justify-between">

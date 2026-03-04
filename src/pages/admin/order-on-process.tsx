@@ -185,8 +185,8 @@ export default function OrderOnProcess() {
                 </TableRow>
               </TableHeader>
               <TableBody className="">
-                {orders?.map((order: Order) => (
-                  <TableRow>
+                {orders?.map((order: Order, index: number) => (
+                  <TableRow key={index}>
                     <TableCell className="font-medium py-5">
                       {order.reference_number || "Unknown"}
                     </TableCell>

@@ -10,6 +10,7 @@ export const updateOrderStatus = async ({
   payment_gateway?: string;
   remarks?: string;
 }) => {
+  console.log("From API Updating order with ID:", id, "to status:", status);
   try {
     if (payment_gateway === "COD" || payment_gateway === "cod") {
       const [orderRes, paymentRes] = await Promise.all([
@@ -30,6 +31,7 @@ export const updateOrderStatus = async ({
           .eq("order_id", id)
           .select(),
       ]);
+
       return {
         data: orderRes.data,
         error: orderRes.error,
@@ -38,6 +40,8 @@ export const updateOrderStatus = async ({
       };
     }
   } catch (error) {
-    console.error("Error updating order status:", error);
+    throw new Error(
+      `Error updating order: ${error instanceof Error ? error.message : String(error)}`,
+    );
   }
 };

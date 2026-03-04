@@ -166,7 +166,7 @@ const UserLayout = ({ children, breadCrumbs }: UserLayoutProps) => {
               return (
                 <div
                   key={item.href}
-                  className="text-muted-foreground md:text-base text-xs"
+                  className="text-muted-foreground md:text-sm text-xs"
                 >
                   <Link
                     to={item.href}

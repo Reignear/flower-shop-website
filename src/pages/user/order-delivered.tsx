@@ -18,6 +18,7 @@ import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import CustomSkeleton from "@/components/custom/custom-skeleton";
 import { Textarea } from "@/components/ui/textarea";
+import { useDeliveredBreadCrumb } from "@/data/user-order-data";
 
 const OrderDelivered = () => {
   const { imgLoaded, setImgLoaded } = useUserOrderDelivered();
@@ -25,7 +26,7 @@ const OrderDelivered = () => {
     useOrderByStatus("delivered");
   console.log(orders);
   return (
-    <Order>
+    <Order breadCrumbs={useDeliveredBreadCrumb}>
       {orders?.map((order: OrderType, index) => (
         <Card
           key={index}
@@ -200,10 +201,12 @@ const OrderDelivered = () => {
               >
                 {order?.feedback?.length ? (
                   <>
-                    <span className="font-medium">Feedback Submitted</span> 
+                    <span className="font-medium">Feedback Submitted</span>
                   </>
                 ) : (
-                 <span className="flex items-center gap-2">Add Feedback <ChevronRight className="w-4 h-4" /></span>
+                  <span className="flex items-center gap-2">
+                    Add Feedback <ChevronRight className="w-4 h-4" />
+                  </span>
                 )}
               </Link>
             </Button>
