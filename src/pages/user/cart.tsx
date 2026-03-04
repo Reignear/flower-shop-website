@@ -60,10 +60,10 @@ export default function Cart() {
   return (
     <UserLayout breadCrumbs={cartBreadCrumb}>
       <Toaster />
-      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+      <main className="mx-auto max-w-7xl px-4 py-8 md:px-6 lg:px-8">
         {isLoading ? (
-          <div className="grid grid-cols-3 gap-5">
-            <div className="col-span-2 space-y-4">
+          <div className="flex flex-col md:grid md:grid-cols-3 gap-5">
+            <div className="md:col-span-2 space-y-4">
               {Array.from({ length: 3 }).map((_, index) => (
                 <div
                   key={index}
@@ -73,119 +73,114 @@ export default function Cart() {
                 </div>
               ))}
             </div>
-            <div className="bg-gray-200 w-full h-96 rounded-lg skeleton-effect col-span-1">
+            <div className="bg-gray-200 w-full h-96 rounded-lg skeleton-effect md:col-span-1">
               <Skeleton width={100} />
             </div>
           </div>
         ) : (
-          <div className="grid grid-cols-3 gap-5">
-            <div className="col-span-2">
-              <div className="grid gap-8 cols-span-1">
-                <div className="space-y-4">
-                  {data?.map((item: any) => (
-                    <Card
-                      key={item.id}
-                      className="overflow-hidden border border-border bg-card p-4 shadow-sm hover:shadow-md transition-shadow"
-                    >
-                      <div className="flex gap-4">
-                        <div className="rounded-lg  flex items-center justify-center">
-                          {!imgLoaded && (
-                            <Mosaic color="#d5d5d5" size="small" />
-                          )}
-                          <img
-                            src={item.product_id.image_url}
-                            alt={item.product_id.name}
-                            className={`h-24 w-24 object-cover rounded-lg ${imgLoaded ? "" : "hidden"}`}
-                            onLoad={() => setImgLoaded(true)}
-                          />
+          <div className="flex flex-col md:grid md:grid-cols-3 gap-5">
+            <div className="md:col-span-2">
+              <div className="space-y-4">
+                {data?.map((item: any) => (
+                  <Card
+                    key={item.id}
+                    className="overflow-hidden border border-border bg-card p-4 shadow-sm hover:shadow-md transition-shadow"
+                  >
+                    <div className="flex flex-col md:flex-row gap-4">
+                      <div className="rounded-lg flex items-center justify-center md:shrink-0">
+                        {!imgLoaded && <Mosaic color="#d5d5d5" size="small" />}
+                        <img
+                          src={item.product_id.image_url}
+                          alt={item.product_id.name}
+                          className={`h-24 w-24 object-cover rounded-lg ${imgLoaded ? "" : "hidden"}`}
+                          onLoad={() => setImgLoaded(true)}
+                        />
+                      </div>
+
+                      {/* Product Details */}
+                      <div className="flex flex-1 flex-col justify-between">
+                        <div>
+                          <h3 className="font-semibold text-foreground text-sm md:text-base">
+                            {item.product_id.name}
+                          </h3>
+                          <p className="text-xs md:text-sm text-muted-foreground">
+                            Description: {item.product_id.description}
+                          </p>
+                          <p className="mt-1 text-base md:text-lg font-bold ">
+                            ₱ {item.product_id.price.toFixed(2)}
+                          </p>
                         </div>
+                      </div>
 
-                        {/* Product Details */}
-                        <div className="flex flex-1 flex-col justify-between">
-                          <div>
-                            <h3 className="font-semibold text-foreground">
-                              {item.product_id.name}
-                            </h3>
-                            <p className="text-sm text-muted-foreground">
-                              Description: {item.product_id.description}
-                            </p>
-                            <p className="mt-1 text-lg font-bold ">
-                              ₱ {item.product_id.price.toFixed(2)}
-                            </p>
-                          </div>
-                        </div>
-
-                        {/* Quantity Controls */}
-                        <div className="flex flex-col items-center justify-between">
-                          <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 p-1">
-                            <button
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity - 1)
-                              }
-                              disabled={item.quantity <= 1}
-                              className="rounded p-1 hover:bg-muted transition-colors"
-                              aria-label="Decrease quantity"
-                            >
-                              <Minus className="h-4 w-4 text-foreground" />
-                            </button>
-                            <span className="w-8 text-center font-semibold text-foreground">
-                              {item.quantity}
-                            </span>
-                            <button
-                              onClick={() =>
-                                updateQuantity(item.id, item.quantity + 1)
-                              }
-                              className="rounded p-1 hover:bg-muted transition-colors"
-                              aria-label="Increase quantity"
-                            >
-                              <Plus className="h-4 w-4 text-foreground" />
-                            </button>
-                          </div>
-
-                          {/* Remove Button */}
+                      {/* Quantity Controls */}
+                      <div className="flex flex-row md:flex-col items-center justify-between md:justify-between">
+                        <div className="flex items-center gap-2 rounded-lg border border-border bg-muted/50 p-1">
                           <button
-                            onClick={() => deleteCartItem(item.id)}
-                            className="mt-2 rounded p-2 text-destructive hover:bg-red-50 transition-colors"
-                            aria-label="Remove item"
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity - 1)
+                            }
+                            disabled={item.quantity <= 1}
+                            className="rounded p-1 hover:bg-muted transition-colors"
+                            aria-label="Decrease quantity"
                           >
-                            <Trash2 className="h-5 w-5" />
+                            <Minus className="h-4 w-4 text-foreground" />
+                          </button>
+                          <span className="w-8 text-center font-semibold text-foreground">
+                            {item.quantity}
+                          </span>
+                          <button
+                            onClick={() =>
+                              updateQuantity(item.id, item.quantity + 1)
+                            }
+                            className="rounded p-1 hover:bg-muted transition-colors"
+                            aria-label="Increase quantity"
+                          >
+                            <Plus className="h-4 w-4 text-foreground" />
                           </button>
                         </div>
-                      </div>
 
-                      {/* Item Total */}
-                      <div className="mt-3 border-t border-border pt-3 text-right">
-                        <p className="text-sm text-muted-foreground">
-                          Subtotal:{" "}
-                          <span className="font-semibold text-foreground">
-                            ₱
-                            {(item.product_id.price * item.quantity).toFixed(2)}
-                          </span>
-                        </p>
+                        {/* Remove Button */}
+                        <button
+                          onClick={() => deleteCartItem(item.id)}
+                          className="md:mt-2 rounded p-2 text-destructive hover:bg-red-50 transition-colors"
+                          aria-label="Remove item"
+                        >
+                          <Trash2 className="h-4 md:h-5 w-4 md:w-5" />
+                        </button>
                       </div>
-                    </Card>
-                  ))}
-                </div>
+                    </div>
+
+                    {/* Item Total */}
+                    <div className="mt-3 border-t border-border pt-3 text-right">
+                      <p className="text-xs md:text-sm text-muted-foreground">
+                        Subtotal:{" "}
+                        <span className="font-semibold text-foreground">
+                          ₱{(item.product_id.price * item.quantity).toFixed(2)}
+                        </span>
+                      </p>
+                    </div>
+                  </Card>
+                ))}
               </div>
             </div>
-            <div className="lg:col-span-1">
+            <div className="md:col-span-1">
               <Card
-                className={`sticky top-8 border border-border bg-card p-6 shadow-sm ${data.length <= 0 && !isLoading ? "hidden" : ""}`}
+                className={`md:sticky md:top-8 border border-border bg-card p-4 md:p-6 shadow-sm ${data.length <= 0 && !isLoading ? "hidden" : ""}`}
               >
-                <h2 className="mb-6 text-xl font-bold text-foreground">
+                <h2 className="mb-4 md:mb-6 text-lg md:text-xl font-bold text-foreground">
                   Order Summary
                 </h2>
 
-                <div className="space-y-3 border-b border-border pb-4">
+                <div className="space-y-2 md:space-y-3 border-b border-border pb-3 md:pb-4">
                   <div className="flex justify-between">
-                    <span className="">Subtotal</span>
-                    <span className="font-semibold text-foreground">
+                    <span className="text-sm md:text-base">Subtotal</span>
+                    <span className="font-semibold text-foreground text-sm md:text-base">
                       ₱ {subtotal.toFixed(2)}
                     </span>
                   </div>
                   <div className="flex justify-between">
-                    <span className="">Shipping</span>
-                    <span className="font-semibold text-foreground">
+                    <span className="text-sm md:text-base">Shipping</span>
+                    <span className="font-semibold text-foreground text-sm md:text-base">
                       {subtotal > 500 ? (
                         <span>FREE</span>
                       ) : (
@@ -200,11 +195,11 @@ export default function Cart() {
                   )}
                 </div>
 
-                <div className="mt-4 flex justify-between">
-                  <span className="text-lg font-bold text-foreground">
+                <div className="mt-3 md:mt-4 flex justify-between">
+                  <span className="text-base md:text-lg font-bold text-foreground">
                     Total
                   </span>
-                  <span className="text-2xl font-bold">
+                  <span className="text-xl md:text-2xl font-bold">
                     ₱{" "}
                     {(subtotal + (subtotal > 500 ? 0 : shippingFee)).toFixed(2)}
                   </span>
@@ -218,11 +213,9 @@ export default function Cart() {
                     total: subtotal + (subtotal > 500 ? 0 : shippingFee),
                   }}
                 >
-                  <Button className="mt-6 w-full bg-primary text-primary-foreground hover:bg-primary/90 py-3 text-base font-semibold">
-                    Proceed to Checkout
-                  </Button>
+                  <Button variant={"customized"} className="w-full">Proceed to Checkout</Button>
                 </Link>
-                <div className="mt-6 rounded-lg bg-muted/50 p-4">
+                <div className="mt-4 md:mt-6 rounded-lg bg-muted/50 p-3 md:p-4">
                   <p className="text-xs text-muted-foreground">
                     ✨ All our flowers are self-made and delivered with care
                   </p>
@@ -233,15 +226,15 @@ export default function Cart() {
         )}
 
         {data.length <= 0 && !isLoading && (
-          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/30 py-16">
-            <p className="text-xl font-semibold text-muted-foreground">
+          <div className="flex flex-col items-center justify-center rounded-lg border-2 border-dashed border-border bg-muted/30 py-12 md:py-16 px-4">
+            <p className="text-lg md:text-xl font-semibold text-muted-foreground text-center">
               Your cart is empty
             </p>
-            <p className="mt-2 text-sm text-muted-foreground">
+            <p className="mt-2 text-sm text-muted-foreground text-center">
               Add some beautiful flowers to get started!
             </p>
             <Link to="/user/products">
-              <Button className="mt-6 bg-primary text-primary-foreground hover:bg-primary/90">
+              <Button className="mt-4 md:mt-6 bg-primary text-primary-foreground hover:bg-primary/90">
                 Continue Shopping
               </Button>
             </Link>

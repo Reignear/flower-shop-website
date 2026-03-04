@@ -1,6 +1,5 @@
 import UserLayout from "@/components/layout/user-layout";
 import { Card } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 import {
   LineChart,
   Line,
@@ -36,86 +35,102 @@ const categoryData = [
 export default function Dashboard() {
   return (
     <UserLayout>
-      <div className="p-8">
+      <div className="p-4 md:p-8">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold text-foreground mb-2">
+        <div className="mb-6 md:mb-8">
+          <h1 className="text-2xl md:text-4xl font-bold text-foreground mb-2">
             Welcome back, Sarah!
           </h1>
-          <p className="text-muted-foreground">
+          <p className="text-sm md:text-base text-muted-foreground">
             Here's your dashboard overview
           </p>
         </div>
 
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4 mb-8">
-          <Card className="p-6">
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-6 md:mb-8">
+          <Card className="p-4 md:p-6">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-sm text-muted-foreground mb-1">
+                <p className="text-sm md:text-base text-muted-foreground mb-1">
                   Total Orders
                 </p>
-                <p className="text-3xl font-bold text-foreground">24</p>
+                <p className="text-xl md:text-3xl font-bold text-foreground">
+                  24
+                </p>
               </div>
-              <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">📦</span>
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
+                <span className="text-xl md:text-2xl">📦</span>
               </div>
             </div>
-            <p className="text-xs text-green-600 mt-4">+12% from last month</p>
+            <p className="text-xs text-green-600 mt-3 md:mt-4">
+              +12% from last month
+            </p>
           </Card>
 
-          <Card className="p-6">
+          <Card className="p-4 md:p-6">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-sm text-muted-foreground mb-1">
+                <p className="text-sm md:text-base text-muted-foreground mb-1">
                   Total Spent
                 </p>
-                <p className="text-3xl font-bold text-foreground">$1,234</p>
+                <p className="text-xl md:text-3xl font-bold text-foreground">
+                  $1,234
+                </p>
               </div>
-              <div className="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">💰</span>
-              </div>
-            </div>
-            <p className="text-xs text-green-600 mt-4">+8% from last month</p>
-          </Card>
-
-          <Card className="p-6">
-            <div className="flex justify-between items-start">
-              <div>
-                <p className="text-sm text-muted-foreground mb-1">Favorites</p>
-                <p className="text-3xl font-bold text-foreground">18</p>
-              </div>
-              <div className="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">❤️</span>
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-lg flex items-center justify-center">
+                <span className="text-xl md:text-2xl">💰</span>
               </div>
             </div>
-            <p className="text-xs text-gray-600 mt-4">From your wishlist</p>
+            <p className="text-xs text-green-600 mt-3 md:mt-4">
+              +8% from last month
+            </p>
           </Card>
 
-          <Card className="p-6">
+          <Card className="p-4 md:p-6">
             <div className="flex justify-between items-start">
               <div>
-                <p className="text-sm text-muted-foreground mb-1">
+                <p className="text-sm md:text-base text-muted-foreground mb-1">
+                  Favorites
+                </p>
+                <p className="text-xl md:text-3xl font-bold text-foreground">
+                  18
+                </p>
+              </div>
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 rounded-lg flex items-center justify-center">
+                <span className="text-xl md:text-2xl">❤️</span>
+              </div>
+            </div>
+            <p className="text-xs text-gray-600 mt-3 md:mt-4">
+              From your wishlist
+            </p>
+          </Card>
+
+          <Card className="p-4 md:p-6">
+            <div className="flex justify-between items-start">
+              <div>
+                <p className="text-sm md:text-base text-muted-foreground mb-1">
                   Active Subscriptions
                 </p>
-                <p className="text-3xl font-bold text-foreground">3</p>
+                <p className="text-xl md:text-3xl font-bold text-foreground">
+                  3
+                </p>
               </div>
-              <div className="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <span className="text-2xl">🔄</span>
+              <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-lg flex items-center justify-center">
+                <span className="text-xl md:text-2xl">🔄</span>
               </div>
             </div>
-            <p className="text-xs text-green-600 mt-4">Monthly plans</p>
+            <p className="text-xs text-green-600 mt-3 md:mt-4">Monthly plans</p>
           </Card>
         </div>
 
         {/* Charts */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 mb-6 md:mb-8">
           {/* Revenue Chart */}
-          <Card className="col-span-2 p-6">
-            <h2 className="text-lg font-semibold text-foreground mb-6">
+          <Card className="md:col-span-2 p-4 md:p-6">
+            <h2 className="text-base md:text-lg font-semibold text-foreground mb-4 md:mb-6">
               Revenue & Orders
             </h2>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250} className="md:h-75">
               <LineChart data={revenueData}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="month" />
@@ -139,11 +154,11 @@ export default function Dashboard() {
           </Card>
 
           {/* Category Distribution */}
-          <Card className="p-6">
-            <h2 className="text-lg font-semibold text-foreground mb-6">
+          <Card className="p-4 md:p-6">
+            <h2 className="text-base md:text-lg font-semibold text-foreground mb-4 md:mb-6">
               Category Distribution
             </h2>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={250} className="md:h-75">
               <PieChart>
                 <Pie
                   data={categoryData}
@@ -151,7 +166,8 @@ export default function Dashboard() {
                   cy="50%"
                   labelLine={false}
                   label={({ name, value }) => `${name} ${value}%`}
-                  outerRadius={80}
+                  outerRadius={60}
+                  className="md:outerRadius-[80px]"
                   fill="#8884d8"
                   dataKey="value"
                 >
@@ -166,98 +182,6 @@ export default function Dashboard() {
           </Card>
         </div>
 
-        {/* Recent Orders */}
-        <Card className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-lg font-semibold text-foreground">
-              Recent Orders
-            </h2>
-            <Button variant="outline">View All</Button>
-          </div>
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead>
-                <tr className="border-b border-border">
-                  <th className="text-left py-3 px-4 font-semibold text-foreground">
-                    Order ID
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-foreground">
-                    Product
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-foreground">
-                    Date
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-foreground">
-                    Amount
-                  </th>
-                  <th className="text-left py-3 px-4 font-semibold text-foreground">
-                    Status
-                  </th>
-                </tr>
-              </thead>
-              <tbody>
-                {[
-                  {
-                    id: "#12345",
-                    product: "Rose Elegance Bouquet",
-                    date: "2024-01-15",
-                    amount: "$70.99",
-                    status: "Delivered",
-                  },
-                  {
-                    id: "#12344",
-                    product: "Tulip Paradise Bundle",
-                    date: "2024-01-10",
-                    amount: "$89.99",
-                    status: "Delivered",
-                  },
-                  {
-                    id: "#12343",
-                    product: "Wedding Invitation Cards",
-                    date: "2024-01-05",
-                    amount: "$120.00",
-                    status: "Processing",
-                  },
-                  {
-                    id: "#12342",
-                    product: "Gift Hamper Deluxe",
-                    date: "2024-01-01",
-                    amount: "$150.00",
-                    status: "Delivered",
-                  },
-                  {
-                    id: "#12341",
-                    product: "Special Mixed Bouquet",
-                    date: "2023-12-28",
-                    amount: "$95.99",
-                    status: "Delivered",
-                  },
-                ].map((order) => (
-                  <tr
-                    key={order.id}
-                    className="border-b border-border hover:bg-muted/50"
-                  >
-                    <td className="py-3 px-4">{order.id}</td>
-                    <td className="py-3 px-4">{order.product}</td>
-                    <td className="py-3 px-4">{order.date}</td>
-                    <td className="py-3 px-4 font-semibold">{order.amount}</td>
-                    <td className="py-3 px-4">
-                      <span
-                        className={`px-3 py-1 rounded-full text-xs font-semibold ${
-                          order.status === "Delivered"
-                            ? "bg-green-100 text-green-700"
-                            : "bg-blue-100 text-blue-700"
-                        }`}
-                      >
-                        {order.status}
-                      </span>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        </Card>
       </div>
     </UserLayout>
   );

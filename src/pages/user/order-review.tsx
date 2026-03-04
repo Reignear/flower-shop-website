@@ -249,7 +249,7 @@ export default function OrderReview() {
                     <RadioGroup
                       value={field.value}
                       onValueChange={field.onChange}
-                      className="grid grid-cols-2 gap-2"
+                      className="grid grid-cols-1 md:grid-cols-2 gap-2"
                     >
                       {paymentMethod?.map((method: any, index: number) => (
                         <div key={index} className="border p-2 rounded-lg flex">

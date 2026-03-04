@@ -15,7 +15,7 @@ export const fetchCart = async () => {
     .select(
       `id,
        quantity,
-       product_id (id, code, description, name, price, image),
+       product: product_id (id, code, description, name, price, image),
        created_at`,
     )
     .eq("user_id", user.id);

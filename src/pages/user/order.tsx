@@ -10,7 +10,6 @@ import {
 } from "@/data/user-order-data";
 import { Link, useLocation } from "react-router-dom";
 interface OrderProps {
-  
   children: React.ReactNode;
 }
 export default function Order({ children }: OrderProps) {
@@ -43,16 +42,16 @@ export default function Order({ children }: OrderProps) {
         <div className="bg-white dark:bg-gray-900 border-b border-gray-200 dark:border-gray-700">
           <div className="px-6 py-8">
             <div className="mb-4">
-              <h1 className="text-4xl font-bold text-gray-900 dark:text-white mb-2">
+              <h1 className="text-xl md:text-4xl font-bold text-gray-900 dark:text-white mb-2">
                 My Orders
               </h1>
-              <p className="text-gray-600 dark:text-gray-400">
+              <p className="text-gray-600 dark:text-gray-400 md:text-base text-sm">
                 Track and manage all your orders in one place
               </p>
             </div>
 
             {/* Stats Grid */}
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 mt-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-4  mt-2 md:mt-6">
               {stats.map((stat) => {
                 const Icon = stat.icon;
                 return (
@@ -63,15 +62,17 @@ export default function Order({ children }: OrderProps) {
                     <div className="p-6">
                       <div className="flex items-center justify-between">
                         <div>
-                          <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">
+                          <p className="text-xs md:text-sm text-gray-600 dark:text-gray-400 mb-1">
                             {stat.label}
                           </p>
-                          <p className="text-3xl font-bold text-gray-900 dark:text-white">
+                          <p className="text-xl md:text-3xl font-bold text-gray-900 dark:text-white">
                             {stat.value}
                           </p>
                         </div>
                         <div className={`${stat.bg} p-3 rounded-lg`}>
-                          <Icon className={`w-6 h-6 ${stat.color}`} />
+                          <Icon
+                            className={`md:w-6 md:h-6 w-4 h-4 ${stat.color}`}
+                          />
                         </div>
                       </div>
                     </div>

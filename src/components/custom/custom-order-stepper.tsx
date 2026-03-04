@@ -11,10 +11,10 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
     { key: "pending", label: "Pending", description: "Order placed" },
     {
       key: isDeclined ? "declined" : "on-process",
-      label: isDeclined ? "Declined" : "On-Process",
+      label: isDeclined ? "Declined" : "On Process",
       description: isDeclined ? "Order declined" : "Being prepared",
     },
-    { key: "for-pickup", label: "Ready for Pick", description: "Ready" },
+    { key: "for-pickup", label: "For Pick", description: "Ready" },
     { key: "delivered", label: "Delivered", description: "Delivered" },
   ];
 
@@ -35,7 +35,7 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
               {/* Step Circle */}
               <div className="flex items-center flex-1 w-full">
                 <div
-                  className={`flex items-center justify-center w-12 h-12 rounded-full font-bold text-sm transition-all duration-300 ${
+                  className={`flex items-center justify-center md:w-12 md:h-12 h-8 w-8 rounded-full font-bold text-sm transition-all duration-300 ${
                     isDeclinedStep
                       ? "bg-red-500 text-white shadow-lg scale-110"
                       : isDelivered || isCurrent
@@ -44,9 +44,9 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
                   }`}
                 >
                   {isDeclinedStep ? (
-                    <X className="w-6 h-6" />
+                    <X className="md:w-6 md:h-6 h-4 w-4" />
                   ) : isDelivered ? (
-                    <Check className="w-6 h-6" />
+                    <Check className="md:w-6 md:h-6 h-4 w-4" />
                   ) : (
                     <span>{index + 1}</span>
                   )}
@@ -54,7 +54,7 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
 
                 {/* Connector Line */}
                 {index < steps.length - 1 && (
-                  <div className="flex-1 h-1 mx-2">
+                  <div className="flex-1 h-1 mx-3 md:mx-2">
                     <div
                       className={`h-full rounded transition-all duration-300 ${
                         isDeclined && index <= 1
@@ -71,7 +71,7 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
               {/* Step Label */}
               <div className="text-center mt-3 w-full">
                 <p
-                  className={`font-semibold text-sm ${
+                  className={`font-semibold text-xs md:text-sm ${
                     isDeclinedStep
                       ? "text-red-600"
                       : isCurrent
@@ -83,7 +83,9 @@ export function CustomOrderStepper({ status }: OrderStepperProps) {
                 >
                   {step.label}
                 </p>
-                <p className="text-xs text-gray-500 mt-1">{step.description}</p>
+                <p className="text-[10px] text-gray-500 mt-1">
+                  {step.description}
+                </p>
               </div>
             </div>
           );

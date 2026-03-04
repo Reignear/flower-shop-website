@@ -1,5 +1,4 @@
 import UserLayout from "@/components/layout/user-layout";
-import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import {
   Select,
@@ -10,7 +9,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useCategory, useProduct } from "@/tanstack/fetch.hook";
+import { useCategory, useOrder, useProduct } from "@/tanstack/fetch.hook";
 import { useUserProduct } from "@/hooks/use-user-product";
 import { pageTitle, pageDescription } from "@/data/user-product-data";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
@@ -25,53 +24,111 @@ export default function ProductsPage() {
     useUserProduct();
   const { data: product = [], isLoading: isProductLoading } = useProduct();
   const { data: category = [], isLoading: isCategoryLoading } = useCategory();
-
+  const { data: orders = [], isLoading: isOrdersLoading } = useOrder();
   const filteredProducts =
     activeCategory === "all"
       ? product
       : product.filter((prod) => prod.category_id === activeCategory);
-  const totalProducts = product.length;
 
-  console.log(product);
+  console.log(orders);
   return (
     <UserLayout breadCrumbs={productBreadCrumb}>
       <div className="p-8 space-y-5">
-        <div className="mb-8">
-          <h1 className="text-3xl font-bold text-foreground mb-2">
+        <div className="mb-4 md:mb-8">
+          <h1 className="text-xl md:text-3xl font-bold text-foreground mb-2">
             {pageTitle}
           </h1>
-          <p className="text-muted-foreground">{pageDescription}</p>
+          <p className="md:text-base text-sm text-muted-foreground">
+            {pageDescription}
+          </p>
         </div>
         {/* Purchase Summary */}
-        <Card className="mt-8 p-6">
-          <h2 className="text-lg font-semibold text-foreground mb-4">
+        <div className="mt-4 md:mt-8 p-6 border rounded-lg shadow-sm">
+          <h2 className="text-base md:text-lg font-semibold text-foreground mb-4">
             Purchase Summary
           </h2>
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 md:gap-4">
             <div>
-              <p className="text-sm text-muted-foreground">Total Products</p>
-              <p className="text-3xl font-bold text-foreground">
-                {totalProducts}
+              <p className="text-xs md:text-sm text-muted-foreground">
+                Total Products
+              </p>
+              <p className="text-xl md:text-3xl font-bold text-foreground">
+                {isOrdersLoading && (
+                  <CustomSkeleton type="small-text" width={8} />
+                )}
+                {!isOrdersLoading && <>{product.length}</>}
               </p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Total Purchases</p>
-              <p className="text-3xl font-bold text-foreground">8</p>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                Total Purchases
+              </p>
+              <p className="text-xl md:text-3xl font-bold text-foreground">
+                {isOrdersLoading && (
+                  <CustomSkeleton type="small-text" width={8} />
+                )}
+                {!isOrdersLoading && (
+                  <>
+                    {
+                      orders?.filter((order) => order.status === "delivered")
+                        .length
+                    }
+                  </>
+                )}
+              </p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Total Spent</p>
-              <p className="text-3xl font-bold text-foreground">$587.96</p>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                Total Spent
+              </p>
+              <p className="text-xl md:text-3xl font-bold text-foreground">
+                {isOrdersLoading && (
+                  <CustomSkeleton type="small-text" width={8} />
+                )}
+                {!isOrdersLoading && (
+                  <>
+                    ₱ {' '}
+                    {orders
+                      ?.filter((item) => item.status === "delivered")
+                      .reduce((total, order) => total + order.total_amount, 0)
+                      .toFixed(2)}
+                  </>
+                )}
+              </p>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground">Avg Order Value</p>
-              <p className="text-3xl font-bold text-foreground">$73.50</p>
+              <p className="text-xs md:text-sm text-muted-foreground">
+                Avg Order Value
+              </p>
+              <p className="text-xl md:text-3xl font-bold text-foreground">
+                {isOrdersLoading && (
+                  <CustomSkeleton type="small-text" width={8} />
+                )}
+                {!isOrdersLoading && (
+                  <>
+                    ₱{" "}
+                    {orders && orders.length > 0
+                      ? (
+                          orders
+                            .filter((item) => item.status === "delivered")
+                            .reduce(
+                              (total, order) => total + order.total_amount,
+                              0,
+                            ) /
+                          orders.filter((item) => item.status === "delivered")
+                            .length
+                        ).toFixed(2)
+                      : "0.00"}
+                  </>
+                )}
+              </p>
             </div>
           </div>
-        </Card>
+        </div>
         {/* Filters */}
         <div className="flex gap-2 justify-between">
           <Select value={activeCategory} onValueChange={setActiveCategory}>
-            <SelectTrigger className="w-full max-w-sm">
+            <SelectTrigger className="w-50 md:w-sm">
               <SelectValue placeholder="Select a category" />
             </SelectTrigger>
             <SelectContent>
@@ -104,17 +161,17 @@ export default function ProductsPage() {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
           {isProductLoading
             ? Array.from({ length: 3 }).map((_, i) => (
                 <CustomSkeleton key={i} type="product-card" />
               ))
             : filteredProducts.map((product) => (
-                <Card
+                <div
                   key={product.id}
-                  className="overflow-hidden hover:shadow-lg transition "
+                  className="overflow-hidden hover:shadow-lg transition border rounded-lg"
                 >
-                  <div className="h-48  overflow-hidden flex items-center justify-center bg-gray-100">
+                  <div className="md:h-48  h-36 overflow-hidden flex items-center justify-center bg-gray-100">
                     {!imageLoaded && <CustomSkeleton type="photo-full" />}
                     <img
                       src={product.image_url}
@@ -125,33 +182,33 @@ export default function ProductsPage() {
                   </div>
                   <div className="p-4">
                     <div className="flex justify-between items-start mb-2">
-                      <h3 className="font-semibold text-foreground">
+                      <h3 className="text-sm md:text-base font-semibold text-foreground">
                         {capitalizeFirstLetter(product.name)}
                       </h3>
-                      <span className="text-xs px-2 py-1 bg-primary/10 text-primary rounded-full">
+                      <span className="text-xs md:text-sm px-2 py-1 bg-primary/10 text-primary rounded-full">
                         {product.code}
                       </span>
                     </div>
-                    <p className="text-sm text-muted-foreground mb-2">
+                    <p className="text-xs md:text-sm text-muted-foreground mb-2">
                       {capitalizeFirstLetter(product.status)}
                     </p>
-                    <p className="text-sm text-muted-foreground mb-4">
+                    <p className="text-xs md:text-sm text-muted-foreground mb-4">
                       Category: {capitalizeFirstLetter(product.category)}
                     </p>
                     <div className="flex justify-between items-center">
-                      <p className="font-semibold text-lg text-foreground">
+                      <p className="font-semibold text-base md:text-lg text-foreground">
                         ₱ {product.price}
                       </p>
                       <div className="flex gap-2">
                         <Link to={`/user/products/${product.id}`}>
-                          <Button size="sm" variant="default">
+                          <Button size="sm" variant="customized">
                             View
                           </Button>
                         </Link>
                       </div>
                     </div>
                   </div>
-                </Card>
+                </div>
               ))}
         </div>
         {!isProductLoading && filteredProducts.length === 0 && (
