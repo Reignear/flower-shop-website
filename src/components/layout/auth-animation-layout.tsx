@@ -5,7 +5,7 @@ interface AuthAnimationLayoutProps {
 const AuthAnimationLayout = ({ children }: AuthAnimationLayoutProps) => {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 overflow-hidden">
-      <div className="hidden md:flex gap-2 h-screen overflow-hidden ">
+      <div className="hidden md:flex gap-2 max-h-screen  overflow-hidden ">
         <div className="h-full w-full flex items-center justify-center">
           <img
             src="/assets/images/public/bouquet-collage.svg"
@@ -20,7 +20,7 @@ const AuthAnimationLayout = ({ children }: AuthAnimationLayoutProps) => {
           backgroundImage: "url('/assets/images/public/bouquet-collage.svg')",
         }}
       />
-      <div className="relative z-10 w-full min-h-screen flex items-center justify-center">
+      <div className="relative z-10 w-full max-h-full flex items-center justify-center">
         {children}
       </div>
     </div>

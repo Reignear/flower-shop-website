@@ -45,7 +45,7 @@ export default function SignUp() {
   };
   return (
     <AuthAnimationLayout>
-      <div className="min-h-screen flex items-center justify-center md:p-4 p-10">
+      <div className="flex items-center justify-center md:p-4 p-2">
         <div className="w-full max-w-lg  md:min-w-md space-y-6">
           <Card className="border-gray-200 shadow-sm bg-white/95">
             <CardHeader className="space-y-2">

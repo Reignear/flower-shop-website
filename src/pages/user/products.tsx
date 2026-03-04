@@ -28,9 +28,7 @@ export default function ProductsPage() {
   const filteredProducts =
     activeCategory === "all"
       ? product
-      : product.filter((prod) => prod.category_id === activeCategory);
-
-  console.log(orders);
+      : product.filter((prod) => prod.category === activeCategory);
   return (
     <UserLayout breadCrumbs={productBreadCrumb}>
       <div className="p-8 space-y-5">
@@ -87,7 +85,7 @@ export default function ProductsPage() {
                 )}
                 {!isOrdersLoading && (
                   <>
-                    ₱ {' '}
+                    ₱{" "}
                     {orders
                       ?.filter((item) => item.status === "delivered")
                       .reduce((total, order) => total + order.total_amount, 0)

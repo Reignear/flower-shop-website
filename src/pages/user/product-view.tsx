@@ -15,7 +15,7 @@ import { useUserProductView } from "@/hooks/use-user-product-view";
 import { formatDate } from "@/utils/date";
 import { averageRating } from "@/utils/rating";
 import { useInsertCart } from "@/tanstack/cart.mutation";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import UserLayout from "@/components/layout/user-layout";
 import { ProductViewBreadCrumb } from "@/data/user-product-view-data";
 import { CustomToast } from "@/components/custom/custom-toast";
@@ -39,8 +39,8 @@ export default function ProductView() {
         }),
         "insert",
       );
-    } catch (error) {
-      console.log("Error adding to cart", error);
+    } catch (error: any) {
+      toast.error(error.message)
     }
   };
 

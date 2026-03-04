@@ -16,7 +16,7 @@ import { useOrderPreview } from "@/hooks/use-user-order-preview";
 import { Controller } from "react-hook-form";
 import { CustomToast } from "@/components/custom/custom-toast";
 import { useInsertOrder } from "@/tanstack/order-mutation";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
 import { useDeleteCart } from "@/tanstack/cart.mutation";
 import { Calendar } from "@/components/ui/calendar";
 import { getDateOnly } from "@/utils/date-formatter";
@@ -55,8 +55,8 @@ export default function OrderReview() {
       );
       await new Promise((resolve) => setTimeout(resolve, 1500));
       navigate("/user/order");
-    } catch (error) {
-      console.log("Error in placing order", error);
+    } catch (error: any) {
+      toast.error(error.message)
     }
   };
 
