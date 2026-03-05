@@ -8,6 +8,7 @@ export const useOrderPreview = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    setValue,
   } = useForm();
   const [date, setDate] = React.useState<Date | undefined>(new Date());
   return {
@@ -17,6 +18,7 @@ export const useOrderPreview = () => {
     watch,
     date,
     setDate,
-    control
+    control,
+    setValue,
   };
 };

@@ -10,7 +10,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { useUserSetting } from "@/hooks/use-user-setting";
+import { useUserSettingAddress } from "@/hooks/use-user-setting-address";
 import type { Address, Region } from "@/utils/interface";
 import { Controller } from "react-hook-form";
 import { useInsertAddress } from "@/tanstack/address.mutation";
@@ -19,6 +19,7 @@ import { AddressCard } from "@/components/custom/custom-address-card";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import UserSettingsLayout from "@/components/layout/user-settings-layout";
+import { Toaster } from "react-hot-toast";
 
 const SettingsAddress = () => {
   const {
@@ -40,7 +41,7 @@ const SettingsAddress = () => {
     register: registerAddress,
     handleSubmit: handleSubmitAddress,
     control: controlAddress,
-  } = useUserSetting();
+  } = useUserSettingAddress();
 
   useEffect(() => {
     fetch("https://psgc.gitlab.io/api/regions/")
@@ -114,6 +115,7 @@ const SettingsAddress = () => {
 
   return (
     <UserSettingsLayout className="grid grid-cols-1 gap-5">
+      <Toaster position="bottom-right" />
       <form onSubmit={handleSubmitAddress(submitAddress)}>
         <Card className="p-6 mb-6">
           <h2 className="text-lg font-semibold text-foreground mb-6">
@@ -297,8 +299,8 @@ const SettingsAddress = () => {
           </div>
           <Button
             type="submit"
-            className="bg-primary text-primary-foreground"
             disabled={insertADdressMutation.isPending}
+            variant={"customized"}
           >
             {insertADdressMutation.isPending ? "Saving..." : "Save Address"}
           </Button>

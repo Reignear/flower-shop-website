@@ -1,5 +1,7 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { insertAddress } from "@/supabase/api/user.address.insert";
+import { deleteUserAddress } from "@/supabase/api/user.address.delete";
+import { updateUserAddress } from "@/supabase/api/user.address.update";
 
 export const useInsertAddress = () => {
   const queryClient = useQueryClient();
@@ -8,8 +10,25 @@ export const useInsertAddress = () => {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["address"] });
     },
-    // onError: (error) => {
-    //   console.error("Error inserting address:", error);
-    // },
+  });
+};
+
+export const useDeleteAddress = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: deleteUserAddress,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["address"] });
+    },
+  });
+};
+
+export const useUpdateAddress = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateUserAddress,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["address"] });
+    },
   });
 };

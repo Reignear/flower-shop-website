@@ -20,8 +20,10 @@ import toast, { Toaster } from "react-hot-toast";
 import { useDeleteCart } from "@/tanstack/cart.mutation";
 import { Calendar } from "@/components/ui/calendar";
 import { getDateOnly } from "@/utils/date-formatter";
+import { useEffect } from "react";
 
 export default function OrderReview() {
+  const { control, handleSubmit, errors, date, setValue } = useOrderPreview();
   const navigate = useNavigate();
   const location = useLocation();
   const { items, subtotal, shippingFee, total } = location.state || {};
@@ -29,13 +31,20 @@ export default function OrderReview() {
   const { data: paymentMethod, isLoading: isPaymentMethodLoading } =
     useBillingMethod();
 
-  const subTotalPerItem = (item: any) => {
-    return item.quantity * item.product_id.price;
-  };
-  const { control, handleSubmit, errors, date } = useOrderPreview();
   const insertOrderMutation = useInsertOrder();
   const deleteCartMutation = useDeleteCart();
 
+  // Set default address on load
+  useEffect(() => {
+    if (address && address.length > 0) {
+      const defaultAddress = address.find((addr: Address) => addr.is_default);
+      if (defaultAddress) {
+        setValue("user_address_id", `${defaultAddress.id}`);
+      }
+    }
+  }, [address, setValue]);
+
+  // Handle form submission
   const onSubmit = async (data: any) => {
     try {
       await CustomToast(
@@ -56,7 +65,7 @@ export default function OrderReview() {
       await new Promise((resolve) => setTimeout(resolve, 1500));
       navigate("/user/order");
     } catch (error: any) {
-      toast.error(error.message)
+      toast.error(error.message);
     }
   };
 
@@ -120,7 +129,10 @@ export default function OrderReview() {
                               <span className="text-xs font-normal text-gray-600 mt-1">
                                 Sub total per item{" "}
                               </span>
-                              ₱{subTotalPerItem(item).toFixed(2)}
+                              ₱
+                              {(item.quantity * item.product_id.price).toFixed(
+                                2,
+                              )}
                             </p>
                           </div>
                         </div>

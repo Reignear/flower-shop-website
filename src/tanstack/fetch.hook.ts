@@ -13,6 +13,7 @@ import { fetchFeedbackOrder } from "@/supabase/api/fetch.feedback.order";
 import { fetchFeedbackProduct } from "@/supabase/api/fetch.feedback.product";
 import { fetchAnalyticsData } from "@/supabase/api/fetch.analytics";
 import { fetchDashboardData } from "@/supabase/api/fetch.dashboard";
+import { fetchUser} from "@/supabase/api/fetch.user";
 
 export const useCategory = () => {
   return useQuery({
@@ -182,3 +183,14 @@ export const useDashboard = () => {
   });
 };
 
+export const useUser = () => {
+  return useQuery({
+    queryKey: ["user"],
+    queryFn: fetchUser,
+    staleTime: 5 * 60 * 1000,
+    retry: 3,
+    retryDelay: (attempt) => Math.min(1000 * 2 ** attempt, 30000),
+    refetchOnWindowFocus: true,
+    refetchOnReconnect: true,
+  });
+}

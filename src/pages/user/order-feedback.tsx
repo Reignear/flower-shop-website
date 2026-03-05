@@ -21,9 +21,10 @@ import { useParams } from "react-router-dom";
 import { useUserOrderFeedback } from "@/hooks/use-user-order-feedback";
 import { useInsertFeedback } from "@/tanstack/feedback.mutation";
 import { CustomToast } from "@/components/custom/custom-toast";
-import { Toaster } from "react-hot-toast";
+import toast, { Toaster } from "react-hot-toast";
+import { useOrderFeedbackBreadCrumb } from "@/data/user-order-data";
 
-const OrderFeedback = () => {
+export default function OrderFeedback() {
   const { id: id } = useParams();
   const { data: order } = useOrderById(Number(id));
 
@@ -80,17 +81,17 @@ const OrderFeedback = () => {
           })),
         }),
       );
-    } catch (error) {
-      console.error("Error submitting feedback:", error);
+    } catch (error: any) {
+      toast.error(error.message);
     }
   };
   return (
-    <UserLayout>
+    <UserLayout breadCrumbs={useOrderFeedbackBreadCrumb()}>
       <Toaster position="bottom-right" />
       <div className="p-5">
-        <div className="grid grid-cols-3 gap-5 ">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
           <div className="space-y-5 col-span-1">
-            <Card className="h-fit sticky top-5">
+            <Card className="h-fit md:sticky md:top-5">
               <CardHeader>
                 <CardTitle>Order Details</CardTitle>
                 <CardDescription>View your order information</CardDescription>
@@ -175,7 +176,7 @@ const OrderFeedback = () => {
             </Card>
           </div>
           {/* Feedback sectino here */}
-          <div className="space-y-5 col-span-2">
+          <div className="space-y-5 col-span-1 md:col-span-2">
             <div>
               <h1 className="text-lg font-semibold">Feedback</h1>
               <p className="text-muted-foreground text-sm">
@@ -284,6 +285,7 @@ const OrderFeedback = () => {
                 <Button
                   type="submit"
                   disabled={insertFeedbackMutation.isPending}
+                  variant={"customized"}
                 >
                   {insertFeedbackMutation.isPending
                     ? "Submitting Feedback..."
@@ -296,6 +298,4 @@ const OrderFeedback = () => {
       </div>
     </UserLayout>
   );
-};
-
-export default OrderFeedback;
+}

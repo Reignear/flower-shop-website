@@ -184,7 +184,7 @@ export default function SignUp() {
                 <Button
                   type="submit"
                   className="w-full bg-black hover:bg-gray-800 text-white rounded-full"
-                  disabled
+                  // disabled
                 >
                   Sign In {loading && <LoaderCircle className="animate-spin" />}
                 </Button>

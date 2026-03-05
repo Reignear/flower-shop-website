@@ -155,3 +155,16 @@ export function useViewOnProcessBreadCrumb() {
     },
   ];
 }
+export function useOrderFeedbackBreadCrumb() {
+  const { id: id } = useParams();
+  const { data: order } = useOrderById(Number(id));
+  return [
+    { label: "Dashboard", href: "/user/dashboard" },
+    { label: "Order", href: "/user/order/all" },
+    { label: "Delivered Orders", href: "/user/order/delivered" },
+    {
+      label: `${order?.reference_number || order?.id}`,
+      href: `/user/order/delivered/${id}`,
+    },
+  ];
+}

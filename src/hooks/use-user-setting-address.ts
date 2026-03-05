@@ -7,7 +7,7 @@ import type {
   Region,
 } from "@/utils/interface";
 import { useForm } from "react-hook-form";
-export const useUserSetting = () => {
+export const useUserSettingAddress = () => {
   const [region, setRegion] = useState<Region[]>();
   const [province, setProvince] = useState<Province[]>();
   const [city, setCity] = useState<CityMunicipality[]>();
@@ -16,7 +16,6 @@ export const useUserSetting = () => {
   const [selectedProvince, setSelectedProvince] = useState("");
   const [selectedCity, setSelectedCity] = useState("");
   const [selectedBarangay, setSelectedBarangay] = useState("");
-
   const { register, handleSubmit, control } = useForm<Address>();
   return {
     region,

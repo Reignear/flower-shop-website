@@ -2,7 +2,6 @@ import {
   LayoutDashboard,
   ShoppingCart,
   Package,
-  Heart,
   Settings,
   Truck,
 } from "lucide-react";
@@ -11,7 +10,6 @@ export const navItems = [
   { label: "Products", href: "/user/products", icon: Package },
   { label: "Cart", href: "/user/cart", icon: ShoppingCart },
   { label: "Orders", href: "/user/order", icon: Truck },
-  { label: "Favorites", href: "/user/favorites", icon: Heart },
   { label: "Settings", href: "/user/settings", icon: Settings },
 ];
 

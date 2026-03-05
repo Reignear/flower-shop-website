@@ -22,7 +22,7 @@ export default function UserSettingsLayout({
             Manage your account and preferences
           </p>
         </div>
-        <div className="grid grid-cols-5 ">
+        <div className="flex gap-3 ">
           {tabItems.map((item, index) => {
             const isActive =
               pathname === item.href || pathname.startsWith(item.href + "/");

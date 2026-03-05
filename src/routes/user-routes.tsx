@@ -13,13 +13,8 @@ import UserProductView from "@/pages/user/product-view";
 import UserCart from "@/pages/user/cart";
 import UserSettingsProfile from "@/pages/user/settings-profile";
 import UserSettingsAddress from "@/pages/user/settings-address";
-import UserSettingsNotification from "@/pages/user/settings-notification";
-import UserSettingsSecurity from "@/pages/user/settings-security";
 import UserSettingsDeletion from "@/pages/user/settings-delete";
-import UserFavorites from "@/pages/user/favorites";
 import UserDashboard from "@/pages/user/dashboard";
-import UserOrderDeclinedView from "@/pages/user/order-declined-view";
-import UserOrderDeliveredView from "@/pages/user/order-delivered-view";
 import UserOrderPendingView from "@/pages/user/order-pending-view";
 import UserOrderOnProcessView from "@/pages/user/order-on-process-view";
 import UserOrderForPickupView from "@/pages/user/order-for-pickup-view";
@@ -34,8 +29,6 @@ export const UserRoutes = [
   { path: "/user/order/for-pickup", element: <UserOrderForPickup /> },
   { path: "/user/order/on-process", element: <UserOrderOnProcess /> },
   { path: "/user/order/delivered", element: <UserOrderDelivered /> },
-  { path: "/user/order/declined/:id", element: <UserOrderDeclinedView /> },
-  { path: "/user/order/delivered/:id", element: <UserOrderDeliveredView /> },
   { path: "/user/order/pending/:id", element: <UserOrderPendingView /> },
   { path: "/user/order/on-process/:id", element: <UserOrderOnProcessView /> },
   { path: "/user/order/for-pickup/:id", element: <UserOrderForPickupView /> },
@@ -45,17 +38,11 @@ export const UserRoutes = [
   { path: "/user/products", element: <UserProducts /> },
   { path: "/user/products/:id", element: <UserProductView /> },
   { path: "/user/cart", element: <UserCart /> },
-  { path: "/user/favorites", element: <UserFavorites /> },
   {
     path: "/user/settings",
     element: <Navigate to="/user/settings/profile" replace />,
   },
   { path: "/user/settings/profile", element: <UserSettingsProfile /> },
   { path: "/user/settings/address", element: <UserSettingsAddress /> },
-  {
-    path: "/user/settings/notification",
-    element: <UserSettingsNotification />,
-  },
-  { path: "/user/settings/security", element: <UserSettingsSecurity /> },
   { path: "/user/settings/deletion", element: <UserSettingsDeletion /> },
 ];
