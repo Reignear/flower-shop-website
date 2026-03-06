@@ -10,6 +10,7 @@ import { useUpdateProfile } from "@/tanstack/user.mutation";
 import { CustomToast } from "@/components/custom/custom-toast";
 import { Toaster } from "react-hot-toast";
 import { useUserSettingProfile } from "@/hooks/use-user-setting-profile";
+import { profileBreadcrumbs } from "@/data/user-settings-data";
 
 const SettingsProfile = () => {
   const { data: userData } = useUser();
@@ -20,7 +21,7 @@ const SettingsProfile = () => {
     await CustomToast(updateProfileMutation.mutateAsync(data), "edit");
   };
   return (
-    <UserSettingsLayout>
+    <UserSettingsLayout breadCrumbs={profileBreadcrumbs}>
       <Toaster position="bottom-right" />
       <Card className="p-6 mb-6">
         <form onSubmit={handleSubmit(submitUpdate)}>

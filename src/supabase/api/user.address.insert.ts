@@ -18,7 +18,7 @@ export const insertAddress = async ({ address }: { address: Address }) => {
     province: address.province,
     region: address.region,
     postal_code: address.postal_code,
-    is_default: true,
+    is_default: false,
   });
 
   return data;

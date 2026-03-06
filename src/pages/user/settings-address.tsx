@@ -20,6 +20,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import UserSettingsLayout from "@/components/layout/user-settings-layout";
 import { Toaster } from "react-hot-toast";
+import { addressBreadcrumbs } from "@/data/user-settings-data";
 
 const SettingsAddress = () => {
   const {
@@ -114,10 +115,13 @@ const SettingsAddress = () => {
   };
 
   return (
-    <UserSettingsLayout className="grid grid-cols-1 gap-5">
+    <UserSettingsLayout
+      className="grid grid-cols-1 gap-5"
+      breadCrumbs={addressBreadcrumbs}
+    >
       <Toaster position="bottom-right" />
       <form onSubmit={handleSubmitAddress(submitAddress)}>
-        <Card className="p-6 mb-6">
+        <Card className="p-4 md:p-6 mb-6">
           <h2 className="text-lg font-semibold text-foreground mb-6">
             Shipping Address
           </h2>
@@ -236,7 +240,7 @@ const SettingsAddress = () => {
                 )}
               />
             </div>
-            <div className="">
+            <div>
               <label className="text-sm text-muted-foreground mb-2 block">
                 Barangay
               </label>
@@ -286,7 +290,7 @@ const SettingsAddress = () => {
                 placeholder="Street, Building, etc."
               ></Input>
             </div>
-            <div className="col-span-2">
+            <div className="md:col-span-2">
               <label className="text-sm text-muted-foreground mb-2 block">
                 Postal Code
               </label>
@@ -306,7 +310,7 @@ const SettingsAddress = () => {
           </Button>
         </Card>
       </form>
-      <div className="grid grid-cols-1 gap-5 col-span-2">
+      <div className="grid grid-cols-1 gap-5 md:col-span-2">
         {address?.length === 0 && !isAddressLoading && (
           <Card className="max-h-40 flex items-center justify-center">
             <CardContent>
@@ -316,7 +320,7 @@ const SettingsAddress = () => {
             </CardContent>
           </Card>
         )}
-        <div className="grid grid-cols-2 gap-5">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           {address?.map((addr, index) => (
             <AddressCard address={addr} index={index} key={index} />
           ))}
