@@ -1,7 +1,11 @@
+export const deleteTitle = "Delete Account";
+export const deleteDescription =
+  "Once you delete your account, there is no going back. Please be certain.";
+
 export const tabItems = [
   { name: "Profile Information", href: "/user/settings/profile" },
   { name: "Address Information", href: "/user/settings/address" },
-  { name: "Account Deletion", href: "/user/settings/deletion" },
+  // { name: "Account Deletion", href: "/user/settings/deletion" },
 ];
 
 export const profileBreadcrumbs = [

@@ -7,7 +7,7 @@ import type { Address } from "@/utils/interface";
 import {
   useDeleteAddress,
   useUpdateAddress,
-} from "@/tanstack/address.mutation";
+} from "@/tanstack/settings.mutation";
 import toast from "react-hot-toast";
 import { CustomToast } from "@/components/custom/custom-toast";
 

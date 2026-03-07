@@ -1,7 +1,18 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { updateProfile } from "@/supabase/api/user.profile.update";
 import { insertAddress } from "@/supabase/api/user.address.insert";
 import { deleteUserAddress } from "@/supabase/api/user.address.delete";
 import { updateUserAddress } from "@/supabase/api/user.address.update";
+
+export const useUpdateProfile = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: updateProfile,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["user"] });
+    },
+  });
+};
 
 export const useInsertAddress = () => {
   const queryClient = useQueryClient();

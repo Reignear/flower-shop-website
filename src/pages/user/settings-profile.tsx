@@ -6,7 +6,7 @@ import { useUser } from "@/tanstack/fetch.hook";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
-import { useUpdateProfile } from "@/tanstack/user.mutation";
+import { useUpdateProfile } from "@/tanstack/settings.mutation";
 import { CustomToast } from "@/components/custom/custom-toast";
 import { Toaster } from "react-hot-toast";
 import { useUserSettingProfile } from "@/hooks/use-user-setting-profile";
