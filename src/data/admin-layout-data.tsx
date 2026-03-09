@@ -5,8 +5,8 @@ import {
   Settings,
   BarChart3,
   ChartColumnStacked,
-  // Tag,
   Cuboid,
+  CalendarClock,
 } from "lucide-react";
 
 export const navItems = [
@@ -19,6 +19,11 @@ export const navItems = [
     label: "Analytics",
     href: "/admin/analytics",
     icon: BarChart3,
+  },
+  {
+    label: "Calendar",
+    href: "/admin/calendar",
+    icon: CalendarClock,
   },
   {
     label: "Products",

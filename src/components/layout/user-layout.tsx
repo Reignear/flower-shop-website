@@ -62,7 +62,7 @@ const UserLayout = ({ children, breadCrumbs }: UserLayoutProps) => {
       <main className="flex-1">
         <div className="p-6 flex flex-col md:flex-row md:items-center  border-b px-6 py-5 h-25 bg-sidebar sticky z-20 top-0 border-sidebar-border">
           {/* Mobile Menu - Only visible on mobile */}
-          <div className="md:hidden mr-4 ">
+          <div className="md:hidden mr-4 flex items-center gap-2">
             <Sheet>
               <SheetTrigger>
                 <Menu className="h-5 w-5" />
@@ -158,6 +158,9 @@ const UserLayout = ({ children, breadCrumbs }: UserLayoutProps) => {
                 </div>
               </SheetContent>
             </Sheet>
+              <h1 className="text-xl md:hidden flex font-extrabold text-foreground love-light-regular">
+                Celestial Bloom
+              </h1>
           </div>
 
           <div className="flex items-center gap-2">

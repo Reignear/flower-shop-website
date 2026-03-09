@@ -25,6 +25,7 @@ import AdminDashboard from "@/pages/admin/dashboard";
 import AdminProduct from "@/pages/admin/products";
 import AdminProductManage from "@/pages/admin/product-manage";
 import AdminProductView from "@/pages/admin/product-view";
+import AdminCalendar from "@/pages/admin/calendar";
 
 export const AdminRoutes = [
   { path: "/admin/dashboard", element: <AdminDashboard /> },
@@ -63,6 +64,7 @@ export const AdminRoutes = [
   { path: "/admin/feedback/product", element: <AdminProductFeedback /> },
   { path: "/admin/settings", element: <AdminSettings /> },
   { path: "/admin/analytics", element: <AdminAnalytics /> },
+  {path: "/admin/calendar", element: <AdminCalendar /> },
   {
     path: "/admin/branding",
     element: <Navigate to="/admin/branding/general" replace />,

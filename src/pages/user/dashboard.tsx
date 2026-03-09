@@ -3,14 +3,16 @@ import CustomPieChart from "@/components/custom/custom-piechart";
 import UserLayout from "@/components/layout/user-layout";
 import { Card } from "@/components/ui/card";
 import { MonthLabels } from "@/data/admin-analytics-data";
+import { dashboardBreadCrumbs } from "@/data/user-dashboard-data";
 import { useDashboard } from "@/tanstack/fetch.hook";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
+import { Cuboid, MessageCircle, PhilippinePeso } from "lucide-react";
 
 export default function Dashboard() {
   const { data: dashboardData } = useDashboard();
 
   return (
-    <UserLayout>
+    <UserLayout breadCrumbs={dashboardBreadCrumbs}>
       <div className="p-4 md:p-8">
         {/* Header */}
         <div className="mb-6 md:mb-8">
@@ -39,7 +41,9 @@ export default function Dashboard() {
                 </p>
               </div>
               <div className="w-10 h-10 md:w-12 md:h-12 bg-blue-100 rounded-lg flex items-center justify-center">
-                <span className="text-xl md:text-2xl">📦</span>
+                <span>
+                  <Cuboid className="h-5 w-5" />
+                </span>
               </div>
             </div>
           </Card>
@@ -55,7 +59,9 @@ export default function Dashboard() {
                 </p>
               </div>
               <div className="w-10 h-10 md:w-12 md:h-12 bg-green-100 rounded-lg flex items-center justify-center">
-                <span className="text-xl md:text-2xl">💰</span>
+                <span>
+                  <PhilippinePeso className="w-5 h-5" />
+                </span>
               </div>
             </div>
           </Card>
@@ -71,7 +77,9 @@ export default function Dashboard() {
                 </p>
               </div>
               <div className="w-10 h-10 md:w-12 md:h-12 bg-red-100 rounded-lg flex items-center justify-center">
-                <span className="text-xl md:text-2xl">❤️</span>
+                <span>
+                  <MessageCircle className="h-5 w-5" />
+                </span>
               </div>
             </div>
           </Card>
@@ -87,7 +95,9 @@ export default function Dashboard() {
                 </p>
               </div>
               <div className="w-10 h-10 md:w-12 md:h-12 bg-purple-100 rounded-lg flex items-center justify-center">
-                <span className="text-xl md:text-2xl">❤️</span>
+                <span>
+                  <MessageCircle className="h-5 w-5" />
+                </span>
               </div>
             </div>
           </Card>
