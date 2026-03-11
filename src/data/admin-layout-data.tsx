@@ -7,6 +7,7 @@ import {
   ChartColumnStacked,
   Cuboid,
   CalendarClock,
+  Tag,
 } from "lucide-react";
 
 export const navItems = [
@@ -57,7 +58,7 @@ export const navItems = [
     ],
     icon: MessageSquare,
   },
-  // { label: "Branding", href: "/admin/branding", icon: Tag },
+  { label: "Branding", href: "/admin/branding", icon: Tag },
   {
     label: "Settings",
     href: "/admin/settings",
