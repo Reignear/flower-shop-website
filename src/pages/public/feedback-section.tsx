@@ -2,7 +2,7 @@ import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { capitalizeFirstLetter } from "@/utils/capitalize";
 import type { OrderFeedback } from "@/utils/interface";
-import { SquareArrowOutUpRight, Star } from "lucide-react";
+import { Star } from "lucide-react";
 import { Link } from "react-router-dom";
 
 interface FeedbackSectionProps {
@@ -82,7 +82,7 @@ export default function FeedbackSection({ feedbacks }: FeedbackSectionProps) {
               size="lg"
               className="rounded-full bg-primary text-primary-foreground hover:bg-primary/90"
             >
-              View Product Feedback <SquareArrowOutUpRight />
+              View Product Feedback
             </Button>
           </Link>
         </div>

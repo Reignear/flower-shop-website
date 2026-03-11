@@ -25,13 +25,13 @@ const Footer = () => {
                 href="/products"
                 className="text-sm opacity-80 hover:opacity-100 transition-opacity"
               >
-                New Arrivals
+                Products
               </a>
               <a
-                href="#"
+                href="/services"
                 className="text-sm opacity-80 hover:opacity-100 transition-opacity"
               >
-                Best Sellers
+                Services
               </a>
               <a
                 href="/about"
@@ -58,17 +58,12 @@ const Footer = () => {
               >
                 Shipping Info
               </a>
-              <a
-                href="#"
-                className="text-sm opacity-80 hover:opacity-100 transition-opacity"
-              >
-                Returns
-              </a>
+
               <a
                 href="/faq"
                 className="text-sm opacity-80 hover:opacity-100 transition-opacity"
               >
-                FAQ
+                FAQS
               </a>
               <a
                 href="/privacy"
